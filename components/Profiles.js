@@ -8,7 +8,7 @@ import Footer from "./Footer";
 import Interactable from "./Interactable";
 import Card from "./Card";
 
-const { Value, interpolate, concat, Extrapolate } = Animated;
+const { Value, interpolate, concat } = Animated;
 const { width, height } = Dimensions.get("window");
 const φ = (1 + Math.sqrt(5)) / 2;
 const deltaX = width / 2;

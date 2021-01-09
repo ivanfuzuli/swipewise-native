@@ -7,7 +7,6 @@ const {
   startClock,
   clockRunning,
   timing,
-  debug,
   stopClock,
   block,
   call,
@@ -52,7 +51,7 @@ function runButtonTiming(clock, dest, x, clicked, cb) {
       cond(state.finished, [
         set(state.position, 0),
         set(clicked, 0),
-        debug("stop clock", stopClock(clock)),
+        stopClock(clock),
         call([x], ([x]) => cb(x)),
       ]),
       // we made the block return the updated position

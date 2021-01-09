@@ -1,21 +1,23 @@
 import React, { useMemo, useRef } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View, Dimensions } from "react-native";
+
 import LottieView from "lottie-react-native";
 import Animated from "react-native-reanimated";
 import runButtonTiming from "../animations/runButtonTiming";
+
+const { width } = Dimensions.get("window");
 
 const { Clock, Value } = Animated;
 
 const Footer = ({ onChange, x }) => {
   const likeRef = useRef(null);
   const dislikeRef = useRef(null);
+
   const clock = useMemo(() => new Clock(), []);
-
   const clicked = useMemo(() => new Value(0), []);
-
   const transX = useMemo(
     () =>
-      runButtonTiming(clock, 380, x, clicked, (x) => {
+      runButtonTiming(clock, width, x, clicked, (x) => {
         onChange({ nativeEvent: { x } });
       }),
     []

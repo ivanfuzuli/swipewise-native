@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 
-import { runSpring, binaryInterpolation, snapPoint } from "./redash";
+import { runSpring, binaryInterpolation, snapPoint } from "../helpers/redash";
 import Animated from "react-native-reanimated";
 
 const {

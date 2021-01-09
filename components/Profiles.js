@@ -27,6 +27,8 @@ export default class Profiles extends React.PureComponent {
 
   onSnap = ({ nativeEvent: { x } }) => {
     const { index } = this.state;
+    this.x.setValue(0);
+
     if (x !== 0) {
       if (index + 1 === this.props.profiles.length) {
         this.setState({ index: 0 });

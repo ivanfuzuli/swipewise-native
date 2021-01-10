@@ -3,7 +3,7 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
 } from "react-native";
 
 import {
@@ -16,8 +16,7 @@ import {
   Input,
   Button,
 } from "native-base";
-import { AntDesign } from "@expo/vector-icons";
-
+import { Feather } from "@expo/vector-icons";
 const Login = () => {
   const passwordInput = useRef(null);
   const [secureTextEntry, setSecureTextEntry] = useState(true);
@@ -127,12 +126,19 @@ const Login = () => {
                     secureTextEntry={secureTextEntry}
                   />
                 </Item>
-                <TouchableOpacity
-                  onPress={toggleSecureTextEntry}
-                  style={styles.eye}
-                >
-                  <AntDesign name="eyeo" size={24} color="black" />
-                </TouchableOpacity>
+
+                <View style={styles.eye}>
+                  <TouchableWithoutFeedback onPress={toggleSecureTextEntry}>
+                    <View>
+                      {secureTextEntry && (
+                        <Feather name="eye" size={24} color="black" />
+                      )}
+                      {!secureTextEntry && (
+                        <Feather name="eye-off" size={24} color="black" />
+                      )}
+                    </View>
+                  </TouchableWithoutFeedback>
+                </View>
               </View>
               {isDirty && errors.password && (
                 <Text style={styles.error}>{errors.password}</Text>

@@ -1,6 +1,12 @@
 import React, { useMemo, useRef } from "react";
-import { Pressable, StyleSheet, View, Dimensions } from "react-native";
-
+import {
+  Animated as RNAnimated,
+  Pressable,
+  StyleSheet,
+  View,
+  Dimensions,
+} from "react-native";
+import { Feather as Icon } from "@expo/vector-icons";
 import LottieView from "lottie-react-native";
 import Animated from "react-native-reanimated";
 import runButtonTiming from "../animations/runButtonTiming";
@@ -11,7 +17,7 @@ const { Clock, Value } = Animated;
 
 const Footer = ({ onChange, x }) => {
   const likeRef = useRef(null);
-  const dislikeRef = useRef(null);
+  const fadeAnim = useRef(new RNAnimated.Value(1)).current; // Initial value for opacity: 0
 
   const clock = useMemo(() => new Clock(), []);
   const clicked = useMemo(() => new Value(0), []);
@@ -31,27 +37,23 @@ const Footer = ({ onChange, x }) => {
   };
 
   const dislike = () => {
-    dislikeRef.current.play();
+    RNAnimated.timing(fadeAnim, {
+      toValue: 0.5,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => fadeAnim.setValue(1));
     clicked.setValue(-1);
-    setTimeout(() => {
-      dislikeRef.current.reset();
-    }, 300);
   };
 
   return (
     <>
       <Animated.View style={{ ...styles.footer }}>
-        <View style={styles.circle}>
-          <Pressable onPress={dislike}>
-            <LottieView
-              ref={dislikeRef}
-              style={{
-                width: 48,
-                height: 48,
-              }}
-              source={require("../assets/dislike.json")}
-            />
-          </Pressable>
+        <View style={{ ...styles.circle }}>
+          <RNAnimated.View style={{ transform: [{ scale: fadeAnim }] }}>
+            <Pressable onPress={dislike}>
+              <Icon name="x" size={32} color="#ec5288" />
+            </Pressable>
+          </RNAnimated.View>
         </View>
         <View style={styles.circle}>
           <Pressable onPress={like}>

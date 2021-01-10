@@ -84,7 +84,7 @@ export default class Profiles extends React.PureComponent {
           <Interactable
             key={index}
             snapPoints={[{ x: -1 * A }, { x: 0 }, { x: A }]}
-            style={StyleSheet.absoluteFill}
+            style={{ ...StyleSheet.absoluteFill, zIndex: 2 }}
             {...{ onSnap, x, y }}
           >
             <Animated.View {...{ style }}>
@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
   placeholder: {
     ...StyleSheet.absoluteFillObject,
     flex: 1,
+    zIndex: 1,
   },
   container: {
     flex: 1,

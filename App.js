@@ -46,13 +46,21 @@ export default function App() {
     <>
       <StatusBar barStyle="dark-content" />
       <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="Home" component={Landing} />
-          <Stack.Screen name="Swipe" component={Swiper} />
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={Landing}
+            options={{
+              headerShown: false, // change this to `false`
+            }}
+          />
+          <Stack.Screen
+            name="Swipe"
+            component={Swiper}
+            options={{
+              headerShown: false, // change this to `false`
+            }}
+          />
           <Stack.Screen name="Login" component={Login} />
         </Stack.Navigator>
       </NavigationContainer>

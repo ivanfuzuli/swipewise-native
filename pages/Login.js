@@ -51,9 +51,10 @@ const Login = () => {
     }
 
     setErrors(localErrors);
+    return isValid(localErrors);
   };
 
-  const isValid = () => {
+  const isValid = (errors) => {
     return Object.values(errors).every((item) => !!item === false);
   };
 
@@ -72,10 +73,9 @@ const Login = () => {
   };
 
   const handleSubmit = () => {
-    validate();
     setDirty(true);
 
-    if (isValid()) {
+    if (validate()) {
       alert("valid");
     } else {
       alert("invalid");
@@ -89,7 +89,6 @@ const Login = () => {
     >
       <Container>
         <View style={styles.Container}>
-          <Text style={styles.heading}>Login</Text>
           <View>
             <Form style={styles.form}>
               <Item floatingLabel>
@@ -143,16 +142,13 @@ const Login = () => {
               {isDirty && errors.password && (
                 <Text style={styles.error}>{errors.password}</Text>
               )}
-
+              <View style={styles.forgot}>
+                <Button transparent>
+                  <Text>Forgot Password?</Text>
+                </Button>
+              </View>
               <View style={styles.buttons}>
-                <Button
-                  onPress={handleSubmit}
-                  style={styles.button}
-                  bordered
-                  full
-                  rounded
-                  primary
-                >
+                <Button onPress={handleSubmit} bordered full rounded primary>
                   <Text>Login</Text>
                 </Button>
               </View>
@@ -168,18 +164,22 @@ const styles = StyleSheet.create({
   lastItem: {
     margin: 15,
   },
+
   buttons: {
     margin: 10,
   },
+
   button: {
     margin: 10,
   },
+
   Container: {
     margin: 10,
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
   },
+
   heading: {
     color: "#fe4b00",
     fontSize: 42,
@@ -196,6 +196,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 15,
     top: 15,
+  },
+
+  forgot: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
   },
 });
 

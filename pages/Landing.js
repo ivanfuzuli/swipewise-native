@@ -1,17 +1,12 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, Dimensions } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import { StyleSheet } from "react-native";
 
 import { Container, View, Text, Button } from "native-base";
 
 const Landing = ({ navigation }) => {
   return (
     <Container>
-      <LinearGradient
-        // Background Linear Gradient
-        colors={["#f1f1f1", "#fff"]}
-        style={styles.gradient}
-      >
+      <View style={styles.gradient}>
         <Text style={styles.heading}>Swipewise</Text>
         <View style={styles.buttons}>
           <Button
@@ -29,7 +24,7 @@ const Landing = ({ navigation }) => {
             <Text>Login</Text>
           </Button>
         </View>
-      </LinearGradient>
+      </View>
     </Container>
   );
 };
@@ -47,7 +42,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   heading: {
-    color: "#6381f0",
+    color: "#fe4b00",
     fontSize: 42,
     fontWeight: "bold",
     textAlign: "center",

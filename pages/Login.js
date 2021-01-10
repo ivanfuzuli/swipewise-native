@@ -1,11 +1,10 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
-  TextInput,
+  TouchableOpacity,
 } from "react-native";
-import { useForm, Controller } from "react-hook-form";
 
 import {
   Container,
@@ -17,14 +16,73 @@ import {
   Input,
   Button,
 } from "native-base";
+import { AntDesign } from "@expo/vector-icons";
 
-const Landing = ({ navigation }) => {
+const Login = () => {
   const passwordInput = useRef(null);
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+  const [isDirty, setDirty] = useState(false);
 
-  const { control, handleSubmit, errors } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const validate = (obj) => {
+    const values = {
+      email,
+      password,
+      ...obj,
+    };
 
-  console.log("errrors", errors);
+    const localErrors = {
+      ...errors,
+    };
+
+    if (!values.email) {
+      localErrors.email = "Email is required!";
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+      localErrors.email = "Invalid email address.";
+    } else {
+      localErrors.email = null;
+    }
+
+    if (!values.password) {
+      localErrors.password = "Password is required!";
+    } else {
+      localErrors.password = null;
+    }
+
+    setErrors(localErrors);
+  };
+
+  const isValid = () => {
+    return Object.values(errors).every((item) => !!item === false);
+  };
+
+  const handleEmailChange = (text) => {
+    setEmail(text);
+    validate({ email: text });
+  };
+
+  const handlePasswordChange = (text) => {
+    setPassword(text);
+    validate({ password: text });
+  };
+
+  const toggleSecureTextEntry = () => {
+    setSecureTextEntry((entry) => !entry);
+  };
+
+  const handleSubmit = () => {
+    validate();
+    setDirty(true);
+
+    if (isValid()) {
+      alert("valid");
+    } else {
+      alert("invalid");
+    }
+  };
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -34,58 +92,55 @@ const Landing = ({ navigation }) => {
         <View style={styles.Container}>
           <Text style={styles.heading}>Login</Text>
           <View>
-            <Form>
-              <Controller
-                control={control}
-                render={({ onChange, onBlur, value }) => (
-                  <Item floatingLabel>
-                    <Label>E-mail</Label>
-                    <Input
-                      onSubmitEditing={() => {
-                        passwordInput.current._root.focus();
-                      }}
-                      keyboardType="email-address"
-                      returnKeyType={"next"}
-                      onBlur={onBlur}
-                      onChangeText={(value) => onChange(value)}
-                      value={value}
-                    />
-                  </Item>
-                )}
-                name="email"
-                rules={{ required: true }}
-                defaultValue=""
-              />
-              {errors.email && <Text>This is required.</Text>}
-              <Controller
-                control={control}
-                render={({ onChange, onBlur, value }) => (
-                  <Item floatingLabel>
-                    <Label>Password</Label>
-                    <Input
-                      errorText="<hello"
-                      onSubmitEditing={() => {
-                        passwordInput.current._root.focus();
-                      }}
-                      returnKeyType={"next"}
-                      onBlur={onBlur}
-                      onChangeText={(value) => onChange(value)}
-                      value={value}
-                      getRef={(input) => {
-                        passwordInput.current = input;
-                      }}
-                    />
-                  </Item>
-                )}
-                name="password"
-                rules={{ required: true }}
-                defaultValue=""
-              />
-              {errors.password && <Text>This is required.</Text>}
+            <Form style={styles.form}>
+              <Item floatingLabel>
+                <Label>E-mail</Label>
+                <Input
+                  onSubmitEditing={() => {
+                    passwordInput.current._root.focus();
+                  }}
+                  keyboardType="email-address"
+                  returnKeyType={"next"}
+                  onChangeText={handleEmailChange}
+                  value={email}
+                  autoCapitalize="none"
+                />
+              </Item>
+              {isDirty && errors.email && (
+                <Text style={styles.error}>{errors.email}</Text>
+              )}
+              <View style={styles.lastItem}>
+                <Item floatingLabel>
+                  <Label>Password</Label>
+                  <Input
+                    errorText="<hello"
+                    onSubmitEditing={() => {
+                      passwordInput.current._root.focus();
+                    }}
+                    autoCapitalize="none"
+                    returnKeyType={"next"}
+                    onChangeText={handlePasswordChange}
+                    value={password}
+                    getRef={(input) => {
+                      passwordInput.current = input;
+                    }}
+                    secureTextEntry={secureTextEntry}
+                  />
+                </Item>
+                <TouchableOpacity
+                  onPress={toggleSecureTextEntry}
+                  style={styles.eye}
+                >
+                  <AntDesign name="eyeo" size={24} color="black" />
+                </TouchableOpacity>
+              </View>
+              {isDirty && errors.password && (
+                <Text style={styles.error}>{errors.password}</Text>
+              )}
 
               <View style={styles.buttons}>
                 <Button
-                  onPress={handleSubmit(onSubmit)}
+                  onPress={handleSubmit}
                   style={styles.button}
                   bordered
                   full
@@ -104,6 +159,9 @@ const Landing = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  lastItem: {
+    margin: 15,
+  },
   buttons: {
     margin: 10,
   },
@@ -111,7 +169,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   Container: {
-    marginTop: 150,
+    margin: 10,
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
@@ -122,6 +180,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
+
+  error: {
+    padding: 5,
+    color: "red",
+  },
+
+  eye: {
+    position: "absolute",
+    right: 15,
+    top: 15,
+  },
 });
 
-export default Landing;
+export default Login;

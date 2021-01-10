@@ -20,7 +20,14 @@ const Landing = ({ navigation }) => {
           >
             <Text>Sign Up</Text>
           </Button>
-          <Button style={styles.button} bordered full rounded primary>
+          <Button
+            onPress={() => navigation.navigate("Login")}
+            style={styles.button}
+            bordered
+            full
+            rounded
+            primary
+          >
             <Text>Login</Text>
           </Button>
         </View>

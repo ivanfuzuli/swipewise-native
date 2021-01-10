@@ -3,12 +3,14 @@ import React from "react";
 import * as SplashScreen from "expo-splash-screen";
 import { View, StatusBar } from "react-native";
 
-import Landing from "./pages/Landing";
-import Swiper from "./pages/Swiper";
 import * as Font from "expo-font";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+
+import Landing from "./pages/Landing";
+import Swiper from "./pages/Swiper";
+import Login from "./pages/Login";
 
 const Stack = createStackNavigator();
 
@@ -51,6 +53,7 @@ export default function App() {
         >
           <Stack.Screen name="Home" component={Landing} />
           <Stack.Screen name="Swipe" component={Swiper} />
+          <Stack.Screen name="Login" component={Login} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

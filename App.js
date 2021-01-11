@@ -8,6 +8,8 @@ import * as Font from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+import { Root } from "native-base";
+
 import Landing from "./pages/Landing";
 import Swiper from "./pages/Swiper";
 import Login from "./pages/Login";
@@ -43,7 +45,7 @@ export default function App() {
     return null;
   }
   return (
-    <>
+    <Root>
       <StatusBar barStyle="dark-content" />
       <NavigationContainer>
         <Stack.Navigator>
@@ -64,6 +66,6 @@ export default function App() {
           <Stack.Screen name="Login" component={Login} />
         </Stack.Navigator>
       </NavigationContainer>
-    </>
+    </Root>
   );
 }

@@ -15,6 +15,7 @@ import {
   Text,
   Input,
   Button,
+  Toast,
 } from "native-base";
 import { Feather } from "@expo/vector-icons";
 const Login = () => {
@@ -76,9 +77,11 @@ const Login = () => {
     setDirty(true);
 
     if (validate()) {
-      alert("valid");
-    } else {
-      alert("invalid");
+      Toast.show({
+        text: "Invalid password!",
+        buttonText: "Okay",
+        duration: 3000,
+      });
     }
   };
 
@@ -143,7 +146,16 @@ const Login = () => {
                 <Text style={styles.error}>{errors.password}</Text>
               )}
               <View style={styles.forgot}>
-                <Button transparent>
+                <Button
+                  onPress={() =>
+                    Toast.show({
+                      text: "Forgot password!",
+                      buttonText: "Okay",
+                      duration: 3000,
+                    })
+                  }
+                  transparent
+                >
                   <Text>Forgot Password?</Text>
                 </Button>
               </View>

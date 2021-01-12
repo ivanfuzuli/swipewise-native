@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 
 import { Container, View, Text, Button } from "native-base";
 
@@ -7,11 +7,13 @@ const Landing = ({ navigation }) => {
   return (
     <Container>
       <View style={styles.gradient}>
-        <Text style={styles.heading}>Swipewise</Text>
+        <Pressable onPress={() => navigation.navigate("Swipe")}>
+          <Text style={styles.heading}>Swipewise</Text>
+        </Pressable>
         <View style={styles.buttons}>
           <Button
             style={styles.button}
-            onPress={() => navigation.navigate("Swipe")}
+            onPress={() => navigation.navigate("Sign up")}
             bordered
             full
             rounded

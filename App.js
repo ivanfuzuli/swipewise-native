@@ -14,6 +14,10 @@ import Landing from "./pages/Landing";
 import Swiper from "./pages/Swiper";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import SelectBooks from "./pages/Selectbooks";
+
+import { Provider } from "react-redux";
+import store from "./store";
 
 const Stack = createStackNavigator();
 
@@ -46,28 +50,31 @@ export default function App() {
     return null;
   }
   return (
-    <Root>
-      <StatusBar barStyle="dark-content" />
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Home"
-            component={Landing}
-            options={{
-              headerShown: false, // change this to `false`
-            }}
-          />
-          <Stack.Screen
-            name="Swipe"
-            component={Swiper}
-            options={{
-              headerShown: false, // change this to `false`
-            }}
-          />
-          <Stack.Screen name="Sign up" component={Signup} />
-          <Stack.Screen name="Login" component={Login} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </Root>
+    <Provider store={store}>
+      <Root>
+        <StatusBar barStyle="dark-content" />
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Home"
+              component={Landing}
+              options={{
+                headerShown: false, // change this to `false`
+              }}
+            />
+            <Stack.Screen
+              name="Swipe"
+              component={Swiper}
+              options={{
+                headerShown: false, // change this to `false`
+              }}
+            />
+            <Stack.Screen name="Sign up" component={Signup} />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="SelectBooks" component={SelectBooks} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Root>
+    </Provider>
   );
 }

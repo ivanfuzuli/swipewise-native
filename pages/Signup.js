@@ -19,7 +19,7 @@ import {
   Toast,
 } from "native-base";
 import { Feather } from "@expo/vector-icons";
-const Signup = () => {
+const Signup = ({ navigation }) => {
   const passwordRef = useRef(null);
   const usernameRef = useRef(null);
 
@@ -194,7 +194,9 @@ const Signup = () => {
                 <Text style={styles.termsText}>
                   Click "Sign up" above to accept Swipewise's
                 </Text>
-                <TouchableOpacity onPress={() => alert("terms")}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("SelectBooks")}
+                >
                   <Text style={styles.termsLink}> Terms of Service </Text>
                 </TouchableOpacity>
                 <Text style={styles.termsText}>and</Text>

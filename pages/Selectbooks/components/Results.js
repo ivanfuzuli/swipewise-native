@@ -5,17 +5,19 @@ import { useSelector } from "react-redux";
 import { Text } from "native-base";
 const Results = () => {
   const books = useSelector((state) => state.selected.books);
+  const searchValue = useSelector((state) => state.selected.searchValue);
 
   return (
     <View style={styles.container}>
-      {books.map((item) => {
-        return (
-          <View style={styles.itemContainer}>
-            <Text style={styles.heading}>{item.title}</Text>
-            <Text style={styles.text}>by {item.author.name}</Text>
-          </View>
-        );
-      })}
+      {!!searchValue &&
+        books.map((item) => {
+          return (
+            <View style={styles.itemContainer}>
+              <Text style={styles.heading}>{item.title}</Text>
+              <Text style={styles.text}>by {item.author.name}</Text>
+            </View>
+          );
+        })}
     </View>
   );
 };

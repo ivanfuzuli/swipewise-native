@@ -2,7 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { debounce } from "lodash";
 
-const SEARCH_ENUMS = {
+const CancelToken = axios.CancelToken;
+let cancel;
+
+export const SEARCH_ENUMS = {
   SEARCHING: "searching",
   FAILED: "failed",
   COMPLETED: "completed",
@@ -12,7 +15,7 @@ const initialState = {
   books: [],
   bookSearchState: SEARCH_ENUMS.COMPLETED,
   searchErrorCode: null,
-  selectedItems: [],
+  selectedBooks: [],
   searchValue: "",
 };
 
@@ -21,7 +24,7 @@ const counterSlice = createSlice({
   initialState,
   reducers: {
     booksReceived(state, action) {
-      state.searchState = SEARCH_ENUMS.COMPLETED;
+      state.bookSearchState = SEARCH_ENUMS.COMPLETED;
       state.books = action.payload;
     },
 
@@ -44,20 +47,30 @@ export const {
 // Define a thunk that dispatches those action creators
 
 export const searchBooks = (value) => async (dispatch) => {
-  dispatch(setSearchState(SEARCH_ENUMS.SEARCHING));
   dispatch(setSearchValue(value));
 
-  search(value, dispatch);
+  if (value.length > 2) {
+    search(value, dispatch);
+  }
 };
 
 const search = debounce(async (value, dispatch) => {
+  dispatch(setSearchState(SEARCH_ENUMS.SEARCHING));
+
   try {
     const response = await axios.get(
-      `https://www.goodreads.com/book/auto_complete?format=json&q=${value}`
+      `https://www.goodreads.com/book/auto_complete?format=json&q=${value}`,
+      {
+        cancelToken: new CancelToken(function executor(e) {
+          cancel = e;
+        }),
+      }
     );
     dispatch(booksReceived(response.data));
   } catch (err) {
-    console.log(err);
+    if (__axios.isCancel(err)) {
+      return;
+    }
     dispatch(setSearchState(SEARCH_ENUMS.FAILED));
   }
 }, 600);

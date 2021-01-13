@@ -1,8 +1,19 @@
 import React, { useState } from "react";
+import {
+  searchBooks,
+  setSearchValue,
+  SEARCH_ENUMS,
+} from "../store/selectedSlice";
+import {
+  StyleSheet,
+  View,
+  ActivityIndicator,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 
 import { useDispatch, useSelector } from "react-redux";
-import { searchBooks } from "../store/selectedSlice";
-import { StyleSheet, View, TextInput } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 
 import Results from "./Results";
 
@@ -13,6 +24,10 @@ const SearchBox = () => {
 
   const search = (value) => {
     dispatch(searchBooks(value));
+  };
+
+  const handleBackdrop = () => {
+    dispatch(setSearchValue(""));
   };
 
   return (
@@ -27,15 +42,48 @@ const SearchBox = () => {
             value={searchValue}
             onChangeText={search}
           />
+          <View style={styles.options}>
+            {searchState === SEARCH_ENUMS.SEARCHING && (
+              <View>
+                <ActivityIndicator size="small" color="#00000" />
+              </View>
+            )}
+            {!!searchValue && (
+              <TouchableOpacity onPress={handleBackdrop}>
+                <MaterialIcons name="clear" size={24} color="black" />
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
         <Results />
       </View>
-      {!!searchValue && <View style={styles.overlay}></View>}
+      {!!searchValue && (
+        <View style={styles.overlay}>
+          <TouchableOpacity
+            style={styles.overlayTouchable}
+            onPress={handleBackdrop}
+          ></TouchableOpacity>
+        </View>
+      )}
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  overlayTouchable: {
+    flex: 1,
+  },
+
+  options: {
+    position: "absolute",
+    top: 15,
+    right: 15,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+
   overlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: "rgba(0,0,0, .4)",

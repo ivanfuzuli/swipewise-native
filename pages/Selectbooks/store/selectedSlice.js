@@ -35,6 +35,17 @@ const counterSlice = createSlice({
     setSearchValue: (state, action) => {
       state.searchValue = action.payload;
     },
+
+    addBook: (state, action) => {
+      state.searchValue = "";
+      state.selectedBooks.push(action.payload);
+    },
+
+    removeByIndex: (state, action) => {
+      state.selectedBooks = state.selectedBooks.filter(
+        (_, index) => index !== action.payload
+      );
+    },
   },
 });
 
@@ -42,6 +53,8 @@ export const {
   setSearchState,
   booksReceived,
   setSearchValue,
+  addBook,
+  removeByIndex,
 } = counterSlice.actions;
 
 // Define a thunk that dispatches those action creators

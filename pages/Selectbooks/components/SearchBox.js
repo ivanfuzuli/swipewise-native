@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import {
   searchBooks,
   setSearchValue,
@@ -21,42 +21,53 @@ const SearchBox = () => {
   const dispatch = useDispatch();
   const searchValue = useSelector((state) => state.selected.searchValue);
   const searchState = useSelector((state) => state.selected.bookSearchState);
+  const selectedBooks = useSelector((state) => state.selected.selectedBooks);
 
+  const inputRef = useRef(null);
+  const isActive = selectedBooks.length < 3;
   const search = (value) => {
     dispatch(searchBooks(value));
   };
 
   const handleBackdrop = () => {
+    blurSearchInput();
     dispatch(setSearchValue(""));
+  };
+
+  const blurSearchInput = () => {
+    inputRef.current.blur();
   };
 
   return (
     <>
-      <View style={styles.searchContainer}>
-        <View style={styles.searchView}>
-          <TextInput
-            placeholder="Search and Select Books"
-            style={styles.searchInput}
-            autoCapitalize="none"
-            autoCompleteType="off"
-            value={searchValue}
-            onChangeText={search}
-          />
-          <View style={styles.options}>
-            {searchState === SEARCH_ENUMS.SEARCHING && (
-              <View>
-                <ActivityIndicator size="small" color="#00000" />
-              </View>
-            )}
-            {!!searchValue && (
-              <TouchableOpacity onPress={handleBackdrop}>
-                <MaterialIcons name="clear" size={24} color="black" />
-              </TouchableOpacity>
-            )}
+      {isActive && (
+        <View style={styles.searchContainer}>
+          <View style={styles.searchView}>
+            <TextInput
+              placeholder="Search and Select Books"
+              style={styles.searchInput}
+              autoCapitalize="none"
+              autoCompleteType="off"
+              value={searchValue}
+              onChangeText={search}
+              ref={inputRef}
+            />
+            <View style={styles.options}>
+              {searchState === SEARCH_ENUMS.SEARCHING && (
+                <View>
+                  <ActivityIndicator size="small" color="#00000" />
+                </View>
+              )}
+              {!!searchValue && (
+                <TouchableOpacity onPress={handleBackdrop}>
+                  <MaterialIcons name="clear" size={24} color="black" />
+                </TouchableOpacity>
+              )}
+            </View>
           </View>
+          <Results blurSearchInput={blurSearchInput} />
         </View>
-        <Results />
-      </View>
+      )}
       {!!searchValue && (
         <View style={styles.overlay}>
           <TouchableOpacity

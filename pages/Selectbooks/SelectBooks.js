@@ -1,25 +1,28 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { StyleSheet } from "react-native";
 
 import { useDispatch } from "react-redux";
 
 import { Container, View, Text, Button } from "native-base";
 
+import { useSelector } from "react-redux";
+
 import SearchBox from "./components/SearchBox";
 import Selected from "./components/Selected";
 
 const BookSelect = () => {
+  const selectedBooks = useSelector((state) => state.selected.selectedBooks);
+  const isDisabled = selectedBooks.length < 3;
+
   return (
     <Container>
       <View style={styles.container}>
         <View style={styles.searchPlaceholder}></View>
         <SearchBox />
-        <View>
-          <Selected />
-        </View>
+        <Selected />
         <View style={styles.footer}>
           <View>
-            <Button disabled>
+            <Button disabled={isDisabled}>
               <Text>Next</Text>
             </Button>
           </View>
@@ -30,9 +33,8 @@ const BookSelect = () => {
 };
 
 const styles = StyleSheet.create({
-  card: {},
   searchPlaceholder: {
-    height: 150,
+    height: 100,
   },
   container: {
     flex: 1,

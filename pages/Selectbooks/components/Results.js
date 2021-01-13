@@ -1,21 +1,30 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Text } from "native-base";
-const Results = () => {
+import { addBook } from "../store/selectedSlice";
+const Results = ({ blurSearchInput }) => {
+  const dispatch = useDispatch();
   const books = useSelector((state) => state.selected.books);
   const searchValue = useSelector((state) => state.selected.searchValue);
 
+  const handleAddBook = (book) => {
+    blurSearchInput();
+    dispatch(addBook(book));
+  };
   return (
     <View style={styles.container}>
       {!!searchValue &&
         books.map((item) => {
           return (
-            <View style={styles.itemContainer}>
+            <TouchableOpacity
+              onPress={() => handleAddBook(item)}
+              style={styles.itemContainer}
+            >
               <Text style={styles.heading}>{item.title}</Text>
               <Text style={styles.text}>by {item.author.name}</Text>
-            </View>
+            </TouchableOpacity>
           );
         })}
     </View>

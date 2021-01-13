@@ -1,30 +1,46 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Text } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useSelector } from "react-redux";
 
+import { useDispatch, useSelector } from "react-redux";
+import { removeByIndex } from "../store/selectedSlice";
 const Selected = () => {
+  const dispatch = useDispatch();
   const selectedBooks = useSelector((state) => state.selected.selectedBooks);
+
+  const handleRemove = (index) => {
+    dispatch(removeByIndex(index));
+  };
 
   return (
     <View>
-      <Text style={styles.title}>
-        Please search and select most favourite three books.
-      </Text>
+      {selectedBooks.length < 1 && (
+        <Text style={styles.title}>
+          Please search and select most favourite three books.
+        </Text>
+      )}
+      {selectedBooks.length > 0 && (
+        <View style={styles.info}>
+          <Text>{selectedBooks.length}/3</Text>
+        </View>
+      )}
       {selectedBooks.length > 0 &&
         selectedBooks.map((book, index) => {
           return (
             <View style={styles.box}>
               <View style={styles.number}>
-                <Text>{index + 1}</Text>
+                <Text style={styles.numberText}>{index + 1}</Text>
               </View>
-              <Text>
-                {book.title} by {book.author.name}
-              </Text>
-              <View>
+              <View style={styles.text}>
+                <Text>
+                  {book.title} by {book.author.name}
+                </Text>
+              </View>
+              <TouchableOpacity onPress={() => handleRemove(index)}>
                 <MaterialIcons name="clear" size={36} color="red" />
-              </View>
+              </TouchableOpacity>
             </View>
           );
         })}
@@ -38,14 +54,24 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: "bold",
   },
+
+  info: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    marginRight: 10,
+    marginBottom: 5,
+  },
+
   number: {
     backgroundColor: "#f0f2f5",
-    fontWeight: "bold",
     padding: 15,
     marginRight: 10,
     borderRadius: 50,
   },
 
+  numberText: {
+    fontWeight: "bold",
+  },
   box: {
     flexDirection: "row",
     alignItems: "center",
@@ -56,6 +82,10 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     borderBottomWidth: 1,
     borderBottomColor: "#d1d1d1",
+  },
+
+  text: {
+    flex: 1,
   },
 });
 

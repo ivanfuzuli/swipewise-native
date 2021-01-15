@@ -4,7 +4,7 @@ import { View, Text } from "native-base";
 import { Video } from "expo-av";
 const { width } = Dimensions.get("window");
 
-const Empty = ({ item }) => {
+const Empty = () => {
   const [seconds, setSecounds] = useState(24 * 60 * 60 * 60 - 1);
   const time = new Date(seconds * 1000).toISOString().substr(11, 8);
   useEffect(() => {
@@ -29,7 +29,7 @@ const Empty = ({ item }) => {
         resizeMode="cover"
         shouldPlay
         isLooping
-        style={{ width: width / 1.1, height: width / 1.1 }}
+        style={{ width: width / 1.5, height: width / 1.5 }}
       />
       <Text style={styles.time}>{time}</Text>
       <Text> remaining to new quotes</Text>
@@ -40,10 +40,10 @@ const Empty = ({ item }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexGrow: 1,
     backgroundColor: "white",
     padding: 20,
     alignItems: "center",
-    flexGrow: 2,
     width: width,
     marginLeft: 16,
     borderRadius: 50,

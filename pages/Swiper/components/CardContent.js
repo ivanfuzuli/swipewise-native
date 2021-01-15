@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 import { Card, CardItem, Text, View } from "native-base";
 import { ScrollView } from "react-native-gesture-handler";
 
-const CardComponent = ({ profile }) => {
+const CardComponent = ({ quote }) => {
   return (
     <View style={{ flex: 1, elevation: 0 }}>
       <Card style={styles.card}>
@@ -15,13 +15,13 @@ const CardComponent = ({ profile }) => {
                 fontSize: 18,
               }}
             >
-              {profile.desc}
+              {quote.desc}
             </Text>
           </ScrollView>
         </CardItem>
         <CardItem footer>
           <Text>
-            — {profile.author}, {profile.book}
+            — {quote.author}, {quote.book}
           </Text>
         </CardItem>
       </Card>

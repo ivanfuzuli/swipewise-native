@@ -1,6 +1,5 @@
 import React from "react";
 import { View, StyleSheet, SafeAreaView, Dimensions } from "react-native";
-import { Feather as Icon } from "@expo/vector-icons";
 import Animated from "react-native-reanimated";
 
 import Footer from "./Footer";
@@ -8,7 +7,7 @@ import Empty from "./Empty";
 
 import Interactable from "./Interactable";
 import Card from "./Card";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import Header from "./Header";
 
 const { Value, interpolate, concat } = Animated;
 const { width, height } = Dimensions.get("window");
@@ -19,7 +18,7 @@ const h = w * φ;
 const α = Math.PI / 12;
 const A = width * Math.cos(α) + height * Math.sin(α);
 
-export default class Profiles extends React.PureComponent {
+export default class Quotes extends React.PureComponent {
   state = {
     index: 0,
   };
@@ -42,8 +41,8 @@ export default class Profiles extends React.PureComponent {
     const x = this.x;
     const y = this.y;
 
-    const profile = quotes[index];
-    const nextProfile = index < quotes.length ? quotes[index + 1] : null;
+    const quote = quotes[index];
+    const nextQuote = index < quotes.length ? quotes[index + 1] : null;
     const isEmpty = quotes.length === index;
 
     const rotateZ = concat(
@@ -68,19 +67,14 @@ export default class Profiles extends React.PureComponent {
       ...StyleSheet.absoluteFillObject,
       transform: [{ translateX }, { translateY }, { rotateZ }],
     };
+
     return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("Settings")}
-          >
-            <Icon name="user" size={32} color="gray" />
-          </TouchableOpacity>
-        </View>
+        <Header quote={quote} isEmpty={isEmpty} />
         <View style={styles.cards}>
-          {nextProfile ? (
+          {nextQuote ? (
             <View style={styles.placeholder}>
-              <Card profile={nextProfile} />
+              <Card quote={nextQuote} />
             </View>
           ) : (
             <Empty />
@@ -93,7 +87,7 @@ export default class Profiles extends React.PureComponent {
               {...{ onSnap, x, y }}
             >
               <Animated.View {...{ style }}>
-                <Card {...{ profile, likeOpacity, nopeOpacity }} />
+                <Card {...{ quote, likeOpacity, nopeOpacity }} />
               </Animated.View>
             </Interactable>
           )}
@@ -114,11 +108,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fbfaff",
     justifyContent: "space-around",
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    padding: 16,
   },
   cards: {
     flex: 1,

@@ -16,6 +16,10 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import SelectBooks from "./pages/Selectbooks";
 
+import Settings from "./pages/Settings";
+import ChangeEmail from "./pages/Settings/ChangeEmail";
+import ChangePassword from "./pages/Settings/ChangePassword";
+
 import { Provider } from "react-redux";
 import store from "./store";
 
@@ -71,7 +75,11 @@ export default function App() {
             />
             <Stack.Screen name="Sign up" component={Signup} />
             <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="SelectBooks" component={SelectBooks} />
+            <Stack.Screen name="Select Books" component={SelectBooks} />
+
+            <Stack.Screen name="Settings" component={Settings} />
+            <Stack.Screen name="Change Email" component={ChangeEmail} />
+            <Stack.Screen name="Change Password" component={ChangePassword} />
           </Stack.Navigator>
         </NavigationContainer>
       </Root>

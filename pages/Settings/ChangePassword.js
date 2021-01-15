@@ -4,7 +4,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableWithoutFeedback,
-  TouchableOpacity,
 } from "react-native";
 
 import {
@@ -19,23 +18,24 @@ import {
   Toast,
 } from "native-base";
 import { Feather } from "@expo/vector-icons";
-const Signup = ({ navigation }) => {
-  const passwordRef = useRef(null);
-  const usernameRef = useRef(null);
-
-  const [secureTextEntry, setSecureTextEntry] = useState(true);
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
+const ChangePassword = () => {
+  const passwordInput = useRef(null);
+  const oldPasswordInput = useRef(null);
 
   const [password, setPassword] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const [oldPasswordSecureTextEntry, setOldPasswordSecureTextEntry] = useState(
+    true
+  );
+
   const [errors, setErrors] = useState({});
   const [isDirty, setDirty] = useState(false);
 
   const validate = (obj) => {
     const values = {
-      email,
       password,
-      username,
+      oldPassword,
       ...obj,
     };
 
@@ -49,17 +49,6 @@ const Signup = ({ navigation }) => {
       localErrors.email = "Invalid email address.";
     } else {
       localErrors.email = null;
-    }
-
-    if (!values.username) {
-      localErrors.username = "Username is required!";
-    } else if (!/^[a-zA-Z0-9]+$/i.test(values.username)) {
-      localErrors.username =
-        "Username should only contains alphanumeric characters..";
-    } else if (values.username.length < 3) {
-      localErrors.username = "Username should be least 3 characters";
-    } else {
-      localErrors.username = null;
     }
 
     if (!values.password) {
@@ -76,19 +65,18 @@ const Signup = ({ navigation }) => {
     return Object.values(errors).every((item) => !!item === false);
   };
 
-  const handleEmailChange = (text) => {
-    setEmail(text);
+  const handleOldPasswordChange = (text) => {
+    setOldPassword(text);
     validate({ email: text });
-  };
-
-  const handleUsernameChange = (text) => {
-    setUsername(text);
-    validate({ username: text });
   };
 
   const handlePasswordChange = (text) => {
     setPassword(text);
     validate({ password: text });
+  };
+
+  const toggleOldPasswordSecureTextEntry = () => {
+    setOldPasswordSecureTextEntry((entry) => !entry);
   };
 
   const toggleSecureTextEntry = () => {
@@ -117,56 +105,53 @@ const Signup = ({ navigation }) => {
           <View>
             <Form style={styles.form}>
               <View>
-                <Text style={styles.heading}>Sign Up</Text>
+                <Text style={styles.heading}>Change Password</Text>
               </View>
-              <Item floatingLabel>
-                <Label>E-mail</Label>
-                <Input
-                  onSubmitEditing={() => {
-                    usernameRef.current._root.focus();
-                  }}
-                  keyboardType="email-address"
-                  returnKeyType={"next"}
-                  onChangeText={handleEmailChange}
-                  value={email}
-                  autoCapitalize="none"
-                />
-              </Item>
-              {isDirty && errors.email && (
-                <Text style={styles.error}>{errors.email}</Text>
+              <View style={styles.lastItem}>
+                <Item floatingLabel>
+                  <Label>Old Password</Label>
+                  <Input
+                    onSubmitEditing={() => {
+                      passwordInput.current._root.focus();
+                    }}
+                    autoCapitalize="none"
+                    returnKeyType={"next"}
+                    onChangeText={handleOldPasswordChange}
+                    value={oldPassword}
+                    secureTextEntry={oldPasswordSecureTextEntry}
+                  />
+                </Item>
+
+                <View style={styles.eye}>
+                  <TouchableWithoutFeedback onPress={toggleSecureTextEntry}>
+                    <View>
+                      {!secureTextEntry && (
+                        <Feather name="eye" size={24} color="black" />
+                      )}
+                      {secureTextEntry && (
+                        <Feather name="eye-off" size={24} color="black" />
+                      )}
+                    </View>
+                  </TouchableWithoutFeedback>
+                </View>
+              </View>
+              {isDirty && errors.password && (
+                <Text style={styles.error}>{errors.password}</Text>
               )}
-              <Item floatingLabel>
-                <Label>Username</Label>
-                <Input
-                  onSubmitEditing={() => {
-                    passwordRef.current._root.focus();
-                  }}
-                  getRef={(input) => {
-                    usernameRef.current = input;
-                  }}
-                  keyboardType="email-address"
-                  returnKeyType={"next"}
-                  onChangeText={handleUsernameChange}
-                  value={username}
-                  autoCapitalize="none"
-                />
-              </Item>
-              {isDirty && errors.username && (
-                <Text style={styles.error}>{errors.username}</Text>
-              )}
+
               <View style={styles.lastItem}>
                 <Item floatingLabel>
                   <Label>Password</Label>
                   <Input
                     onSubmitEditing={() => {
-                      passwordRef.current._root.focus();
+                      passwordInput.current._root.focus();
                     }}
                     autoCapitalize="none"
                     returnKeyType={"next"}
                     onChangeText={handlePasswordChange}
                     value={password}
                     getRef={(input) => {
-                      passwordRef.current = input;
+                      passwordInput.current = input;
                     }}
                     secureTextEntry={secureTextEntry}
                   />
@@ -190,22 +175,8 @@ const Signup = ({ navigation }) => {
               )}
               <View style={styles.buttons}>
                 <Button onPress={handleSubmit} bordered full rounded primary>
-                  <Text>Sign up</Text>
+                  <Text>Change Password</Text>
                 </Button>
-              </View>
-              <View style={styles.terms}>
-                <Text style={styles.termsText}>
-                  Click "Sign up" above to accept Swipewise's
-                </Text>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("Select Books")}
-                >
-                  <Text style={styles.termsLink}> Terms of Service </Text>
-                </TouchableOpacity>
-                <Text style={styles.termsText}>and</Text>
-                <TouchableOpacity onPress={() => alert("privacy")}>
-                  <Text style={styles.termsLink}> Privacy Policy.</Text>
-                </TouchableOpacity>
               </View>
             </Form>
           </View>
@@ -253,21 +224,10 @@ const styles = StyleSheet.create({
     top: 15,
   },
 
-  terms: {
-    color: "#dddddd",
+  forgot: {
     flexDirection: "row",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    marginTop: 15,
-  },
-
-  termsText: {
-    color: "rgb(128, 128, 128)",
-  },
-
-  termsLink: {
-    color: "#4991f7",
+    justifyContent: "flex-end",
   },
 });
 
-export default Signup;
+export default ChangePassword;

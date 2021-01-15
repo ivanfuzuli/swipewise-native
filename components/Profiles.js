@@ -7,6 +7,7 @@ import Footer from "./Footer";
 
 import Interactable from "./Interactable";
 import Card from "./Card";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const { Value, interpolate, concat } = Animated;
 const { width, height } = Dimensions.get("window");
@@ -73,8 +74,11 @@ export default class Profiles extends React.PureComponent {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-          <Icon name="user" size={32} color="gray" />
-          <Icon name="message-circle" size={32} color="gray" />
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("Settings")}
+          >
+            <Icon name="menu" size={32} color="gray" />
+          </TouchableOpacity>
         </View>
         <View style={styles.cards}>
           <View style={styles.placeholder}>
@@ -109,7 +113,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   header: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 16,

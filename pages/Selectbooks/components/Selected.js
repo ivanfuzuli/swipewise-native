@@ -2,7 +2,7 @@ import React from "react";
 
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Text } from "native-base";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 
 import { useDispatch, useSelector } from "react-redux";
 import { removeByIndex } from "../store/selectedSlice";
@@ -39,7 +39,7 @@ const Selected = () => {
                 </Text>
               </View>
               <TouchableOpacity onPress={() => handleRemove(index)}>
-                <MaterialIcons name="clear" size={36} color="red" />
+                <AntDesign name="delete" size={24} color="red" />
               </TouchableOpacity>
             </View>
           );

@@ -93,6 +93,9 @@ const Login = () => {
       <Container>
         <View style={styles.Container}>
           <View>
+            <Text style={styles.heading}>Login</Text>
+          </View>
+          <View>
             <Form style={styles.form}>
               <Item floatingLabel>
                 <Label>E-mail</Label>
@@ -192,8 +195,8 @@ const styles = StyleSheet.create({
   },
 
   heading: {
-    color: "#fe4b00",
-    fontSize: 42,
+    color: "#1582fe",
+    fontSize: 32,
     fontWeight: "bold",
     textAlign: "center",
   },

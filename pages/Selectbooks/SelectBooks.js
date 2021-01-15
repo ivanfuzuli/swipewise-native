@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 
 import { useDispatch } from "react-redux";
 
@@ -15,20 +15,22 @@ const BookSelect = () => {
   const isDisabled = selectedBooks.length < 3;
 
   return (
-    <Container>
-      <View style={styles.container}>
-        <View style={styles.searchPlaceholder}></View>
-        <SearchBox />
-        <Selected />
-        <View style={styles.footer}>
-          <View>
-            <Button disabled={isDisabled}>
-              <Text>Next</Text>
-            </Button>
+    <SafeAreaView style={{ flex: 1 }}>
+      <Container>
+        <View style={styles.container}>
+          <View style={styles.searchPlaceholder}></View>
+          <SearchBox />
+          <Selected />
+          <View style={styles.footer}>
+            <View>
+              <Button disabled={isDisabled}>
+                <Text>Next</Text>
+              </Button>
+            </View>
           </View>
         </View>
-      </View>
-    </Container>
+      </Container>
+    </SafeAreaView>
   );
 };
 
@@ -44,7 +46,7 @@ const styles = StyleSheet.create({
   },
 
   footer: {
-    marginBottom: 30,
+    marginBottom: 50,
     alignItems: "flex-end",
   },
 });

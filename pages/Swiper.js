@@ -47,10 +47,10 @@ const profiles = [
   },
 ];
 
-export default function App() {
+export default function App({ navigation }) {
   return (
     <Container>
-      <Profiles {...{ profiles }} />
+      <Profiles {...{ navigation, profiles }} />
     </Container>
   );
 }

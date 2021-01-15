@@ -4,6 +4,7 @@ import { Feather as Icon } from "@expo/vector-icons";
 import Animated from "react-native-reanimated";
 
 import Footer from "./Footer";
+import Empty from "./Empty";
 
 import Interactable from "./Interactable";
 import Card from "./Card";
@@ -30,12 +31,6 @@ export default class Profiles extends React.PureComponent {
     const { index } = this.state;
     this.x.setValue(0);
     if (x !== 0) {
-      if (index + 1 === this.props.profiles.length) {
-        this.setState({ index: 0 });
-
-        return;
-      }
-
       this.setState({ index: index + 1 });
     }
   };
@@ -48,7 +43,7 @@ export default class Profiles extends React.PureComponent {
     const y = this.y;
 
     const profile = quotes[index];
-    const nextProfile = quotes[index + 1] || profiles[0];
+    const nextProfile = index < quotes.length ? quotes[index + 1] : null;
     const rotateZ = concat(
       interpolate(x, {
         inputRange: [-1 * deltaX, deltaX],
@@ -80,22 +75,30 @@ export default class Profiles extends React.PureComponent {
             <Icon name="user" size={32} color="gray" />
           </TouchableOpacity>
         </View>
-        <View style={styles.cards}>
-          <View style={styles.placeholder}>
-            <Card profile={nextProfile} />
+        <>
+          <View style={styles.cards}>
+            {nextProfile ? (
+              <View style={styles.placeholder}>
+                <Card profile={nextProfile} />
+              </View>
+            ) : (
+              <Empty />
+            )}
+            {nextProfile && (
+              <Interactable
+                key={index}
+                snapPoints={[{ x: -1 * A }, { x: 0 }, { x: A }]}
+                style={{ ...StyleSheet.absoluteFill, zIndex: 2 }}
+                {...{ onSnap, x, y }}
+              >
+                <Animated.View {...{ style }}>
+                  <Card {...{ profile, likeOpacity, nopeOpacity }} />
+                </Animated.View>
+              </Interactable>
+            )}
           </View>
-          <Interactable
-            key={index}
-            snapPoints={[{ x: -1 * A }, { x: 0 }, { x: A }]}
-            style={{ ...StyleSheet.absoluteFill, zIndex: 2 }}
-            {...{ onSnap, x, y }}
-          >
-            <Animated.View {...{ style }}>
-              <Card {...{ profile, likeOpacity, nopeOpacity }} />
-            </Animated.View>
-          </Interactable>
-        </View>
-        <Footer onChange={onSnap} x={x} y={y} />
+          {nextProfile && <Footer onChange={onSnap} x={x} y={y} />}
+        </>
       </SafeAreaView>
     );
   }

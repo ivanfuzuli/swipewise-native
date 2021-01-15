@@ -9,7 +9,7 @@ import {
 import { Feather as Icon } from "@expo/vector-icons";
 import LottieView from "lottie-react-native";
 import Animated from "react-native-reanimated";
-import runButtonTiming from "../animations/runButtonTiming";
+import runButtonTiming from "../../../animations/runButtonTiming";
 
 const { width } = Dimensions.get("window");
 
@@ -63,7 +63,7 @@ const Footer = ({ onChange, x }) => {
                 width: 64,
                 height: 64,
               }}
-              source={require("../assets/like.json")}
+              source={require("../../../assets/like.json")}
             />
           </View>
         </Pressable>
@@ -73,8 +73,6 @@ const Footer = ({ onChange, x }) => {
           transform: [{ translateX: transX }],
           width: 10,
           height: 10,
-          borderWidth: 1,
-          borderColor: "red",
         }}
       ></Animated.View>
     </>

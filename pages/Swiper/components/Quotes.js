@@ -44,6 +44,8 @@ export default class Profiles extends React.PureComponent {
 
     const profile = quotes[index];
     const nextProfile = index < quotes.length ? quotes[index + 1] : null;
+    const isEmpty = quotes.length === index;
+
     const rotateZ = concat(
       interpolate(x, {
         inputRange: [-1 * deltaX, deltaX],
@@ -84,7 +86,7 @@ export default class Profiles extends React.PureComponent {
             ) : (
               <Empty />
             )}
-            {nextProfile && (
+            {!isEmpty && (
               <Interactable
                 key={index}
                 snapPoints={[{ x: -1 * A }, { x: 0 }, { x: A }]}
@@ -97,7 +99,7 @@ export default class Profiles extends React.PureComponent {
               </Interactable>
             )}
           </View>
-          {nextProfile && <Footer onChange={onSnap} x={x} y={y} />}
+          {!isEmpty && <Footer onChange={onSnap} x={x} y={y} />}
         </>
       </SafeAreaView>
     );

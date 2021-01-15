@@ -1,28 +1,38 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Dimensions } from "react-native";
 import { View, Text } from "native-base";
-import LottieView from "lottie-react-native";
-
-const { width, height } = Dimensions.get("window");
+import { Video } from "expo-av";
+const { width } = Dimensions.get("window");
 
 const Empty = ({ item }) => {
-  const likeRef = useRef(null);
-
+  const [seconds, setSecounds] = useState(24 * 60 * 60 * 60 - 1);
+  const time = new Date(seconds * 1000).toISOString().substr(11, 8);
   useEffect(() => {
-    likeRef.current.play();
+    const interval = setInterval(() => {
+      setSecounds((seconds) => {
+        return seconds - 1;
+      });
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
   return (
     <View style={styles.container}>
-      <LottieView
-        ref={likeRef}
-        style={{
-          width: 54,
-          height: height / 2,
-        }}
-        loop
-        source={require("../../../assets/yoga.json")}
+      <Text style={styles.heading}>Rest Time...</Text>
+      <Video
+        source={require("../../../assets/yoga.mp4")}
+        rate={1.0}
+        volume={1.0}
+        isMuted={true}
+        resizeMode="cover"
+        shouldPlay
+        isLooping
+        style={{ width: width / 1.1, height: width / 1.1 }}
       />
-      <Text>Rest time..</Text>
+      <Text>{time}</Text>
+      <Text> remaining to new quotes</Text>
     </View>
   );
 };
@@ -30,12 +40,18 @@ const Empty = ({ item }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white",
+    padding: 20,
     alignItems: "center",
     flexGrow: 2,
     width: width,
-    height: height - 120,
     marginLeft: 16,
+    borderRadius: 50,
     alignItems: "center",
+  },
+
+  heading: {
+    fontWeight: "bold",
   },
 });
 

@@ -10,6 +10,7 @@ import { Feather as Icon } from "@expo/vector-icons";
 import LottieView from "lottie-react-native";
 import Animated from "react-native-reanimated";
 import runButtonTiming from "../../../animations/runButtonTiming";
+import { useEffect } from "react/cjs/react.development";
 
 const { width } = Dimensions.get("window");
 
@@ -17,6 +18,8 @@ const { Clock, Value } = Animated;
 
 const Footer = ({ onChange, x }) => {
   const likeRef = useRef(null);
+  const timeout = useRef(null);
+
   const fadeAnim = useRef(new RNAnimated.Value(1)).current; // Initial value for opacity: 0
 
   const clock = useMemo(() => new Clock(), []);
@@ -31,8 +34,10 @@ const Footer = ({ onChange, x }) => {
   const like = () => {
     likeRef.current.play();
     clicked.setValue(1);
-    setTimeout(() => {
-      likeRef.current.reset();
+
+    clearTimeout(timeout.current);
+    timeout.current = setTimeout(() => {
+      likeRef.current && likeRef.current.reset();
     }, 600);
   };
 
@@ -45,6 +50,11 @@ const Footer = ({ onChange, x }) => {
     clicked.setValue(-1);
   };
 
+  useEffect(() => {
+    return () => {
+      clearTimeout(timeout.current);
+    };
+  }, []);
   return (
     <>
       <Animated.View style={{ ...styles.footer }}>

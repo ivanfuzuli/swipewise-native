@@ -1,9 +1,9 @@
 import React from "react";
 import { Container } from "native-base";
 
-import Profiles from "../components/Profiles";
+import Quotes from "./components/Quotes";
 
-const profiles = [
+const quotes = [
   {
     id: "1",
     author: "Jack London",
@@ -50,7 +50,7 @@ const profiles = [
 export default function App({ navigation }) {
   return (
     <Container>
-      <Profiles {...{ navigation, profiles }} />
+      <Quotes {...{ navigation, quotes }} />
     </Container>
   );
 }

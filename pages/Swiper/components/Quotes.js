@@ -42,13 +42,13 @@ export default class Profiles extends React.PureComponent {
 
   render() {
     const { onSnap } = this;
-    const { profiles } = this.props;
+    const { quotes } = this.props;
     const { index } = this.state;
     const x = this.x;
     const y = this.y;
 
-    const profile = profiles[index];
-    const nextProfile = profiles[index + 1] || profiles[0];
+    const profile = quotes[index];
+    const nextProfile = quotes[index + 1] || profiles[0];
     const rotateZ = concat(
       interpolate(x, {
         inputRange: [-1 * deltaX, deltaX],
@@ -77,7 +77,7 @@ export default class Profiles extends React.PureComponent {
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate("Settings")}
           >
-            <Icon name="menu" size={32} color="gray" />
+            <Icon name="user" size={32} color="gray" />
           </TouchableOpacity>
         </View>
         <View style={styles.cards}>
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     padding: 16,
   },
   cards: {

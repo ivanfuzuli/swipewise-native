@@ -42,6 +42,8 @@ const counterSlice = createSlice({
     },
 
     removeByIndex: (state, action) => {
+      state.books = [];
+
       state.selectedBooks = state.selectedBooks.filter(
         (_, index) => index !== action.payload
       );

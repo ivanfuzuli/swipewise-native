@@ -48,15 +48,15 @@ const Footer = ({ onChange, x }) => {
   return (
     <>
       <Animated.View style={{ ...styles.footer }}>
-        <View style={{ ...styles.circle }}>
-          <RNAnimated.View style={{ transform: [{ scale: fadeAnim }] }}>
-            <Pressable onPress={dislike}>
+        <Pressable onPress={dislike}>
+          <View style={{ ...styles.circle }}>
+            <RNAnimated.View style={{ transform: [{ scale: fadeAnim }] }}>
               <Icon name="x" size={32} color="#ec5288" />
-            </Pressable>
-          </RNAnimated.View>
-        </View>
-        <View style={styles.circle}>
-          <Pressable onPress={like}>
+            </RNAnimated.View>
+          </View>
+        </Pressable>
+        <Pressable onPress={like}>
+          <View style={styles.circle}>
             <LottieView
               ref={likeRef}
               style={{
@@ -65,8 +65,8 @@ const Footer = ({ onChange, x }) => {
               }}
               source={require("../assets/like.json")}
             />
-          </Pressable>
-        </View>
+          </View>
+        </Pressable>
       </Animated.View>
       <Animated.View
         style={{

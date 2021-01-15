@@ -1,29 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { StyleSheet, Dimensions } from "react-native";
 import { View, Text, Container } from "native-base";
 import { Video } from "expo-av";
 const { width } = Dimensions.get("window");
 
-const Empty = () => {
-  const [seconds, setSecounds] = useState(24 * 60 * 60 * 60 - 1);
-  const time = new Date(seconds * 1000).toISOString().substr(11, 8);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSecounds((seconds) => {
-        return seconds - 1;
-      });
-    }, 1000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+const Loading = () => {
   return (
     <Container>
       <View style={styles.container}>
         <Text style={styles.heading}>Preparing...</Text>
         <Video
           source={require("../../../assets/preparing.mp4")}
+          posterSource={require("../../../assets/preparing-poster.png")}
           rate={1.0}
           volume={1.0}
           isMuted={true}
@@ -57,4 +45,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Empty;
+export default Loading;

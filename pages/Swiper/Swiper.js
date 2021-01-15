@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container } from "native-base";
 
 import Quotes from "./components/Quotes";
 import Loading from "./components/Loading";
 
-const quotes = [
+/*const quotes = [
   {
     id: "1",
     author: "Jack London",
@@ -47,9 +47,30 @@ const quotes = [
     book: "Gelecek Bilim",
   },
 ];
+*/
+
+const quotes = [
+  {
+    id: "1",
+    author: "Jack London",
+    book: "Wild",
+    desc:
+      "We waste time looking for the perfect lover, instead of creating the perfect love.",
+  },
+  {
+    author: "Michelle Facoult",
+    desc: "Normal insan kurgudur.",
+    book: "Deliliğe Övgü",
+  },
+];
 
 export default function App({ navigation }) {
-  const isLoading = true;
+  const [isLoading, setLoading] = useState(true);
+
+  setTimeout(() => {
+    setLoading(false);
+  }, 3000);
+
   return (
     <Container>
       {isLoading && <Loading />}

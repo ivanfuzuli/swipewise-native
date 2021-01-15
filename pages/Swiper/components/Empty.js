@@ -31,7 +31,7 @@ const Empty = ({ item }) => {
         isLooping
         style={{ width: width / 1.1, height: width / 1.1 }}
       />
-      <Text>{time}</Text>
+      <Text style={styles.time}>{time}</Text>
       <Text> remaining to new quotes</Text>
     </View>
   );
@@ -52,6 +52,11 @@ const styles = StyleSheet.create({
 
   heading: {
     fontWeight: "bold",
+  },
+
+  time: {
+    fontWeight: "bold",
+    fontSize: 40,
   },
 });
 

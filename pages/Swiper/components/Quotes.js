@@ -77,30 +77,28 @@ export default class Profiles extends React.PureComponent {
             <Icon name="user" size={32} color="gray" />
           </TouchableOpacity>
         </View>
-        <>
-          <View style={styles.cards}>
-            {nextProfile ? (
-              <View style={styles.placeholder}>
-                <Card profile={nextProfile} />
-              </View>
-            ) : (
-              <Empty />
-            )}
-            {!isEmpty && (
-              <Interactable
-                key={index}
-                snapPoints={[{ x: -1 * A }, { x: 0 }, { x: A }]}
-                style={{ ...StyleSheet.absoluteFill, zIndex: 2 }}
-                {...{ onSnap, x, y }}
-              >
-                <Animated.View {...{ style }}>
-                  <Card {...{ profile, likeOpacity, nopeOpacity }} />
-                </Animated.View>
-              </Interactable>
-            )}
-          </View>
-          {!isEmpty && <Footer onChange={onSnap} x={x} y={y} />}
-        </>
+        <View style={styles.cards}>
+          {nextProfile ? (
+            <View style={styles.placeholder}>
+              <Card profile={nextProfile} />
+            </View>
+          ) : (
+            <Empty />
+          )}
+          {!isEmpty && (
+            <Interactable
+              key={index}
+              snapPoints={[{ x: -1 * A }, { x: 0 }, { x: A }]}
+              style={{ ...StyleSheet.absoluteFill, zIndex: 2 }}
+              {...{ onSnap, x, y }}
+            >
+              <Animated.View {...{ style }}>
+                <Card {...{ profile, likeOpacity, nopeOpacity }} />
+              </Animated.View>
+            </Interactable>
+          )}
+        </View>
+        {!isEmpty && <Footer onChange={onSnap} x={x} y={y} />}
       </SafeAreaView>
     );
   }

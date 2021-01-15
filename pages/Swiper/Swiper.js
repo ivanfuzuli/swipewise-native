@@ -2,6 +2,7 @@ import React from "react";
 import { Container } from "native-base";
 
 import Quotes from "./components/Quotes";
+import Loading from "./components/Loading";
 
 const quotes = [
   {
@@ -48,9 +49,11 @@ const quotes = [
 ];
 
 export default function App({ navigation }) {
+  const isLoading = true;
   return (
     <Container>
-      <Quotes {...{ navigation, quotes }} />
+      {isLoading && <Loading />}
+      {!isLoading && <Quotes {...{ navigation, quotes }} />}
     </Container>
   );
 }

@@ -8,17 +8,8 @@ import {
 } from "../../../helpers/redash";
 import Animated from "react-native-reanimated";
 
-const {
-  Value,
-  event,
-  block,
-  set,
-  cond,
-  eq,
-  Clock,
-  call,
-  clockRunning,
-} = Animated;
+const { Value, debug, event, block, set, cond, eq, Clock, call, clockRunning } =
+  Animated;
 
 export default ({ style, x, y, snapPoints, onSnap, children }) => {
   const ref = useRef(null);
@@ -40,6 +31,7 @@ export default ({ style, x, y, snapPoints, onSnap, children }) => {
     },
   ]);
   const points = snapPoints.map((point) => point.x);
+  console.log(State.END);
   return (
     <PanGestureHandler
       onHandlerStateChange={onGestureEvent}
@@ -53,8 +45,8 @@ export default ({ style, x, y, snapPoints, onSnap, children }) => {
               cond(eq(state, State.END), [
                 set(snapPointX, snapPoint(translationX, velocityX, points)),
                 set(spring, runSpring(clock, 0, 1)),
-
                 cond(eq(clockRunning(clock), 0), [
+                  debug("debug", snapPointX),
                   call([snapPointX], ([x]) => onSnap({ nativeEvent: { x } })),
                 ]),
               ]),

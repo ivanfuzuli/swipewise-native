@@ -9,7 +9,7 @@ import Interactable from "./Interactable";
 import Card from "./Card";
 import Header from "./Header";
 
-const { Value, interpolate, concat } = Animated;
+const { Value, interpolateNode, concat } = Animated;
 const { width, height } = Dimensions.get("window");
 const φ = (1 + Math.sqrt(5)) / 2;
 const deltaX = width / 2;
@@ -46,18 +46,18 @@ export default class Quotes extends React.PureComponent {
     const isEmpty = quotes.length === index;
 
     const rotateZ = concat(
-      interpolate(x, {
+      interpolateNode(x, {
         inputRange: [-1 * deltaX, deltaX],
         outputRange: [α, -1 * α],
         extrapolate: "clamp",
       }),
       "rad"
     );
-    const likeOpacity = interpolate(x, {
+    const likeOpacity = interpolateNode(x, {
       inputRange: [0, deltaX / 4],
       outputRange: [0, 1],
     });
-    const nopeOpacity = interpolate(x, {
+    const nopeOpacity = interpolateNode(x, {
       inputRange: [(-1 * deltaX) / 4, 0],
       outputRange: [1, 0],
     });

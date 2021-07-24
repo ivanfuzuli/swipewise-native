@@ -7,20 +7,19 @@ import { Container, View, Text, Button } from "native-base";
 
 import { useSelector } from "react-redux";
 
-import SearchBox from "./components/SearchBox";
 import Selected from "./components/Selected";
 
 const BookSelect = () => {
-  const selectedBooks = useSelector((state) => state.selected.selectedBooks);
-  const isDisabled = selectedBooks.length < 3;
+  const selectedTags = useSelector((state) => state.selected.selectedTags);
+  const isDisabled = selectedTags.length < 3;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Container>
         <View style={styles.container}>
-          <View style={styles.searchPlaceholder}></View>
-          <SearchBox />
-          <Selected />
+          <View style={styles.main}>
+            <Selected />
+          </View>
           <View style={styles.footer}>
             <View>
               <Button disabled={isDisabled}>
@@ -35,14 +34,16 @@ const BookSelect = () => {
 };
 
 const styles = StyleSheet.create({
-  searchPlaceholder: {
-    height: 100,
-  },
   container: {
     flex: 1,
     padding: 10,
     backgroundColor: "#f1f1f1",
     justifyContent: "space-between",
+  },
+
+  main: {
+    flexGrow: 1,
+    flexBasis: 0,
   },
 
   footer: {

@@ -84,7 +84,7 @@ var event = Animated.event,
   Node = Animated.Node;
 export { timing, clockRunning, add };
 export var snapPoint = function snapPoint(value, velocity, points) {
-  var point = add(value, multiply(4, velocity));
+  var point = add(value, multiply(1.1, velocity));
   var diffPoint = function diffPoint(p) {
     return abs(sub(point, p));
   };

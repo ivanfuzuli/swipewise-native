@@ -1,4 +1,9 @@
-import Animated, { Easing, eq, or, multiply } from "react-native-reanimated";
+import Animated, {
+  EasingNode,
+  eq,
+  or,
+  multiply,
+} from "react-native-reanimated";
 
 const {
   Value,
@@ -23,7 +28,7 @@ function runButtonTiming(clock, dest, x, clicked, cb) {
   const config = {
     duration: 300,
     toValue: new Value(0),
-    easing: Easing.out(Easing.ease),
+    easing: EasingNode.in(EasingNode.ease),
   };
 
   return block([
@@ -35,7 +40,7 @@ function runButtonTiming(clock, dest, x, clicked, cb) {
           set(config.toValue, multiply(dest, clicked)),
         ],
         [
-          // if the clock isn't running we reset all the animation params and start the clock
+          //   the animation params and start the clock
           set(state.finished, 0),
           set(state.time, 0),
           set(state.position, 0),

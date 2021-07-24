@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React, { useMemo, useEffect, useRef } from "react";
 import {
   Animated as RNAnimated,
   Pressable,
@@ -10,7 +10,6 @@ import { Feather as Icon } from "@expo/vector-icons";
 import LottieView from "lottie-react-native";
 import Animated from "react-native-reanimated";
 import runButtonTiming from "../../../animations/runButtonTiming";
-import { useEffect } from "react/cjs/react.development";
 
 const { width } = Dimensions.get("window");
 

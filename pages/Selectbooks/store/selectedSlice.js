@@ -15,7 +15,7 @@ const initialState = {
   books: [],
   bookSearchState: SEARCH_ENUMS.COMPLETED,
   searchErrorCode: null,
-  selectedBooks: [],
+  selectedTags: [],
   searchValue: "",
 };
 
@@ -38,13 +38,13 @@ const counterSlice = createSlice({
 
     addBook: (state, action) => {
       state.searchValue = "";
-      state.selectedBooks.push(action.payload);
+      state.selectedTags.push(action.payload);
     },
 
     removeByIndex: (state, action) => {
       state.books = [];
 
-      state.selectedBooks = state.selectedBooks.filter(
+      state.selectedTags = state.selectedTags.filter(
         (_, index) => index !== action.payload
       );
     },

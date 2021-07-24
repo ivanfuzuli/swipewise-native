@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import React from "react";
+import React, { useEffect } from "react";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "react-native";
 
@@ -27,7 +27,7 @@ const Stack = createStackNavigator();
 
 export default function App() {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
-  React.useEffect(() => {
+  useEffect(() => {
     async function loadResourcesAndDataAsync() {
       if (isLoadingComplete) return;
       try {

@@ -46,7 +46,6 @@ export default ({ style, x, y, snapPoints, onSnap, children }) => {
                 set(snapPointX, snapPoint(translationX, velocityX, points)),
                 set(spring, runSpring(clock, 0, 1)),
                 cond(eq(clockRunning(clock), 0), [
-                  debug("debug", snapPointX),
                   call([snapPointX], ([x]) => onSnap({ nativeEvent: { x } })),
                 ]),
               ]),

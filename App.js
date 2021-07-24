@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import React, { useEffect } from "react";
-import * as SplashScreen from "expo-splash-screen";
+import AppLoading from "expo-app-loading";
 import { StatusBar } from "react-native";
 
 import * as Font from "expo-font";
@@ -27,32 +27,32 @@ const Stack = createStackNavigator();
 
 export default function App() {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
-  useEffect(() => {
-    async function loadResourcesAndDataAsync() {
-      if (isLoadingComplete) return;
-      try {
-        SplashScreen.preventAutoHideAsync();
-
-        // Load fonts
-        await Font.loadAsync({
-          Roboto: require("native-base/Fonts/Roboto.ttf"),
-          Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
-        });
-      } catch (e) {
-        // We might want to provide this error information to an error reporting service
-        console.warn(e);
-      } finally {
-        setLoadingComplete(true);
-        SplashScreen.hideAsync();
-      }
+  async function loadResourcesAndDataAsync() {
+    if (isLoadingComplete) return;
+    try {
+      // Load fonts
+      await Font.loadAsync({
+        Roboto: require("native-base/Fonts/Roboto.ttf"),
+        Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+      });
+    } catch (e) {
+      // We might want to provide this error information to an error reporting service
+      console.warn(e);
     }
+  }
 
-    loadResourcesAndDataAsync();
-  }, []);
+  const loadingComplete = () => setLoadingComplete(true);
 
   if (!isLoadingComplete) {
-    return null;
+    return (
+      <AppLoading
+        startAsync={loadResourcesAndDataAsync}
+        onFinish={loadingComplete}
+        onError={console.warn}
+      />
+    );
   }
+
   return (
     <Provider store={store}>
       <Root>

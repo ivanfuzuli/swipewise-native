@@ -1,71 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { View, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
-import { Button, Icon, Text } from "native-base";
-import { MaterialIcons, AntDesign } from "@expo/vector-icons";
+import { Text } from "native-base";
+import { AntDesign } from "@expo/vector-icons";
 
 import { useDispatch, useSelector } from "react-redux";
-import { removeByIndex } from "../store/selectedSlice";
+import tags from "./tags.json";
+
+import { addTag, removeTag } from "../store/selectedSlice";
 const Selected = () => {
   const dispatch = useDispatch();
-  const [selectedTags, setSelectedTags] = useState({});
+  const selectedTags = useSelector((state) => state.selected.selectedTags);
 
   const handleToggle = (id) => {
-    let status = false;
-    if (!selectedTags[id]) {
-      status = true;
+    if (!selectedTags.includes(id)) {
+      dispatch(addTag(id));
+    } else {
+      dispatch(removeTag(id));
     }
-
-    setSelectedTags((items) => ({ ...items, [id]: status }));
-    console.log("selcted", selectedTags);
   };
 
-  const tags = [
-    {
-      id: "philosohpy",
-      name: "Philosophy",
-    },
-    {
-      id: "love",
-      name: "Love",
-    },
-    {
-      id: "inspiring",
-      name: "Inspire",
-    },
-    {
-      id: "life",
-      name: "Life",
-    },
-    {
-      id: "humor",
-      name: "Humor",
-    },
-    {
-      id: "Death",
-      name: "Death",
-    },
-    {
-      id: "happiness",
-      name: "Happiness",
-    },
-    {
-      id: "romance",
-      name: "Romance",
-    },
-    { id: "knowledge", name: "Knowledge" },
-    { id: "best", name: "Best of" },
-    { id: "darkness", name: "Darkness" },
-    { id: "truth", name: "Truth" },
-    { id: "dance", name: "Dance" },
-    { id: "friend", name: "Friend" },
-    { id: "enmy", name: "Enemy" },
-    { id: "rational", name: "Rational" },
-  ];
-
   const isSelected = (id) => {
-    console.log(selectedTags, "id" + id, selectedTags[id]);
-    return selectedTags[id];
+    return selectedTags.includes(id);
   };
 
   const getBoxStyle = (id) => {
@@ -80,7 +36,7 @@ const Selected = () => {
   return (
     <ScrollView>
       <Text style={styles.title}>
-        Please select most favourite categories at least three.
+        Please select most favourite genres at least three.
       </Text>
       <View style={styles.container}>
         {tags.map((tag) => {
@@ -88,6 +44,7 @@ const Selected = () => {
             <TouchableOpacity
               onPress={() => handleToggle(tag.id)}
               style={getBoxStyle(tag.id)}
+              key={tag.id}
             >
               <View style={styles.selectbox}>
                 <View style={styles.selecticon}>

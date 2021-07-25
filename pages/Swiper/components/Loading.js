@@ -2,6 +2,8 @@ import React from "react";
 import { StyleSheet, Dimensions } from "react-native";
 import { View, Text, Container } from "native-base";
 import { Video } from "expo-av";
+import LottieView from "lottie-react-native";
+
 const { width } = Dimensions.get("window");
 
 const Loading = () => {
@@ -9,16 +11,12 @@ const Loading = () => {
     <Container>
       <View style={styles.container}>
         <Text style={styles.heading}>Preparing...</Text>
-        <Video
-          source={require("../../../assets/preparing.mp4")}
-          posterSource={require("../../../assets/preparing-poster.png")}
-          rate={1.0}
-          volume={1.0}
-          isMuted={true}
-          resizeMode="cover"
-          shouldPlay
-          isLooping
-          style={{ width: width / 1.1, height: width / 1.1 }}
+
+        <LottieView
+          style={styles.animation}
+          source={require("../../../assets/preparing.json")}
+          autoPlay
+          loop
         />
         <Text style={styles.center}>
           Preparing quotes based on your favourite books.
@@ -30,6 +28,13 @@ const Loading = () => {
 };
 
 const styles = StyleSheet.create({
+  animation: {
+    position: "relative",
+    paddingLeft: 10,
+    paddingRight: 10,
+    height: width,
+  },
+
   center: {
     textAlign: "center",
   },

@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import React, { useEffect } from "react";
+import React from "react";
 import AppLoading from "expo-app-loading";
 import { StatusBar } from "react-native";
 
@@ -14,7 +14,7 @@ import Landing from "./pages/Landing";
 import Swiper from "./pages/Swiper";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import SelectBooks from "./pages/Selectbooks";
+import SelectTags from "./pages/SelectTags";
 
 import Settings from "./pages/Settings";
 import ChangeEmail from "./pages/Settings/ChangeEmail";
@@ -75,7 +75,7 @@ export default function App() {
             />
             <Stack.Screen name="Sign up" component={Signup} />
             <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Select Books" component={SelectBooks} />
+            <Stack.Screen name="Select Books" component={SelectTags} />
 
             <Stack.Screen name="Settings" component={Settings} />
             <Stack.Screen name="Change Email" component={ChangeEmail} />

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
 
 import { useDispatch } from "react-redux";
@@ -21,11 +21,9 @@ const BookSelect = () => {
             <Selected />
           </View>
           <View style={styles.footer}>
-            <View>
-              <Button disabled={isDisabled}>
-                <Text>Next</Text>
-              </Button>
-            </View>
+            <Button full disabled={isDisabled}>
+              <Text>Continue</Text>
+            </Button>
           </View>
         </View>
       </Container>

@@ -2,50 +2,21 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { debounce } from "lodash";
 
-const CancelToken = axios.CancelToken;
-let cancel;
-
-export const SEARCH_ENUMS = {
-  SEARCHING: "searching",
-  FAILED: "failed",
-  COMPLETED: "completed",
-};
-
 const initialState = {
-  books: [],
-  bookSearchState: SEARCH_ENUMS.COMPLETED,
-  searchErrorCode: null,
   selectedTags: [],
-  searchValue: "",
 };
 
 const counterSlice = createSlice({
   name: "selected",
   initialState,
   reducers: {
-    booksReceived(state, action) {
-      state.bookSearchState = SEARCH_ENUMS.COMPLETED;
-      state.books = action.payload;
-    },
-
-    setSearchState: (state, action) => {
-      state.bookSearchState = action.payload;
-    },
-
-    setSearchValue: (state, action) => {
-      state.searchValue = action.payload;
-    },
-
-    addBook: (state, action) => {
-      state.searchValue = "";
+    addTag: (state, action) => {
       state.selectedTags.push(action.payload);
     },
 
-    removeByIndex: (state, action) => {
-      state.books = [];
-
+    removeTag: (state, action) => {
       state.selectedTags = state.selectedTags.filter(
-        (_, index) => index !== action.payload
+        (tag) => tag !== action.payload
       );
     },
   },
@@ -57,6 +28,8 @@ export const {
   setSearchValue,
   addBook,
   removeByIndex,
+  addTag,
+  removeTag,
 } = counterSlice.actions;
 
 // Define a thunk that dispatches those action creators

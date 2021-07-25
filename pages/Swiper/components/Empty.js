@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Dimensions } from "react-native";
 import { View, Text } from "native-base";
-import { Video } from "expo-av";
+import LottieView from "lottie-react-native";
 const { width } = Dimensions.get("window");
 
 const Empty = () => {
@@ -21,15 +21,11 @@ const Empty = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Rest Time...</Text>
-      <Video
-        source={require("../../../assets/yoga.mp4")}
-        rate={1.0}
-        volume={1.0}
-        isMuted={true}
-        resizeMode="cover"
-        shouldPlay
-        isLooping
-        style={{ width: width / 1.5, height: width / 1.5 }}
+      <LottieView
+        style={styles.animation}
+        source={require("../../../assets/yoga.json")}
+        autoPlay
+        loop
       />
       <Text style={styles.time}>{time}</Text>
       <Text> remaining to new quotes</Text>
@@ -38,6 +34,10 @@ const Empty = () => {
 };
 
 const styles = StyleSheet.create({
+  animation: {
+    position: "relative",
+    width: width,
+  },
   container: {
     flex: 1,
     flexGrow: 1,

@@ -31,7 +31,6 @@ export default ({ style, x, y, snapPoints, onSnap, children }) => {
     },
   ]);
   const points = snapPoints.map((point) => point.x);
-  console.log(State.END);
   return (
     <PanGestureHandler
       onHandlerStateChange={onGestureEvent}

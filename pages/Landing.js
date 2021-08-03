@@ -1,46 +1,45 @@
 import React from "react";
-import { Pressable, StyleSheet } from "react-native";
+import {
+  Pressable,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  StyleSheet,
+} from "react-native";
 
 import { Container, View, Text, Button } from "native-base";
+import Signup from "./Signup";
 
 const Landing = ({ navigation }) => {
   return (
     <Container>
-      <View style={styles.gradient}>
-        <Pressable onPress={() => navigation.navigate("Swipe")}>
-          <Text style={styles.heading}>Swipewise</Text>
-        </Pressable>
-        <View style={styles.buttons}>
-          <Button
-            style={styles.button}
-            onPress={() => navigation.navigate("Sign up")}
-            bordered
-            full
-            rounded
-            large
-            primary
-          >
-            <Text>Sign Up</Text>
-          </Button>
-          <Button
-            onPress={() => navigation.navigate("Login")}
-            style={styles.button}
-            bordered
-            full
-            rounded
-            primary
-          >
-            <Text>Login</Text>
-          </Button>
+      <KeyboardAvoidingView style={{ flex: 1 }}>
+        <View style={styles.gradient}>
+          <Pressable onPress={() => navigation.navigate("Swipe")}>
+            <Text style={styles.heading}>Swipewise</Text>
+          </Pressable>
+          <Signup navigation={navigation} />
+          <View style={styles.buttons}>
+            <View>
+              <Text>Already have account? </Text>
+            </View>
+            <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+              <Text style={styles.termsLink}> Login </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Container>
   );
 };
 
 const styles = StyleSheet.create({
+  termsLink: {
+    color: "#4991f7",
+  },
   buttons: {
     margin: 10,
+    flexDirection: "row",
+    justifyContent: "center",
   },
   button: {
     margin: 10,

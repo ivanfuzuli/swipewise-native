@@ -1,8 +1,6 @@
 import React, { useRef, useState } from "react";
 import {
   StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
   TouchableWithoutFeedback,
   TouchableOpacity,
 } from "react-native";
@@ -108,116 +106,111 @@ const Signup = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <Container>
-        <View style={styles.Container}>
-          <View>
-            <Form style={styles.form}>
-              <View>
-                <Text style={styles.heading}>Sign Up</Text>
-              </View>
-              <Item floatingLabel>
-                <Label>E-mail</Label>
-                <Input
-                  onSubmitEditing={() => {
-                    usernameRef.current._root.focus();
-                  }}
-                  keyboardType="email-address"
-                  returnKeyType={"next"}
-                  onChangeText={handleEmailChange}
-                  value={email}
-                  autoCapitalize="none"
-                />
-              </Item>
-              {isDirty && errors.email && (
-                <Text style={styles.error}>{errors.email}</Text>
-              )}
-              <Item floatingLabel>
-                <Label>Username</Label>
-                <Input
-                  onSubmitEditing={() => {
-                    passwordRef.current._root.focus();
-                  }}
-                  getRef={(input) => {
-                    usernameRef.current = input;
-                  }}
-                  keyboardType="email-address"
-                  returnKeyType={"next"}
-                  onChangeText={handleUsernameChange}
-                  value={username}
-                  autoCapitalize="none"
-                />
-              </Item>
-              {isDirty && errors.username && (
-                <Text style={styles.error}>{errors.username}</Text>
-              )}
-              <View style={styles.lastItem}>
-                <Item floatingLabel>
-                  <Label>Password</Label>
-                  <Input
-                    onSubmitEditing={() => {
-                      passwordRef.current._root.focus();
-                    }}
-                    autoCapitalize="none"
-                    returnKeyType={"next"}
-                    onChangeText={handlePasswordChange}
-                    value={password}
-                    getRef={(input) => {
-                      passwordRef.current = input;
-                    }}
-                    secureTextEntry={secureTextEntry}
-                  />
-                </Item>
+    <View>
+      <Form style={styles.form}>
+        <View>
+          <Text style={styles.heading}>Sign Up</Text>
+        </View>
+        <View style={styles.item}>
+          <Item floatingLabel>
+            <Label>E-mail</Label>
+            <Input
+              onSubmitEditing={() => {
+                usernameRef.current._root.focus();
+              }}
+              keyboardType="email-address"
+              returnKeyType={"next"}
+              onChangeText={handleEmailChange}
+              value={email}
+              autoCapitalize="none"
+            />
+          </Item>
+        </View>
+        {isDirty && errors.email && (
+          <Text style={styles.error}>{errors.email}</Text>
+        )}
+        <View style={styles.item}>
+          <Item floatingLabel>
+            <Label>Username</Label>
+            <Input
+              onSubmitEditing={() => {
+                passwordRef.current._root.focus();
+              }}
+              getRef={(input) => {
+                usernameRef.current = input;
+              }}
+              keyboardType="email-address"
+              returnKeyType={"next"}
+              onChangeText={handleUsernameChange}
+              value={username}
+              autoCapitalize="none"
+            />
+          </Item>
+        </View>
+        {isDirty && errors.username && (
+          <Text style={styles.error}>{errors.username}</Text>
+        )}
+        <View style={styles.item}>
+          <Item floatingLabel>
+            <Label>Password</Label>
+            <Input
+              onSubmitEditing={() => {
+                passwordRef.current._root.focus();
+              }}
+              autoCapitalize="none"
+              returnKeyType={"next"}
+              onChangeText={handlePasswordChange}
+              value={password}
+              getRef={(input) => {
+                passwordRef.current = input;
+              }}
+              secureTextEntry={secureTextEntry}
+            />
+          </Item>
 
-                <View style={styles.eye}>
-                  <TouchableWithoutFeedback onPress={toggleSecureTextEntry}>
-                    <View>
-                      {!secureTextEntry && (
-                        <Feather name="eye" size={24} color="black" />
-                      )}
-                      {secureTextEntry && (
-                        <Feather name="eye-off" size={24} color="black" />
-                      )}
-                    </View>
-                  </TouchableWithoutFeedback>
-                </View>
+          <View style={styles.eye}>
+            <TouchableWithoutFeedback onPress={toggleSecureTextEntry}>
+              <View>
+                {!secureTextEntry && (
+                  <Feather name="eye" size={24} color="black" />
+                )}
+                {secureTextEntry && (
+                  <Feather name="eye-off" size={24} color="black" />
+                )}
               </View>
-              {isDirty && errors.password && (
-                <Text style={styles.error}>{errors.password}</Text>
-              )}
-              <View style={styles.buttons}>
-                <Button onPress={handleSubmit} bordered full rounded primary>
-                  <Text>Sign up</Text>
-                </Button>
-              </View>
-              <View style={styles.terms}>
-                <Text style={styles.termsText}>
-                  Click "Sign up" above to accept Swipewise's
-                </Text>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("Select Books")}
-                >
-                  <Text style={styles.termsLink}> Terms of Service </Text>
-                </TouchableOpacity>
-                <Text style={styles.termsText}>and</Text>
-                <TouchableOpacity onPress={() => alert("privacy")}>
-                  <Text style={styles.termsLink}> Privacy Policy.</Text>
-                </TouchableOpacity>
-              </View>
-            </Form>
+            </TouchableWithoutFeedback>
           </View>
         </View>
-      </Container>
-    </KeyboardAvoidingView>
+        {isDirty && errors.password && (
+          <Text style={styles.error}>{errors.password}</Text>
+        )}
+        <View style={styles.buttons}>
+          <Button onPress={handleSubmit} bordered full rounded primary>
+            <Text>Sign up Free</Text>
+          </Button>
+        </View>
+        <View style={styles.terms}>
+          <Text style={styles.termsText}>
+            Click "Sign up" above to accept Swipewise's
+          </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("Select Books")}>
+            <Text style={styles.termsLink}> Terms of Service </Text>
+          </TouchableOpacity>
+          <Text style={styles.termsText}>and</Text>
+          <TouchableOpacity onPress={() => alert("privacy")}>
+            <Text style={styles.termsLink}> Privacy Policy.</Text>
+          </TouchableOpacity>
+        </View>
+      </Form>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  lastItem: {
-    margin: 15,
+  item: {
+    marginBottom: 15,
+    marginLeft: 10,
+    marginRight: 10,
   },
 
   buttons: {
@@ -226,13 +219,6 @@ const styles = StyleSheet.create({
 
   button: {
     margin: 10,
-  },
-
-  Container: {
-    margin: 10,
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
   },
 
   heading: {

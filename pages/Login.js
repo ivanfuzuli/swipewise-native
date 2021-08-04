@@ -18,7 +18,14 @@ import {
   Toast,
 } from "native-base";
 import { Feather } from "@expo/vector-icons";
+import * as Auth from "./store/authSlice";
+import { useSelector, useDispatch } from "react-redux";
+
 const Login = () => {
+  const dispatch = useDispatch();
+  const errorMessage = useSelector((state) => state.auth.errorMessage);
+  const loading = useSelector((state) => state.auth.loading);
+
   const passwordInput = useRef(null);
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [email, setEmail] = useState("");
@@ -77,11 +84,12 @@ const Login = () => {
     setDirty(true);
 
     if (validate()) {
-      Toast.show({
-        text: "Invalid password!",
-        buttonText: "Okay",
-        duration: 3000,
-      });
+      dispatch(
+        Auth.login({
+          email,
+          password,
+        })
+      );
     }
   };
 
@@ -95,6 +103,12 @@ const Login = () => {
           <View>
             <Text style={styles.heading}>Login</Text>
           </View>
+          {errorMessage && (
+            <View style={styles.errorContainer}>
+              <Text style={styles.errorHeading}>Error:</Text>
+              <Text style={styles.errorWhite}>{errorMessage}</Text>
+            </View>
+          )}
           <View>
             <Form style={styles.form}>
               <Item floatingLabel>
@@ -162,7 +176,15 @@ const Login = () => {
                 </Button>
               </View>
               <View style={styles.buttons}>
-                <Button onPress={handleSubmit} bordered full rounded primary>
+                <Button
+                  onPress={handleSubmit}
+                  bordered
+                  full
+                  rounded
+                  primary
+                  disabled={loading}
+                >
+                  {loading && <Spinner size={24} color="blue" />}
                   <Text>Login</Text>
                 </Button>
               </View>

@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import jwt_decode from "jwt-decode";
 import axios from "../../config/@axios";
+import * as SecureStore from "expo-secure-store";
 
 export const signup = createAsyncThunk(
   "auth/signupStatus",
@@ -9,7 +11,11 @@ export const signup = createAsyncThunk(
       username,
       password,
     });
-    return response.data;
+    const token = response.data.token;
+    await SecureStore.setItemAsync("token", token);
+
+    const decoded = jwt_decode(token);
+    return decoded;
   }
 );
 const initialState = {

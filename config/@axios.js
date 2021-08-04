@@ -1,7 +1,7 @@
 import axios from "axios";
 import PubSub from "pubsub-js";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 import env from "./@env";
 
 const API_URL = env.apiUrl;
@@ -29,7 +29,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   async (config) => {
-    const token = await AsyncStorage.getItem("token");
+    const token = await SecureStore.getItemAsync("token");
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;

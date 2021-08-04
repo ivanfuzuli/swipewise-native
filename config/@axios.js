@@ -1,7 +1,6 @@
 import axios from "axios";
 import PubSub from "pubsub-js";
 
-import errorMessages from "./errorMessages";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 let apiUrl = "http://localhost:8080/";
@@ -17,10 +16,7 @@ const createMeaningfulMessage = (err) => {
   }
 
   if (response?.data?.message) {
-    let errorCode = response.data.message;
-    if (errorCode && errorMessages[errorCode]) {
-      errorMessage = errorMessages[errorCode];
-    }
+    errorMessage = response.data.message;
   }
 
   return errorMessage;

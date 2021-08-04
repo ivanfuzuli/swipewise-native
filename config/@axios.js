@@ -2,8 +2,9 @@ import axios from "axios";
 import PubSub from "pubsub-js";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import env from "./@env";
 
-let apiUrl = "http://localhost:8080/";
+const API_URL = env.apiUrl;
 
 const createMeaningfulMessage = (err) => {
   let errorMessage;
@@ -23,7 +24,7 @@ const createMeaningfulMessage = (err) => {
 };
 
 const instance = axios.create({
-  baseURL: apiUrl,
+  baseURL: API_URL,
 });
 
 instance.interceptors.request.use(

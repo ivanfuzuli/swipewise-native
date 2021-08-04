@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../config/@axios";
 
-export const login = createAsyncThunk(
-  "users/fetchByIdStatus",
+export const signup = createAsyncThunk(
+  "auth/signupStatus",
   async ({ email, username, password }, thunkAPI) => {
     const response = await axios.post("register", {
       email,
@@ -33,21 +33,21 @@ const counterSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(login.pending, (state) => {
+    builder.addCase(signup.pending, (state) => {
       // Add user to the state array
       state.errorMessage = null;
       state.loading = true;
     });
 
     // Add reducers for additional action types here, and handle loading state as needed
-    builder.addCase(login.fulfilled, (state, action) => {
+    builder.addCase(signup.fulfilled, (state, action) => {
       // Add user to the state array
       state.loggedIn = true;
       state.loading = false;
       state.user = action.payload;
     });
 
-    builder.addCase(login.rejected, (state, action) => {
+    builder.addCase(signup.rejected, (state, action) => {
       // Add user to the state array
       state.loggedIn = false;
       state.loading = false;

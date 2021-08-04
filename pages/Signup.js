@@ -108,7 +108,7 @@ const Signup = ({ navigation }) => {
 
     if (validate()) {
       dispatch(
-        Auth.login({
+        Auth.signup({
           email,
           username,
           password,

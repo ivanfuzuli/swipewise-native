@@ -50,7 +50,7 @@ instance.interceptors.response.use(
 
   (error) => {
     if (error?.response?.status === 401) {
-      PubSub.publish("auth", "denied");
+      PubSub.publish("auth", "logout");
     }
 
     error.message = createMeaningfulMessage(error);

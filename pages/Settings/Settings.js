@@ -9,7 +9,13 @@ import {
   Icon,
   Text,
 } from "native-base";
+import PubSub from "pubsub-js";
+
 const Settings = ({ navigation }) => {
+  const logout = () => {
+    PubSub.publish("auth", "logout");
+  };
+
   return (
     <Container>
       <Content>
@@ -30,7 +36,7 @@ const Settings = ({ navigation }) => {
               <Icon name="arrow-forward" />
             </Right>
           </ListItem>
-          <ListItem>
+          <ListItem onPress={logout}>
             <Left>
               <Text>Logout</Text>
             </Left>

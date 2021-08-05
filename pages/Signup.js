@@ -17,6 +17,7 @@ import {
   Spinner,
 } from "native-base";
 import { Feather } from "@expo/vector-icons";
+import * as RootNavigation from "../RootNavigation.js";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -103,17 +104,21 @@ const Signup = ({ navigation }) => {
     setSecureTextEntry((entry) => !entry);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setDirty(true);
 
     if (validate()) {
-      dispatch(
-        Auth.signup({
-          email,
-          username,
-          password,
-        })
-      );
+      try {
+        await dispatch(
+          Auth.signup({
+            email,
+            username,
+            password,
+          })
+        ).unwrap();
+
+        RootNavigation.navigate("Select Books");
+      } catch (err) {}
     }
   };
 

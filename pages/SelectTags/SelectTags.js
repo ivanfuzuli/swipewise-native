@@ -1,32 +1,49 @@
-import React, { useState } from "react";
-import { StyleSheet, SafeAreaView } from "react-native";
-
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { StyleSheet, SafeAreaView, KeyboardAvoidingView } from "react-native";
 
 import { Container, View, Text, Button } from "native-base";
 
 import { useSelector } from "react-redux";
-
 import Selected from "./components/Selected";
 
-const BookSelect = () => {
+const disableNavigation = (e) => {
+  e.preventDefault();
+  return;
+};
+
+const BookSelect = ({ navigation }) => {
   const selectedTags = useSelector((state) => state.selected.selectedTags);
   const isDisabled = selectedTags.length < 3;
 
+  useEffect(() => {
+    navigation.addListener("beforeRemove", disableNavigation);
+
+    return () => {
+      navigation.removeListener("beforeRemove", disableNavigation);
+    };
+  }, []);
+
+  const handleNext = () => {
+    // enable navigation
+    navigation.removeListener("beforeRemove", disableNavigation);
+    navigation.navigate("Swipe");
+  };
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Container>
-        <View style={styles.container}>
-          <View style={styles.main}>
-            <Selected />
+      <KeyboardAvoidingView>
+        <Container>
+          <View style={styles.container}>
+            <View style={styles.main}>
+              <Selected />
+            </View>
+            <View style={styles.footer}>
+              <Button full disabled={isDisabled} onPress={handleNext}>
+                <Text>Continue</Text>
+              </Button>
+            </View>
           </View>
-          <View style={styles.footer}>
-            <Button full disabled={isDisabled}>
-              <Text>Continue</Text>
-            </Button>
-          </View>
-        </View>
-      </Container>
+        </Container>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

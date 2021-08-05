@@ -16,6 +16,7 @@ import {
   Input,
   Button,
   Toast,
+  Spinner,
 } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import * as Auth from "./store/authSlice";
@@ -197,6 +198,22 @@ const Login = () => {
 };
 
 const styles = StyleSheet.create({
+  errorContainer: {
+    borderColor: "red",
+    backgroundColor: "#f9461c",
+    margin: 10,
+    padding: 10,
+    marginBottom: 20,
+    borderRadius: 5,
+  },
+  errorWhite: {
+    padding: 5,
+    color: "white",
+  },
+  errorHeading: {
+    fontWeight: "bold",
+    color: "#fff",
+  },
   lastItem: {
     margin: 15,
   },

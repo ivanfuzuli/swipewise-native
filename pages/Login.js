@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableWithoutFeedback,
+  Linking,
 } from "react-native";
 
 import {
@@ -19,6 +20,8 @@ import {
   Spinner,
 } from "native-base";
 import { Feather } from "@expo/vector-icons";
+import env from "../config/@env";
+
 import * as Auth from "./store/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -94,6 +97,10 @@ const Login = () => {
     }
   };
 
+  const handleForgot = () => {
+    Linking.openURL(env.apiUrl + "/forgot");
+  };
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -165,16 +172,7 @@ const Login = () => {
                 <Text style={styles.error}>{errors.password}</Text>
               )}
               <View style={styles.forgot}>
-                <Button
-                  onPress={() =>
-                    Toast.show({
-                      text: "Forgot password!",
-                      buttonText: "Okay",
-                      duration: 3000,
-                    })
-                  }
-                  transparent
-                >
+                <Button onPress={handleForgot} transparent>
                   <Text>Forgot Password?</Text>
                 </Button>
               </View>

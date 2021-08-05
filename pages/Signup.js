@@ -147,6 +147,7 @@ const Signup = ({ navigation }) => {
               value={email}
               autoCapitalize="none"
               autoCompleteType="email"
+              autoCorrect={false}
               textContentType="emailAddress"
             />
           </Item>

@@ -146,6 +146,8 @@ const Signup = ({ navigation }) => {
               onChangeText={handleEmailChange}
               value={email}
               autoCapitalize="none"
+              autoCompleteType="email"
+              textContentType="emailAddress"
             />
           </Item>
         </View>
@@ -181,7 +183,7 @@ const Signup = ({ navigation }) => {
                 passwordRef.current._root.focus();
               }}
               autoCapitalize="none"
-              returnKeyType={"next"}
+              returnKeyType={"done"}
               onChangeText={handlePasswordChange}
               value={password}
               getRef={(input) => {

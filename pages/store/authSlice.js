@@ -5,9 +5,9 @@ import * as SecureStore from "expo-secure-store";
 
 export const signup = createAsyncThunk(
   "auth/signupStatus",
-  async ({ email, username, password }, thunkAPI) => {
+  async ({ email, username, password }) => {
     const response = await axios.post("register", {
-      email,
+      emaiL: email.trim(),
       username,
       password,
     });
@@ -21,9 +21,9 @@ export const signup = createAsyncThunk(
 
 export const login = createAsyncThunk(
   "auth/loginStatus",
-  async ({ email, password }, thunkAPI) => {
+  async ({ email, password }) => {
     const response = await axios.post("login", {
-      email,
+      email: email.trim(),
       password,
     });
     const token = response.data.token;

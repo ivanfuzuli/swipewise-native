@@ -109,6 +109,8 @@ const ChangeEmail = () => {
                   onChangeText={handleEmailChange}
                   value={email}
                   autoCapitalize="none"
+                  autoCompleteType="email"
+                  autoCorrect={false}
                 />
               </Item>
               {isDirty && errors.email && (

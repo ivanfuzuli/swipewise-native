@@ -123,6 +123,8 @@ const Login = () => {
                   onChangeText={handleEmailChange}
                   value={email}
                   autoCapitalize="none"
+                  autoCompleteType="email"
+                  autoCorrect={false}
                 />
               </Item>
               {isDirty && errors.email && (
@@ -136,7 +138,7 @@ const Login = () => {
                       passwordInput.current._root.focus();
                     }}
                     autoCapitalize="none"
-                    returnKeyType={"next"}
+                    returnKeyType={"done"}
                     onChangeText={handlePasswordChange}
                     value={password}
                     getRef={(input) => {

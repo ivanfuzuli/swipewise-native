@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   StyleSheet,
+  Platform,
 } from "react-native";
 
 import { Container, View, Text, Button } from "native-base";
@@ -11,8 +12,11 @@ import Signup from "./Signup";
 
 const Landing = ({ navigation }) => {
   return (
-    <Container>
-      <KeyboardAvoidingView style={{ flex: 1 }}>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <Container>
         <View style={styles.gradient}>
           <Pressable onPress={() => navigation.navigate("Swipe")}>
             <Text style={styles.heading}>Swipewise</Text>
@@ -27,8 +31,8 @@ const Landing = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
-      </KeyboardAvoidingView>
-    </Container>
+      </Container>
+    </KeyboardAvoidingView>
   );
 };
 

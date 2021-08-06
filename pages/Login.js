@@ -16,7 +16,6 @@ import {
   Text,
   Input,
   Button,
-  Toast,
   Spinner,
 } from "native-base";
 import { Feather } from "@expo/vector-icons";

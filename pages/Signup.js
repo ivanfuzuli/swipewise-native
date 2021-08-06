@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   TouchableOpacity,
+  Linking,
 } from "react-native";
 
 import {
@@ -227,11 +228,19 @@ const Signup = ({ navigation }) => {
           <Text style={styles.termsText}>
             Click "Sign up" above to accept Swipewise's
           </Text>
-          <TouchableOpacity onPress={() => navigation.navigate("Select Books")}>
+          <TouchableOpacity
+            onPress={() =>
+              Linking.openURL("https://swipewiseapp.com/terms.html")
+            }
+          >
             <Text style={styles.termsLink}> Terms of Service </Text>
           </TouchableOpacity>
           <Text style={styles.termsText}>and</Text>
-          <TouchableOpacity onPress={() => alert("privacy")}>
+          <TouchableOpacity
+            onPress={() =>
+              Linking.openURL("https://swipewiseapp.com/privacy.html")
+            }
+          >
             <Text style={styles.termsLink}> Privacy Policy.</Text>
           </TouchableOpacity>
         </View>

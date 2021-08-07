@@ -30,20 +30,18 @@ const BookSelect = ({ navigation }) => {
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <KeyboardAvoidingView>
-        <Container>
-          <View style={styles.container}>
-            <View style={styles.main}>
-              <Selected />
-            </View>
-            <View style={styles.footer}>
-              <Button full disabled={isDisabled} onPress={handleNext}>
-                <Text>Continue</Text>
-              </Button>
-            </View>
+      <Container>
+        <View style={styles.container}>
+          <View style={styles.main}>
+            <Selected />
           </View>
-        </Container>
-      </KeyboardAvoidingView>
+          <View style={styles.footer}>
+            <Button full disabled={isDisabled} onPress={handleNext}>
+              <Text>Continue</Text>
+            </Button>
+          </View>
+        </View>
+      </Container>
     </SafeAreaView>
   );
 };

@@ -7,7 +7,7 @@ export const signup = createAsyncThunk(
   "auth/signupStatus",
   async ({ email, username, password }) => {
     const response = await axios.post("register", {
-      emaiL: email.trim(),
+      email: email.trim(),
       username,
       password,
     });

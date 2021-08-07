@@ -6,6 +6,9 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 
+import axios from "../../config/@axios";
+import PubSub from "pubsub-js";
+
 import {
   Container,
   Form,
@@ -18,7 +21,9 @@ import {
   Toast,
 } from "native-base";
 import { Feather } from "@expo/vector-icons";
+
 const ChangeEmail = () => {
+  const [errorMessage, setErrorMessage] = useState(null);
   const passwordInput = useRef(null);
 
   const [email, setEmail] = useState("");
@@ -31,6 +36,7 @@ const ChangeEmail = () => {
   const validate = (obj) => {
     const values = {
       email,
+      password,
       ...obj,
     };
 
@@ -74,15 +80,26 @@ const ChangeEmail = () => {
     setSecureTextEntry((entry) => !entry);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setDirty(true);
+    setErrorMessage(null);
 
     if (validate()) {
-      Toast.show({
-        text: "Invalid password!",
-        buttonText: "Okay",
-        duration: 3000,
-      });
+      try {
+        await axios.put("profile/email", {
+          newEmail: email,
+          password,
+        });
+
+        Toast.show({
+          text: "Your e-mail has been successfully changed! Please login again.",
+          buttonText: "Okay",
+        });
+
+        PubSub.publish("auth", "logout");
+      } catch (err) {
+        setErrorMessage(err.message);
+      }
     }
   };
 
@@ -94,6 +111,12 @@ const ChangeEmail = () => {
       <Container>
         <View style={styles.Container}>
           <View>
+            {errorMessage && (
+              <View style={styles.errorContainer}>
+                <Text style={styles.errorHeading}>Error:</Text>
+                <Text style={styles.errorWhite}>{errorMessage}</Text>
+              </View>
+            )}
             <Form style={styles.form}>
               <View>
                 <Text style={styles.heading}>Change E-mail</Text>
@@ -118,7 +141,7 @@ const ChangeEmail = () => {
               )}
               <View style={styles.lastItem}>
                 <Item floatingLabel>
-                  <Label>New Password</Label>
+                  <Label>Password</Label>
                   <Input
                     onSubmitEditing={() => {
                       passwordInput.current._root.focus();
@@ -164,6 +187,25 @@ const ChangeEmail = () => {
 };
 
 const styles = StyleSheet.create({
+  errorContainer: {
+    borderColor: "red",
+    backgroundColor: "#f9461c",
+    margin: 10,
+    padding: 10,
+    marginBottom: 20,
+    borderRadius: 5,
+  },
+
+  errorWhite: {
+    padding: 5,
+    color: "white",
+  },
+
+  errorHeading: {
+    fontWeight: "bold",
+    color: "#fff",
+  },
+
   lastItem: {
     margin: 15,
   },

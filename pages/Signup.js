@@ -21,7 +21,7 @@ import { Feather } from "@expo/vector-icons";
 import * as RootNavigation from "../RootNavigation.js";
 
 import { useSelector, useDispatch } from "react-redux";
-
+import FacebookAuth from "./Social/FacebookAuth";
 const Signup = ({ navigation }) => {
   const dispatch = useDispatch();
 
@@ -224,6 +224,7 @@ const Signup = ({ navigation }) => {
             <Text>Sign up Free</Text>
           </Button>
         </View>
+        <FacebookAuth />
         <View style={styles.terms}>
           <Text style={styles.termsText}>
             Click "Sign up" above to accept Swipewise's

@@ -5,6 +5,7 @@ import {
   Platform,
   TouchableWithoutFeedback,
 } from "react-native";
+import axios from "../../config/@axios";
 
 import {
   Container,
@@ -16,18 +17,19 @@ import {
   Input,
   Button,
   Toast,
+  Spinner,
 } from "native-base";
 import { Feather } from "@expo/vector-icons";
 const ChangePassword = () => {
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setLoading] = useState(false);
   const passwordInput = useRef(null);
-  const oldPasswordInput = useRef(null);
 
   const [password, setPassword] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [secureTextEntry, setSecureTextEntry] = useState(true);
-  const [oldPasswordSecureTextEntry, setOldPasswordSecureTextEntry] = useState(
-    true
-  );
+  const [oldPasswordSecureTextEntry, setOldPasswordSecureTextEntry] =
+    useState(true);
 
   const [errors, setErrors] = useState({});
   const [isDirty, setDirty] = useState(false);
@@ -83,15 +85,25 @@ const ChangePassword = () => {
     setSecureTextEntry((entry) => !entry);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setDirty(true);
-
-    if (validate()) {
-      Toast.show({
-        text: "Invalid password!",
-        buttonText: "Okay",
-        duration: 3000,
+    setLoading(true);
+    setErrorMessage(null);
+    try {
+      await axios.put("profile/password", {
+        oldPassword: oldPassword,
+        newPassword: password,
       });
+      setPassword(null);
+      setOldPassword(null);
+      Toast.show({
+        text: "Your password has been successfully changed!",
+        buttonText: "Okay",
+      });
+    } catch (err) {
+      setErrorMessage(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -103,6 +115,12 @@ const ChangePassword = () => {
       <Container>
         <View style={styles.Container}>
           <View>
+            {errorMessage && (
+              <View style={styles.errorContainer}>
+                <Text style={styles.errorHeading}>Error:</Text>
+                <Text style={styles.errorWhite}>{errorMessage}</Text>
+              </View>
+            )}
             <Form style={styles.form}>
               <View>
                 <Text style={styles.heading}>Change Password</Text>
@@ -123,12 +141,14 @@ const ChangePassword = () => {
                 </Item>
 
                 <View style={styles.eye}>
-                  <TouchableWithoutFeedback onPress={toggleSecureTextEntry}>
+                  <TouchableWithoutFeedback
+                    onPress={toggleOldPasswordSecureTextEntry}
+                  >
                     <View>
-                      {!secureTextEntry && (
+                      {!oldPasswordSecureTextEntry && (
                         <Feather name="eye" size={24} color="black" />
                       )}
-                      {secureTextEntry && (
+                      {oldPasswordSecureTextEntry && (
                         <Feather name="eye-off" size={24} color="black" />
                       )}
                     </View>
@@ -141,13 +161,10 @@ const ChangePassword = () => {
 
               <View style={styles.lastItem}>
                 <Item floatingLabel>
-                  <Label>Password</Label>
+                  <Label>New Password</Label>
                   <Input
-                    onSubmitEditing={() => {
-                      passwordInput.current._root.focus();
-                    }}
                     autoCapitalize="none"
-                    returnKeyType={"next"}
+                    returnKeyType={"done"}
                     onChangeText={handlePasswordChange}
                     value={password}
                     getRef={(input) => {
@@ -174,7 +191,15 @@ const ChangePassword = () => {
                 <Text style={styles.error}>{errors.password}</Text>
               )}
               <View style={styles.buttons}>
-                <Button onPress={handleSubmit} bordered full rounded primary>
+                <Button
+                  onPress={handleSubmit}
+                  bordered
+                  full
+                  rounded
+                  primary
+                  disabled={isLoading}
+                >
+                  {isLoading && <Spinner size={24} color="blue" />}
                   <Text>Change Password</Text>
                 </Button>
               </View>
@@ -187,6 +212,24 @@ const ChangePassword = () => {
 };
 
 const styles = StyleSheet.create({
+  errorContainer: {
+    borderColor: "red",
+    backgroundColor: "#f9461c",
+    margin: 10,
+    padding: 10,
+    marginBottom: 20,
+    borderRadius: 5,
+  },
+
+  errorWhite: {
+    padding: 5,
+    color: "white",
+  },
+
+  errorHeading: {
+    fontWeight: "bold",
+    color: "#fff",
+  },
   lastItem: {
     margin: 15,
   },

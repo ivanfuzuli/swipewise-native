@@ -143,11 +143,8 @@ const ChangeEmail = () => {
                 <Item floatingLabel>
                   <Label>Password</Label>
                   <Input
-                    onSubmitEditing={() => {
-                      passwordInput.current._root.focus();
-                    }}
                     autoCapitalize="none"
-                    returnKeyType={"next"}
+                    returnKeyType={"done"}
                     onChangeText={handlePasswordChange}
                     value={password}
                     getRef={(input) => {

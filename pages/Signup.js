@@ -221,7 +221,7 @@ const Signup = ({ navigation }) => {
             disabled={loading}
           >
             {loading && <Spinner size={24} color="blue" />}
-            <Text>Sign up Free</Text>
+            <Text>Sign up</Text>
           </Button>
         </View>
         <FacebookAuth />

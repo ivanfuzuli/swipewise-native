@@ -4,48 +4,38 @@ import {
   View,
   Image,
   TouchableOpacity,
-  Dimensions,
   Platform,
 } from "react-native";
 import { Text } from "native-base";
 
-import Constants from "expo-constants";
-import { maybeCompleteAuthSession } from "expo-web-browser";
-import {
-  useAuthRequest,
-  makeRedirectUri,
-  AuthRequestConfig,
-  DiscoveryDocument,
-} from "expo-auth-session";
+import { useAuthRequest } from "expo-auth-session";
 
-maybeCompleteAuthSession();
-const useProxy = Constants.appOwnership === "expo";
+import env from "../../config/@env";
+
+const API_URL = env.apiUrl;
+const FB_APP_ID = env.fbAppId;
 
 const discovery = {
   authorizationEndpoint: "https://www.facebook.com/v6.0/dialog/oauth",
   tokenEndpoint: "https://graph.facebook.com/v6.0/oauth/access_token",
 };
 
-const redirectUri = makeRedirectUri({
-  native: "fb580899039611484://authorize",
-  useProxy,
-});
-
 const config = {
-  clientId: "580899039611484",
+  clientId: FB_APP_ID,
   scopes: ["public_profile"],
-  redirectUri,
+  redirectUri: API_URL + "/auth/facebook",
   extraParams: { display: Platform.select({ web: "popup" }) },
 };
 
 import fb from "../../assets/fb-logo.png";
-const { width } = Dimensions.get("window");
 
 const FacebookAuth = () => {
   const [request, response, promptAsync] = useAuthRequest(config, discovery);
+  console.log("res", response);
   const go = async () => {
-    await promptAsync({ useProxy });
+    await promptAsync();
   };
+
   return (
     <View>
       <TouchableOpacity onPress={go} style={styles.social_container}>

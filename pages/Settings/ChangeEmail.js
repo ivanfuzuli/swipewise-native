@@ -46,7 +46,9 @@ const ChangeEmail = () => {
 
     if (!values.email) {
       localErrors.email = "Email is required!";
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email.trim())
+    ) {
       localErrors.email = "Invalid email address.";
     } else {
       localErrors.email = null;
@@ -87,7 +89,7 @@ const ChangeEmail = () => {
     if (validate()) {
       try {
         await axios.put("profile/email", {
-          newEmail: email,
+          newEmail: email.trim(),
           password,
         });
 

@@ -53,7 +53,9 @@ const Signup = ({ navigation }) => {
 
     if (!values.email) {
       localErrors.email = "Email is required!";
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email.trim())
+    ) {
       localErrors.email = "Invalid email address.";
     } else {
       localErrors.email = null;
@@ -61,7 +63,7 @@ const Signup = ({ navigation }) => {
 
     if (!values.username) {
       localErrors.username = "Username is required!";
-    } else if (!/^[a-zA-Z0-9]+$/i.test(values.username)) {
+    } else if (!/^[a-zA-Z0-9]+$/i.test(values.username.trim())) {
       localErrors.username =
         "Username should only contains alphanumeric characters..";
     } else if (values.username.length < 3) {

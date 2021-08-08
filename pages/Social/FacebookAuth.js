@@ -23,7 +23,7 @@ const discovery = {
 
 const config = {
   clientId: FB_APP_ID,
-  scopes: ["public_profile", "email"],
+  scopes: ["public_profile"],
   redirectUri: API_URL + "/auth/facebook",
   extraParams: { display: Platform.select({ web: "popup" }) },
 };

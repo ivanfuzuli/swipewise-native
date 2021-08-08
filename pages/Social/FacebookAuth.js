@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -9,9 +9,10 @@ import {
 import { Text } from "native-base";
 
 import { useAuthRequest } from "expo-auth-session";
+import { useDispatch } from "react-redux";
+import * as Auth from "../store/authSlice";
 
 import env from "../../config/@env";
-
 const API_URL = env.apiUrl;
 const FB_APP_ID = env.fbAppId;
 
@@ -22,7 +23,7 @@ const discovery = {
 
 const config = {
   clientId: FB_APP_ID,
-  scopes: ["public_profile"],
+  scopes: ["public_profile", "email"],
   redirectUri: API_URL + "/auth/facebook",
   extraParams: { display: Platform.select({ web: "popup" }) },
 };
@@ -30,8 +31,15 @@ const config = {
 import fb from "../../assets/fb-logo.png";
 
 const FacebookAuth = () => {
+  const dispatch = useDispatch();
   const [request, response, promptAsync] = useAuthRequest(config, discovery);
-  console.log("res", response);
+
+  useEffect(() => {
+    if (response?.type === "success") {
+      const { token } = response.params;
+      dispatch(Auth.loginViaToken(token));
+    }
+  }, [response]);
   const go = async () => {
     await promptAsync();
   };

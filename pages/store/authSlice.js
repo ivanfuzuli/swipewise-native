@@ -44,6 +44,18 @@ const initialState = {
 const counterSlice = createSlice({
   name: "auth",
   initialState,
+  reducers: {
+    loginViaToken: (state, action) => {
+      const decoded = jwt_decode(action.payload);
+
+      state.errorMessage = null;
+      state.loading = false;
+      state.loggedIn = true;
+
+      state.user = decoded;
+    },
+  },
+
   extraReducers: (builder) => {
     /**
      * SignUp
@@ -91,5 +103,5 @@ const counterSlice = createSlice({
   },
 });
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+export const { loginViaToken } = counterSlice.actions;
 export default counterSlice.reducer;

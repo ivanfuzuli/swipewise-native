@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     borderColor: "#6ee3b4",
   },
   likeLabel: {
-    fontSize: 32,
+    fontSize: 36,
     color: "#6ee3b4",
     fontWeight: "bold",
   },
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     borderColor: "#ec5288",
   },
   nopeLabel: {
-    fontSize: 32,
+    fontSize: 36,
     color: "#ec5288",
     fontWeight: "bold",
   },

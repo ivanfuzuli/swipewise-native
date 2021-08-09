@@ -12,7 +12,7 @@ const CardComponent = ({ quote }) => {
           <ScrollView>
             <Text
               style={{
-                fontSize: 18,
+                fontSize: 24,
               }}
             >
               {quote.desc}
@@ -21,7 +21,9 @@ const CardComponent = ({ quote }) => {
         </CardItem>
         <CardItem footer>
           <Text>
-            — {quote.author}, {quote.book}
+            — {quote.author}
+            {quote.book && ", "}
+            {quote.book}
           </Text>
         </CardItem>
       </Card>

@@ -111,17 +111,13 @@ const Signup = ({ navigation }) => {
     setDirty(true);
 
     if (validate()) {
-      try {
-        await dispatch(
-          Auth.signup({
-            email,
-            username,
-            password,
-          })
-        ).unwrap();
-
-        RootNavigation.navigate("Select Books");
-      } catch (err) {}
+      dispatch(
+        Auth.signup({
+          email,
+          username,
+          password,
+        })
+      );
     }
   };
 

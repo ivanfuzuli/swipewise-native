@@ -36,9 +36,6 @@ const Header = ({ quote, isEmpty }) => {
       <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
         <Icon name="user" size={32} color="gray" />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-        <Icon name="home" size={32} color="gray" />
-      </TouchableOpacity>
     </View>
   );
 };

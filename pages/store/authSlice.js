@@ -11,11 +11,12 @@ export const signup = createAsyncThunk(
       username: username.trim(),
       password,
     });
-    const token = response.data.token;
+
+    const { token, hasTags } = response.data;
     await SecureStore.setItemAsync("token", token);
 
-    const decoded = jwt_decode(token);
-    return decoded;
+    const user = jwt_decode(token);
+    return { user, hasTags };
   }
 );
 
@@ -26,11 +27,12 @@ export const login = createAsyncThunk(
       email: email.trim(),
       password,
     });
-    const token = response.data.token;
+
+    const { token, hasTags } = response.data;
     await SecureStore.setItemAsync("token", token);
 
-    const decoded = jwt_decode(token);
-    return decoded;
+    const user = jwt_decode(token);
+    return { user, hasTags };
   }
 );
 
@@ -39,6 +41,7 @@ const initialState = {
   errorMessage: null,
   loading: false,
   user: {},
+  hasTags: false,
 };
 
 const counterSlice = createSlice({
@@ -46,13 +49,19 @@ const counterSlice = createSlice({
   initialState,
   reducers: {
     loginViaToken: (state, action) => {
-      const decoded = jwt_decode(action.payload);
+      const { token, hasTags } = action.payload;
+      const user = jwt_decode(token);
 
       state.errorMessage = null;
       state.loading = false;
       state.loggedIn = true;
 
-      state.user = decoded;
+      state.hasTags = hasTags;
+      state.user = user;
+    },
+
+    setHasTags: (state, action) => {
+      state.hasTags = action.payload;
     },
   },
 
@@ -66,10 +75,12 @@ const counterSlice = createSlice({
     });
 
     builder.addCase(signup.fulfilled, (state, action) => {
+      const { user, hasTags } = action.payload;
       // Add user to the state array
       state.loggedIn = true;
       state.loading = false;
-      state.user = action.payload;
+      state.user = user;
+      state.hasTags = hasTags;
     });
 
     builder.addCase(signup.rejected, (state, action) => {
@@ -88,9 +99,12 @@ const counterSlice = createSlice({
     });
 
     builder.addCase(login.fulfilled, (state, action) => {
+      const { user, hasTags } = action.payload;
+      // Add user to the state array
       state.loggedIn = true;
       state.loading = false;
-      state.user = action.payload;
+      state.user = user;
+      state.hasTags = hasTags;
     });
 
     builder.addCase(login.rejected, (state, action) => {
@@ -103,5 +117,5 @@ const counterSlice = createSlice({
   },
 });
 
-export const { loginViaToken } = counterSlice.actions;
+export const { loginViaToken, setHasTags } = counterSlice.actions;
 export default counterSlice.reducer;

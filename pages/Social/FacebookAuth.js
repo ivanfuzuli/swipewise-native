@@ -11,6 +11,7 @@ import { Text } from "native-base";
 import { useAuthRequest } from "expo-auth-session";
 import { useDispatch } from "react-redux";
 import * as Auth from "../store/authSlice";
+import * as SecureStore from "expo-secure-store";
 
 import env from "../../config/@env";
 const API_URL = env.apiUrl;
@@ -34,10 +35,20 @@ const FacebookAuth = () => {
   const dispatch = useDispatch();
   const [request, response, promptAsync] = useAuthRequest(config, discovery);
 
+  const tryLogin = async () => {
+    const { token, hasTags } = response.params;
+    await SecureStore.setItemAsync("token", token);
+    dispatch(
+      Auth.loginViaToken({
+        token,
+        hasTags: hasTags === "1",
+      })
+    );
+  };
+
   useEffect(() => {
     if (response?.type === "success") {
-      const { token } = response.params;
-      dispatch(Auth.loginViaToken(token));
+      tryLogin();
     }
   }, [response]);
   const go = async () => {

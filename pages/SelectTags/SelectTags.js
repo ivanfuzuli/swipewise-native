@@ -1,10 +1,13 @@
-import React, { useEffect } from "react";
-import { StyleSheet, SafeAreaView, KeyboardAvoidingView } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, SafeAreaView } from "react-native";
 
-import { Container, View, Text, Button } from "native-base";
+import { Container, View, Text, Spinner, Button } from "native-base";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Selected from "./components/Selected";
+import axios from "../../config/@axios";
+import { setHasTags } from "../store/authSlice";
+import ErrorMessage from "../../components/ErrorMessage";
 
 const disableNavigation = (e) => {
   e.preventDefault();
@@ -12,7 +15,12 @@ const disableNavigation = (e) => {
 };
 
 const BookSelect = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   const selectedTags = useSelector((state) => state.selected.selectedTags);
+  const [isLoading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const isDisabled = selectedTags.length < 3;
 
   useEffect(() => {
@@ -23,20 +31,35 @@ const BookSelect = ({ navigation }) => {
     };
   }, []);
 
-  const handleNext = () => {
-    // enable navigation
-    navigation.removeListener("beforeRemove", disableNavigation);
-    navigation.navigate("Swipe");
+  const handleNext = async () => {
+    setLoading(true);
+    setErrorMessage(null);
+    try {
+      await axios.put("profile/tags", { tags: selectedTags });
+      dispatch(setHasTags(true));
+      navigation.removeListener("beforeRemove", disableNavigation);
+      navigation.navigate("Swipe");
+    } catch (err) {
+      setErrorMessage(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Container>
         <View style={styles.container}>
+          <ErrorMessage message={errorMessage} />
           <View style={styles.main}>
             <Selected />
           </View>
           <View style={styles.footer}>
-            <Button full disabled={isDisabled} onPress={handleNext}>
+            <Button
+              full
+              onPress={handleNext}
+              disabled={isLoading || isDisabled}
+            >
+              {isLoading && <Spinner size={24} color="blue" />}
               <Text>Continue</Text>
             </Button>
           </View>

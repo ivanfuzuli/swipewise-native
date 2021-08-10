@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { Container } from "native-base";
+import React, { useEffect, useState } from "react";
+import { Container, View, Text } from "native-base";
 
 import Quotes from "./components/Quotes";
 import Loading from "./components/Loading";
+import { useSelector } from "react-redux";
 
 const quotes = [
   {
@@ -45,10 +46,33 @@ const quotes = [
 
 export default function App({ navigation }) {
   const [isLoading, setLoading] = useState(true);
+  const hasTags = useSelector((state) => state.auth.hasTags);
 
-  setTimeout(() => {
-    setLoading(false);
-  }, 3000);
+  useEffect(() => {
+    if (!hasTags) {
+      navigation.navigate("Select Genres");
+    }
+
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [hasTags]);
+
+  if (!hasTags) {
+    return (
+      <Container
+        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+      >
+        <View>
+          <Text>Please select at least 3 tags.</Text>
+        </View>
+      </Container>
+    );
+  }
 
   return (
     <Container>

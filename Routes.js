@@ -24,16 +24,16 @@ const Routes = () => {
       {isLoggedIn ? (
         <Stack.Navigator initialRouteName="Swipe">
           <Stack.Screen
-            name="Select Books"
-            component={SelectTags}
-            options={{ headerLeft: () => null }}
-          />
-          <Stack.Screen
             name="Swipe"
             component={Swiper}
             options={{
               headerShown: false, // change this to `false`
             }}
+          />
+          <Stack.Screen
+            name="Select Genres"
+            component={SelectTags}
+            options={{ headerLeft: () => null }}
           />
           <Stack.Screen name="Settings" component={Settings} />
           <Stack.Screen name="Change Email" component={ChangeEmail} />

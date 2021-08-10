@@ -24,7 +24,7 @@ import env from "../config/@env";
 import * as Auth from "./store/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const dispatch = useDispatch();
   const errorMessage = useSelector((state) => state.auth.errorMessage);
   const loading = useSelector((state) => state.auth.loading);
@@ -83,7 +83,7 @@ const Login = () => {
     setSecureTextEntry((entry) => !entry);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setDirty(true);
 
     if (validate()) {

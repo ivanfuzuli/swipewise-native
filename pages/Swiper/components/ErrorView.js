@@ -1,26 +1,38 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+
 import { StyleSheet, Dimensions } from "react-native";
-import { View, Text, Container } from "native-base";
+import { View, Text, Container, Button } from "native-base";
 import LottieView from "lottie-react-native";
+import { getQuotes } from "../../store/statusSlice";
 
 const { width } = Dimensions.get("window");
 
-const Loading = () => {
+const ErrorView = () => {
+  const dispatch = useDispatch();
+
+  const handlePress = async () => {
+    await dispatch(getQuotes());
+  };
   return (
     <Container>
       <View style={styles.container}>
-        <Text style={styles.heading}>Preparing...</Text>
+        <Text style={styles.heading}>An error occured!...</Text>
 
         <LottieView
           style={styles.animation}
-          source={require("../../../assets/preparing.json")}
+          source={require("../../../assets/error.lottie.json")}
           autoPlay
           loop
         />
         <Text style={styles.center}>
-          Preparing quotes based on your favourite books.
+          It may be related to your internet connection.
         </Text>
-        <Text style={styles.center}>This could be take a while.</Text>
+        <Text style={styles.center}>
+          <Button onPress={handlePress}>
+            <Text>Refresh</Text>
+          </Button>
+        </Text>
       </View>
     </Container>
   );
@@ -36,6 +48,7 @@ const styles = StyleSheet.create({
 
   center: {
     textAlign: "center",
+    marginBottom: 5,
   },
 
   container: {
@@ -49,4 +62,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Loading;
+export default ErrorView;

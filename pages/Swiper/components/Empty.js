@@ -5,7 +5,7 @@ import LottieView from "lottie-react-native";
 const { width } = Dimensions.get("window");
 
 const Empty = () => {
-  const [seconds, setSecounds] = useState(6 * 60 * 60 - 1);
+  const [seconds, setSecounds] = useState(30 * 60 - 1);
   const time = new Date(seconds * 1000).toISOString().substr(11, 8);
   useEffect(() => {
     const interval = setInterval(() => {

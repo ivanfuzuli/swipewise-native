@@ -15,15 +15,15 @@ const CardComponent = ({ quote }) => {
                 fontSize: 24,
               }}
             >
-              {quote.desc}
+              {quote.quote}
             </Text>
           </ScrollView>
         </CardItem>
         <CardItem footer>
           <Text>
             — {quote.author}
-            {quote.book && ", "}
-            {quote.book}
+            {quote.title && ", "}
+            {quote.title}
           </Text>
         </CardItem>
       </Card>

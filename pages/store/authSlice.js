@@ -44,7 +44,7 @@ const initialState = {
   hasTags: false,
 };
 
-const counterSlice = createSlice({
+const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
@@ -117,5 +117,5 @@ const counterSlice = createSlice({
   },
 });
 
-export const { loginViaToken, setHasTags } = counterSlice.actions;
-export default counterSlice.reducer;
+export const { loginViaToken, setHasTags } = authSlice.actions;
+export default authSlice.reducer;

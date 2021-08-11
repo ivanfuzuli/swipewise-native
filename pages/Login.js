@@ -23,6 +23,9 @@ import env from "../config/@env";
 
 import * as Auth from "./store/authSlice";
 import { useSelector, useDispatch } from "react-redux";
+import Divider from "./Social/Divider";
+import FacebookAuth from "./Social/FacebookAuth";
+import GoogleAuth from "./Social/GoogleAuth";
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -189,6 +192,9 @@ const Login = ({ navigation }) => {
                 </Button>
               </View>
             </Form>
+            <Divider />
+            <FacebookAuth title="Sign In with Facebook" />
+            <GoogleAuth title="Sign In with Google" />
           </View>
         </View>
       </Container>

@@ -15,23 +15,23 @@ import * as SecureStore from "expo-secure-store";
 
 import env from "../../config/@env";
 const API_URL = env.apiUrl;
-const FB_APP_ID = env.fbAppId;
+const GOOGLE_APP_ID = env.googleAppId;
 
 const discovery = {
-  authorizationEndpoint: "https://www.facebook.com/v6.0/dialog/oauth",
-  tokenEndpoint: "https://graph.facebook.com/v6.0/oauth/access_token",
+  authorizationEndpoint: "https://accounts.google.com/o/oauth2/v2/auth",
+  tokenEndpoint: "https://oauth2.googleapis.com/token",
 };
 
 const config = {
-  clientId: FB_APP_ID,
-  scopes: ["public_profile"],
-  redirectUri: API_URL + "/auth/facebook",
+  clientId: GOOGLE_APP_ID,
+  scopes: ["https://www.googleapis.com/auth/userinfo.profile"],
+  redirectUri: API_URL + "/auth/google",
   usePKCE: false,
 };
 
-import fb from "../../assets/fb-logo.png";
+import google from "../../assets/google.logo.png";
 
-const FacebookAuth = ({ title }) => {
+const GoogleAuth = ({ title }) => {
   const dispatch = useDispatch();
   const [request, response, promptAsync] = useAuthRequest(config, discovery);
 
@@ -58,7 +58,7 @@ const FacebookAuth = ({ title }) => {
   return (
     <View>
       <TouchableOpacity onPress={go} style={styles.social_container}>
-        <Image style={styles.social} source={fb} />
+        <Image style={styles.social} source={google} />
         <View style={styles.text_container}>
           <Text style={styles.text}>{title}</Text>
         </View>
@@ -74,21 +74,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    color: "#fff",
+    color: "#000",
   },
   social_container: {
     margin: 10,
     borderRadius: 50,
-    backgroundColor: "#3a559f",
+    height: 50,
+    borderColor: "#000",
+    borderWidth: 1,
     flexDirection: "row",
     justifyContent: "center",
+    alignItems: "center",
   },
   social: {
     borderRadius: 50,
-    backgroundColor: "#fff",
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
+    marginRight: 5,
     resizeMode: "contain",
   },
 });
-export default FacebookAuth;
+export default GoogleAuth;

@@ -17,6 +17,8 @@ function getEnvironment() {
       envName: "DEVELOPMENT",
       apiUrl: "http://localhost:8080",
       fbAppId: 521027949012572,
+      googleAppId:
+        "906263258839-ddaqdt1427vsr2t9po37lcuu6rp0mmd9.apps.googleusercontent.com",
     }; // dev env settings
   }
 }

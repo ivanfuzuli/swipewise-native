@@ -22,6 +22,9 @@ import * as RootNavigation from "../RootNavigation.js";
 
 import { useSelector, useDispatch } from "react-redux";
 import FacebookAuth from "./Social/FacebookAuth";
+import GoogleAuth from "./Social/GoogleAuth";
+import Divider from "./Social/Divider";
+
 const Signup = ({ navigation }) => {
   const dispatch = useDispatch();
 
@@ -219,13 +222,15 @@ const Signup = ({ navigation }) => {
             disabled={loading}
           >
             {loading && <Spinner size={24} color="blue" />}
-            <Text>Sign up</Text>
+            <Text>Sign Up</Text>
           </Button>
         </View>
-        <FacebookAuth />
+        <Divider />
+        <FacebookAuth title="Continue with Facebook" />
+        <GoogleAuth title="Continue with Google" />
         <View style={styles.terms}>
           <Text style={styles.termsText}>
-            Click "Sign up" above to accept Swipewise's
+            Click "Sign Up" above to accept Swipewise's
           </Text>
           <TouchableOpacity
             onPress={() =>
@@ -307,6 +312,7 @@ const styles = StyleSheet.create({
 
   termsText: {
     color: "rgb(128, 128, 128)",
+    textAlign: "center",
   },
 
   termsLink: {

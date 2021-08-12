@@ -7,6 +7,7 @@ import SelectTags from "./pages/SelectTags";
 import Settings from "./pages/Settings";
 import ChangeEmail from "./pages/Settings/ChangeEmail";
 import ChangePassword from "./pages/Settings/ChangePassword";
+import DeleteAccount from "./pages/Settings/DeleteAccount";
 
 import { useSelector } from "react-redux";
 
@@ -38,6 +39,7 @@ const Routes = () => {
           <Stack.Screen name="Settings" component={Settings} />
           <Stack.Screen name="Change Email" component={ChangeEmail} />
           <Stack.Screen name="Change Password" component={ChangePassword} />
+          <Stack.Screen name="Delete Account" component={DeleteAccount} />
         </Stack.Navigator>
       ) : (
         <Stack.Navigator>

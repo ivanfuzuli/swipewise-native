@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "swipe",
-    "slug": "swipe",
-    "version": "1.0.0",
+    "name": "Swipewise",
+    "slug": "swipewisdom",
+    "version": "1.0.1",
     "scheme": "com.swipewise.app",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,9 +14,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.can.swipewise"

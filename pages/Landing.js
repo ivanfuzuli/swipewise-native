@@ -5,6 +5,8 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
   Platform,
+  ScrollView,
+  SafeAreaView,
 } from "react-native";
 
 import { Container, View, Text, Button } from "native-base";
@@ -12,27 +14,31 @@ import Signup from "./Signup";
 
 const Landing = ({ navigation }) => {
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <Container>
-        <View style={styles.gradient}>
-          <Pressable onPress={() => navigation.navigate("Swipe")}>
-            <Text style={styles.heading}>Swipewise</Text>
-          </Pressable>
-          <Signup navigation={navigation} />
-          <View style={styles.buttons}>
-            <View>
-              <Text>Already have account? </Text>
+    <SafeAreaView style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <Container>
+          <ScrollView>
+            <View style={styles.gradient}>
+              <Pressable onPress={() => navigation.navigate("Swipe")}>
+                <Text style={styles.heading}>Swipewise</Text>
+              </Pressable>
+              <Signup navigation={navigation} />
+              <View style={styles.buttons}>
+                <View>
+                  <Text>Already have account? </Text>
+                </View>
+                <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+                  <Text style={styles.termsLink}> Login </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-            <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-              <Text style={styles.termsLink}> Login </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Container>
-    </KeyboardAvoidingView>
+          </ScrollView>
+        </Container>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 

@@ -9,18 +9,20 @@ import {
   SafeAreaView,
 } from "react-native";
 
-import { Container, View, Text, Button } from "native-base";
+import { Container, View, Text } from "native-base";
 import Signup from "./Signup";
 
 const Landing = ({ navigation }) => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-      >
-        <Container>
-          <ScrollView>
+    <Container>
+      <SafeAreaView style={{ flex: 1 }}>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+          <ScrollView
+            contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+          >
             <View style={styles.gradient}>
               <Pressable onPress={() => navigation.navigate("Swipe")}>
                 <Text style={styles.heading}>Swipewise</Text>
@@ -36,9 +38,9 @@ const Landing = ({ navigation }) => {
               </View>
             </View>
           </ScrollView>
-        </Container>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </Container>
   );
 };
 

@@ -6,6 +6,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
+    "publish:prod": "expo publish --release-channel=prod",
     "debug": "open ‘rndebugger://set-debugger-loc?host=localhost&port=19001’ && expo start"
   },
   "dependencies": {

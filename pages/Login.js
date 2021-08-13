@@ -5,6 +5,8 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Linking,
+  SafeAreaView,
+  ScrollView,
 } from "react-native";
 
 import {
@@ -104,101 +106,106 @@ const Login = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <Container>
-        <View style={styles.Container}>
-          <View>
-            <Text style={styles.heading}>Login</Text>
-          </View>
-          {errorMessage && (
-            <View style={styles.errorContainer}>
-              <Text style={styles.errorHeading}>Error:</Text>
-              <Text style={styles.errorWhite}>{errorMessage}</Text>
-            </View>
-          )}
-          <View>
-            <Form style={styles.form}>
-              <Item floatingLabel>
-                <Label>E-mail</Label>
-                <Input
-                  onSubmitEditing={() => {
-                    passwordInput.current._root.focus();
-                  }}
-                  keyboardType="email-address"
-                  returnKeyType={"next"}
-                  onChangeText={handleEmailChange}
-                  value={email}
-                  autoCapitalize="none"
-                  autoCompleteType="email"
-                  autoCorrect={false}
-                />
-              </Item>
-              {isDirty && errors.email && (
-                <Text style={styles.error}>{errors.email}</Text>
-              )}
-              <View style={styles.lastItem}>
-                <Item floatingLabel>
-                  <Label>Password</Label>
-                  <Input
-                    onSubmitEditing={() => {
-                      passwordInput.current._root.focus();
-                    }}
-                    autoCapitalize="none"
-                    returnKeyType={"done"}
-                    onChangeText={handlePasswordChange}
-                    value={password}
-                    getRef={(input) => {
-                      passwordInput.current = input;
-                    }}
-                    secureTextEntry={secureTextEntry}
-                  />
-                </Item>
-
-                <View style={styles.eye}>
-                  <TouchableWithoutFeedback onPress={toggleSecureTextEntry}>
-                    <View>
-                      {!secureTextEntry && (
-                        <Feather name="eye" size={24} color="black" />
-                      )}
-                      {secureTextEntry && (
-                        <Feather name="eye-off" size={24} color="black" />
-                      )}
-                    </View>
-                  </TouchableWithoutFeedback>
+    <Container>
+      <SafeAreaView style={{ flex: 1 }}>
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+        >
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+          >
+            <View style={styles.Container}>
+              <View>
+                <Text style={styles.heading}>Login</Text>
+              </View>
+              {errorMessage && (
+                <View style={styles.errorContainer}>
+                  <Text style={styles.errorHeading}>Error:</Text>
+                  <Text style={styles.errorWhite}>{errorMessage}</Text>
                 </View>
-              </View>
-              {isDirty && errors.password && (
-                <Text style={styles.error}>{errors.password}</Text>
               )}
-              <View style={styles.forgot}>
-                <Button onPress={handleForgot} transparent>
-                  <Text>Forgot Password?</Text>
-                </Button>
+              <View>
+                <Form style={styles.form}>
+                  <Item floatingLabel>
+                    <Label>E-mail</Label>
+                    <Input
+                      onSubmitEditing={() => {
+                        passwordInput.current._root.focus();
+                      }}
+                      keyboardType="email-address"
+                      returnKeyType={"next"}
+                      onChangeText={handleEmailChange}
+                      value={email}
+                      autoCapitalize="none"
+                      autoCompleteType="email"
+                      autoCorrect={false}
+                    />
+                  </Item>
+                  {isDirty && errors.email && (
+                    <Text style={styles.error}>{errors.email}</Text>
+                  )}
+                  <View style={styles.lastItem}>
+                    <Item floatingLabel>
+                      <Label>Password</Label>
+                      <Input
+                        onSubmitEditing={() => {
+                          passwordInput.current._root.focus();
+                        }}
+                        autoCapitalize="none"
+                        returnKeyType={"done"}
+                        onChangeText={handlePasswordChange}
+                        value={password}
+                        getRef={(input) => {
+                          passwordInput.current = input;
+                        }}
+                        secureTextEntry={secureTextEntry}
+                      />
+                    </Item>
+
+                    <View style={styles.eye}>
+                      <TouchableWithoutFeedback onPress={toggleSecureTextEntry}>
+                        <View>
+                          {!secureTextEntry && (
+                            <Feather name="eye" size={24} color="black" />
+                          )}
+                          {secureTextEntry && (
+                            <Feather name="eye-off" size={24} color="black" />
+                          )}
+                        </View>
+                      </TouchableWithoutFeedback>
+                    </View>
+                  </View>
+                  {isDirty && errors.password && (
+                    <Text style={styles.error}>{errors.password}</Text>
+                  )}
+                  <View style={styles.forgot}>
+                    <Button onPress={handleForgot} transparent>
+                      <Text>Forgot Password?</Text>
+                    </Button>
+                  </View>
+                  <View style={styles.buttons}>
+                    <Button
+                      onPress={handleSubmit}
+                      bordered
+                      full
+                      rounded
+                      primary
+                      disabled={loading}
+                    >
+                      {loading && <Spinner size={24} color="blue" />}
+                      <Text>Login</Text>
+                    </Button>
+                  </View>
+                </Form>
+                <Divider />
+                <FacebookAuth title="Sign In with Facebook" />
+                <GoogleAuth title="Sign In with Google" />
               </View>
-              <View style={styles.buttons}>
-                <Button
-                  onPress={handleSubmit}
-                  bordered
-                  full
-                  rounded
-                  primary
-                  disabled={loading}
-                >
-                  {loading && <Spinner size={24} color="blue" />}
-                  <Text>Login</Text>
-                </Button>
-              </View>
-            </Form>
-            <Divider />
-            <FacebookAuth title="Sign In with Facebook" />
-            <GoogleAuth title="Sign In with Google" />
-          </View>
-        </View>
-      </Container>
-    </KeyboardAvoidingView>
+            </View>
+          </KeyboardAvoidingView>
+        </ScrollView>
+      </SafeAreaView>
+    </Container>
   );
 };
 
@@ -236,6 +243,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
+    alignItems: "center",
   },
 
   heading: {

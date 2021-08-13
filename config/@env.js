@@ -21,7 +21,7 @@ function getEnvironment() {
     // assume any other release channel is development
     return {
       envName: "DEVELOPMENT",
-      apiUrl: "https://swipewise-dev.herokuapp.com",
+      apiUrl: "http://localhost:8080",
       fbAppId: 521027949012572,
       googleAppId:
         "90841678000-8rekofcgmrll1d9r6q3fj6oc791nv3qs.apps.googleusercontent.com",

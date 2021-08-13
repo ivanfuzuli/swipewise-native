@@ -9,7 +9,7 @@ const Header = ({ quote, isEmpty }) => {
   const handleShare = async () => {
     try {
       const result = await Share.share({
-        message: `"${quote.desc}" by ${quote.author}`,
+        message: `"${quote.quote}" by ${quote.author}`,
       });
 
       if (result.action === Share.sharedAction) {

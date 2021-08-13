@@ -11,11 +11,15 @@ const quotesSlice = createSlice({
   name: "quotes",
   initialState,
   reducers: {
+    incIndex: (state) => {
+      state.currentIndex = state.currentIndex + 1;
+    },
     setQuotes: {
       reducer: (state, action) => {
         const { items, lastSync } = action.payload;
         state.items = items;
         state.lastSync = lastSync;
+        state.currentIndex = 0;
       },
       prepare: ({ items }) => {
         const lastSync = Date.now();
@@ -25,5 +29,5 @@ const quotesSlice = createSlice({
   },
 });
 
-export const { setQuotes } = quotesSlice.actions;
+export const { incIndex, setQuotes } = quotesSlice.actions;
 export default quotesSlice.reducer;

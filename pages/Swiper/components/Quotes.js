@@ -8,6 +8,9 @@ import Empty from "./Empty";
 import Interactable from "./Interactable";
 import Card from "./Card";
 import Header from "./Header";
+import { connect } from "react-redux";
+import { sendVotes } from "../../store/votesSlice";
+import { incIndex } from "../../store/quotesSlice";
 
 const { Value, interpolateNode, concat } = Animated;
 const { width, height } = Dimensions.get("window");
@@ -18,32 +21,38 @@ const h = w * φ;
 const α = Math.PI / 12;
 const A = width * Math.cos(α) + height * Math.sin(α);
 
-export default class Quotes extends React.PureComponent {
-  state = {
-    index: 0,
-  };
-
+class Quotes extends React.PureComponent {
   x = new Value(0);
   y = new Value(0);
 
   onSnap = ({ nativeEvent: { x } }) => {
-    const { index } = this.state;
     this.x.setValue(0);
     if (x !== 0) {
-      this.setState({ index: index + 1 });
+      let up = false;
+      if (x > 0) {
+        up = true;
+      }
+      const quote = this.props.quotes[this.props.currentIndex];
+      const vote = {
+        quote_id: quote._id,
+        like: up ? 1 : -1,
+      };
+      this.props.sendVotes(vote);
+      this.props.incIndex();
     }
   };
 
   render() {
     const { onSnap } = this;
     const { quotes } = this.props;
-    const { index } = this.state;
+    const { currentIndex } = this.props;
     const x = this.x;
     const y = this.y;
 
-    const quote = quotes[index];
-    const nextQuote = index < quotes.length ? quotes[index + 1] : null;
-    const isEmpty = quotes.length === index;
+    const quote = quotes[currentIndex];
+    const nextQuote =
+      currentIndex < quotes.length ? quotes[currentIndex + 1] : null;
+    const isEmpty = quotes.length === currentIndex;
 
     const rotateZ = concat(
       interpolateNode(x, {
@@ -81,7 +90,7 @@ export default class Quotes extends React.PureComponent {
           )}
           {!isEmpty && (
             <Interactable
-              key={index}
+              key={currentIndex}
               snapPoints={[{ x: -1 * A }, { x: 0 }, { x: A }]}
               style={{ ...StyleSheet.absoluteFill, zIndex: 2 }}
               {...{ onSnap, x, y }}
@@ -117,3 +126,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
+
+const mapStateToProps = (state, ownProps) => ({
+  currentIndex: state.quotes.currentIndex,
+});
+
+export default connect(mapStateToProps, { sendVotes, incIndex })(Quotes);

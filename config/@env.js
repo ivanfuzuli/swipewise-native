@@ -3,7 +3,11 @@ import * as Updates from "expo-updates";
 function getEnvironment() {
   if (Updates.releaseChannel.startsWith("prod")) {
     // matches prod-v1, prod-v2, prod-v3
-    return { envName: "PRODUCTION", apiUrl: "https://api.swipewiseapp.com" }; // prod env settings
+    return {
+      envName: "PRODUCTION",
+      apiUrl: "https://api.swipewiseapp.com",
+      fbAppId: 580899039611484,
+    }; // prod env settings
   } else if (Updates.releaseChannel.startsWith("staging")) {
     // matches staging-v1, staging-v2
     return {

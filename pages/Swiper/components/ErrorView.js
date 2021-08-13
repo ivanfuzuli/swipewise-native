@@ -1,10 +1,11 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, SafeAreaView } from "react-native";
 import { View, Text, Container, Button } from "native-base";
 import LottieView from "lottie-react-native";
 import { getQuotes } from "../../store/statusSlice";
+import Header from "./Header";
 
 const { width } = Dimensions.get("window");
 
@@ -15,7 +16,8 @@ const ErrorView = () => {
     await dispatch(getQuotes());
   };
   return (
-    <Container>
+    <SafeAreaView style={{ flex: 1 }}>
+      <Header isEmpty />
       <View style={styles.container}>
         <Text style={styles.heading}>An error occured!...</Text>
 
@@ -34,7 +36,7 @@ const ErrorView = () => {
           </Button>
         </Text>
       </View>
-    </Container>
+    </SafeAreaView>
   );
 };
 

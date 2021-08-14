@@ -1,5 +1,4 @@
-import { createSlice, createAction } from "@reduxjs/toolkit";
-import { setQuotes } from "./quotesSlice";
+import { createSlice } from "@reduxjs/toolkit";
 import axios from "../../config/@axios";
 
 const initialState = {
@@ -19,6 +18,10 @@ const votesReducer = createSlice({
       const votes = action.payload;
       state.queue = state.queue.filter((el) => !votes.includes(el));
     },
+
+    emptyQueue: (state) => {
+      state.queue = [];
+    },
   },
 });
 
@@ -34,6 +37,22 @@ export const sendVotes = (vote) => async (dispatch) => {
     dispatch({
       type: "votes/removeQueue",
       payload: votes,
+    });
+  } catch (err) {}
+};
+
+export const dequeue = () => async (dispatch, getState) => {
+  const state = getState();
+  const votes = state.votes.queue;
+
+  if (votes.length < 1) {
+    return false;
+  }
+
+  try {
+    await axios.post("votes", votes);
+    dispatch({
+      type: "votes/emptyQueue",
     });
   } catch (err) {}
 };

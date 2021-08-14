@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   KeyboardAvoidingView,
@@ -9,6 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 
+import Analytics from "../config/Analytics";
 import {
   Container,
   Form,
@@ -29,7 +30,7 @@ import Divider from "./Social/Divider";
 import FacebookAuth from "./Social/FacebookAuth";
 import GoogleAuth from "./Social/GoogleAuth";
 
-const Login = ({ navigation }) => {
+const Login = () => {
   const dispatch = useDispatch();
   const errorMessage = useSelector((state) => state.auth.errorMessage);
   const loading = useSelector((state) => state.auth.loading);
@@ -105,6 +106,9 @@ const Login = ({ navigation }) => {
     Linking.openURL(env.apiUrl + "/forgot");
   };
 
+  useEffect(() => {
+    Analytics.track(Analytics.events.LOGIN_PAGE_OPENED);
+  }, []);
   return (
     <Container>
       <SafeAreaView style={{ flex: 1 }}>

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import Analytics from "../config/Analytics";
 import {
   Pressable,
   TouchableOpacity,
@@ -13,6 +14,10 @@ import { Container, View, Text } from "native-base";
 import Signup from "./Signup";
 
 const Landing = ({ navigation }) => {
+  useEffect(() => {
+    Analytics.track(Analytics.events.LANDING_PAGE_OPENED);
+  }, []);
+
   return (
     <Container>
       <SafeAreaView style={{ flex: 1 }}>

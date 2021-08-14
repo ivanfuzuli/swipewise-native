@@ -1,23 +1,52 @@
+import env from "../../../config/@env";
+import Analytics from "../../../config/Analytics";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Dimensions } from "react-native";
 import { View, Text } from "native-base";
 import LottieView from "lottie-react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { getQuotes } from "../../store/statusSlice";
+
 const { width } = Dimensions.get("window");
 
+const getDiff = (lastSync) => {
+  const now = Date.now();
+  const waitTimeInMs = env.waitTimeInMinutes * 60 * 1000;
+  const diff = waitTimeInMs - (now - lastSync);
+  if (diff < 0) {
+    return 0;
+  }
+
+  return diff;
+};
+
 const Empty = () => {
-  const [seconds, setSecounds] = useState(30 * 60 - 1);
-  const time = new Date(seconds * 1000).toISOString().substr(11, 8);
+  const dispatch = useDispatch();
+  const lastSync = useSelector((state) => state.quotes.lastSync);
+  const initialTime = new Date(getDiff(lastSync)).toISOString().substr(11, 8);
+  const [time, setTime] = useState(initialTime);
+
   useEffect(() => {
+    Analytics.track(Analytics.events.EMPTY_PAGE_OPENED);
+
     const interval = setInterval(() => {
-      setSecounds((seconds) => {
-        return seconds - 1;
-      });
+      const diff = getDiff(lastSync);
+      if (diff <= 0) {
+        clearInterval(interval);
+        dispatch(getQuotes());
+        Analytics.track(Analytics.events.TIME_UP);
+
+        return;
+      }
+      const time = new Date(diff).toISOString().substr(11, 8);
+      setTime(time);
     }, 1000);
 
     return () => {
       clearInterval(interval);
     };
   }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Rest Time...</Text>

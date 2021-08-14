@@ -1,3 +1,5 @@
+import env from "../../config/@env";
+
 import React, { useEffect, useState } from "react";
 import { Container, View, Text } from "native-base";
 
@@ -5,10 +7,12 @@ import Quotes from "./components/Quotes";
 import Loading from "./components/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { getQuotes } from "../store/statusSlice";
-import ErrorView from "./components/ErrorView";
+import { dequeue } from "../store/votesSlice";
 
+import ErrorView from "./components/ErrorView";
 let timer = null;
 const DURATION = 3000;
+
 export default function App({ navigation }) {
   const dispatch = useDispatch();
 
@@ -16,6 +20,7 @@ export default function App({ navigation }) {
   const errorMessage = useSelector((state) => state.status.error);
 
   const quotes = useSelector((state) => state.quotes.items);
+  const lastSync = useSelector((state) => state.quotes.lastSync);
   const hasTags = useSelector((state) => state.auth.hasTags);
 
   const [isTimerActive, setTimerActive] = useState(false);
@@ -24,10 +29,19 @@ export default function App({ navigation }) {
       if (!hasTags) {
         navigation.navigate("Select Genres");
       } else {
+        const now = Date.now();
+        const waitTimeInMs = env.waitTimeInMinutes * 60 * 1000;
+        const diff = now - waitTimeInMs;
+
+        if (lastSync && lastSync > diff) {
+          return;
+        }
+
         setTimerActive(true);
         timer = setTimeout(() => {
           setTimerActive(false);
         }, DURATION);
+        await dispatch(dequeue());
         await dispatch(getQuotes());
       }
     })();

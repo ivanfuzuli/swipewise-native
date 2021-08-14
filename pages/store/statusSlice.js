@@ -1,11 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setQuotes } from "./quotesSlice";
 import axios from "../../config/@axios";
+import env from "../../config/@env";
 
 export const getQuotes = createAsyncThunk(
   "quotes/getQuotesStatus",
   async (_, thunkAPI) => {
-    const response = await axios.get("quotes");
+    const response = await axios.get("quotes", {
+      params: {
+        limit: env.limit,
+      },
+    });
 
     const quotes = response.data;
     thunkAPI.dispatch(
@@ -20,7 +25,7 @@ export const getQuotes = createAsyncThunk(
 
 const initialState = {
   error: null,
-  loading: false,
+  loading: true,
 };
 
 const statusSlice = createSlice({

@@ -8,6 +8,7 @@ import Selected from "./components/Selected";
 import axios from "../../config/@axios";
 import { setHasTags } from "../store/authSlice";
 import ErrorMessage from "../../components/ErrorMessage";
+import Analytics from "../../config/Analytics";
 
 const disableNavigation = (e) => {
   e.preventDefault();
@@ -25,7 +26,7 @@ const BookSelect = ({ navigation }) => {
 
   useEffect(() => {
     navigation.addListener("beforeRemove", disableNavigation);
-
+    Analytics.track(Analytics.events.SELECT_TAGS_OPENED);
     return () => {
       navigation.removeListener("beforeRemove", disableNavigation);
     };

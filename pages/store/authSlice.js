@@ -1,4 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import Analytics from "../../config/Analytics";
+
 import jwt_decode from "jwt-decode";
 import axios from "../../config/@axios";
 import * as SecureStore from "expo-secure-store";
@@ -14,8 +16,10 @@ export const signup = createAsyncThunk(
 
     const { token, hasTags } = response.data;
     await SecureStore.setItemAsync("token", token);
-
     const user = jwt_decode(token);
+    await Analytics.identify(user.sub);
+    await Analytics.track(Analytics.events.SING_UP);
+
     return { user, hasTags };
   }
 );
@@ -30,8 +34,10 @@ export const login = createAsyncThunk(
 
     const { token, hasTags } = response.data;
     await SecureStore.setItemAsync("token", token);
-
     const user = jwt_decode(token);
+    await Analytics.identify(user.sub);
+    await Analytics.track(Analytics.events.SIGN_IN);
+
     return { user, hasTags };
   }
 );

@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, SafeAreaView, Dimensions } from "react-native";
 import Animated from "react-native-reanimated";
+import Analytics from "../../../config/Analytics";
 
 import Footer from "./Footer";
 import Empty from "./Empty";
@@ -24,6 +25,9 @@ const A = width * Math.cos(α) + height * Math.sin(α);
 class Quotes extends React.PureComponent {
   x = new Value(0);
   y = new Value(0);
+  componentDidMount = () => {
+    Analytics.track(Analytics.events.QUOTES_PAGE_OPENED);
+  };
 
   onSnap = ({ nativeEvent: { x } }) => {
     this.x.setValue(0);

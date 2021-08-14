@@ -1,3 +1,4 @@
+import Constants from "expo-constants";
 import React from "react";
 import { StyleSheet } from "react-native";
 import {
@@ -16,7 +17,7 @@ import { useSelector } from "react-redux";
 
 const Settings = ({ navigation }) => {
   const email = useSelector((state) => state.auth.user.email);
-
+  const version = Constants.manifest.version;
   const logout = () => {
     PubSub.publish("auth", "logout");
   };
@@ -58,12 +59,19 @@ const Settings = ({ navigation }) => {
             </Left>
           </ListItem>
         </List>
+        <View style={styles.version}>
+          <Text>Version: ({version})</Text>
+        </View>
       </Content>
     </Container>
   );
 };
 
 const styles = StyleSheet.create({
+  version: {
+    marginTop: 10,
+    alignItems: "center",
+  },
   profile: {
     padding: 10,
   },

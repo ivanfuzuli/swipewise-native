@@ -19,5 +19,6 @@
   { "id": "spirituality", "name": "Spirituality" },
   { "id": "motivational", "name": "Motivational" },
   { "id": "success", "name": "Success" },
-  { "id": "science", "name": "Science" }
+  { "id": "science", "name": "Science" },
+  { "id": "philosophical", "name": "Philosophical" }
 ]

@@ -2,7 +2,7 @@
   "expo": {
     "name": "Swipewise",
     "slug": "swipewisdom",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "scheme": "swipewisedom",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

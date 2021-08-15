@@ -2,6 +2,7 @@ import React from "react";
 
 import { View, Text } from "native-base";
 import { StyleSheet } from "react-native";
+
 const ErrorMessage = ({ message }) => {
   if (!message) {
     return null;
@@ -16,6 +17,7 @@ const ErrorMessage = ({ message }) => {
 
 const styles = StyleSheet.create({
   errorContainer: {
+    width: "100%",
     borderColor: "red",
     backgroundColor: "#f9461c",
     margin: 10,

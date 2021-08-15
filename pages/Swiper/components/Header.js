@@ -9,7 +9,7 @@ const Header = ({ quote, isEmpty }) => {
   const handleShare = async () => {
     try {
       const result = await Share.share({
-        message: `"${quote.quote}" by ${quote.author}`,
+        message: `A quote for you from swipewise:\n"${quote.quote}" by ${quote.author}`,
       });
 
       if (result.action === Share.sharedAction) {

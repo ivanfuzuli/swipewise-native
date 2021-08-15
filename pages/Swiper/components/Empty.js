@@ -38,6 +38,7 @@ const Empty = () => {
 
         return;
       }
+
       const time = new Date(diff).toISOString().substr(11, 8);
       setTime(time);
     }, 1000);

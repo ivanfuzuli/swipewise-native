@@ -26,6 +26,8 @@ import env from "../config/@env";
 
 import * as Auth from "./store/authSlice";
 import { useSelector, useDispatch } from "react-redux";
+
+import ErrorMessage from "../components/ErrorMessage";
 import Divider from "./Social/Divider";
 import FacebookAuth from "./Social/FacebookAuth";
 import GoogleAuth from "./Social/GoogleAuth";
@@ -122,12 +124,7 @@ const Login = () => {
               <View>
                 <Text style={styles.heading}>Login</Text>
               </View>
-              {errorMessage && (
-                <View style={styles.errorContainer}>
-                  <Text style={styles.errorHeading}>Error:</Text>
-                  <Text style={styles.errorWhite}>{errorMessage}</Text>
-                </View>
-              )}
+              <ErrorMessage message={errorMessage} />
               <View>
                 <Form style={styles.form}>
                   <Item floatingLabel>
@@ -213,22 +210,6 @@ const Login = () => {
 };
 
 const styles = StyleSheet.create({
-  errorContainer: {
-    borderColor: "red",
-    backgroundColor: "#f9461c",
-    margin: 10,
-    padding: 10,
-    marginBottom: 20,
-    borderRadius: 5,
-  },
-  errorWhite: {
-    padding: 5,
-    color: "white",
-  },
-  errorHeading: {
-    fontWeight: "bold",
-    color: "#fff",
-  },
   lastItem: {
     margin: 15,
   },

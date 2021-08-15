@@ -28,6 +28,19 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": ["sentry-expo"],
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "swipewise",
+            "project": "swipewise",
+            "authToken": "40591064d03843dcacdcd631cae51783caa4115f45e24bf291735d888d2bc12e"
+          }
+        }
+      ]
     }
   }
 }

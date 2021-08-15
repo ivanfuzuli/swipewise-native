@@ -3,7 +3,9 @@ import env from "./config/@env";
 import "react-native-gesture-handler";
 import React, { useEffect } from "react";
 import { PersistGate } from "redux-persist/integration/react";
+
 import Analytics from "./config/Analytics";
+import * as Sentry from "sentry-expo";
 
 import AppLoading from "expo-app-loading";
 import { StatusBar } from "react-native";
@@ -34,6 +36,14 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
+      if (env.sentryDsn) {
+        Sentry.init({
+          dsn: env.sentryDsn,
+          enableInExpoDevelopment: false,
+          debug: false, // Sentry will try to print out useful debugging information if something goes wrong with sending an event. Set this to `false` in production.
+        });
+      }
+
       await Analytics.initialize();
       await Analytics.track(Analytics.events.INIT);
     })();

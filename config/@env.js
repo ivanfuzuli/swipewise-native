@@ -10,6 +10,8 @@ function getEnvironment() {
       limit: 15,
       waitTimeInMinutes: 1,
       fbAppId: 580899039611484,
+      sentryDsn:
+        "https://2dfc33c7af474d26b03707b62e6151fe@o958963.ingest.sentry.io/5907450",
     }; // prod env settings
   } else if (Updates.releaseChannel.startsWith("staging")) {
     // matches staging-v1, staging-v2
@@ -28,6 +30,7 @@ function getEnvironment() {
     return {
       envName: "DEVELOPMENT",
       apiUrl: "http://localhost:8080",
+      sentryDsn: "",
       amplitudeApiKey: "",
       limit: 2,
       waitTimeInMinutes: 1,

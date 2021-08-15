@@ -3,7 +3,7 @@
     "name": "Swipewise",
     "slug": "swipewisdom",
     "version": "1.0.2",
-    "scheme": "com.swipewise.app",
+    "scheme": "swipewisedom",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {

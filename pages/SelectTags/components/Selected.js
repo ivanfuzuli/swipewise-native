@@ -35,9 +35,7 @@ const Selected = () => {
   };
   return (
     <ScrollView>
-      <Text style={styles.title}>
-        Please select most favourite genres at least three.
-      </Text>
+      <Text style={styles.title}>Please select minimum three genres.</Text>
       <View style={styles.container}>
         {tags.map((tag) => {
           return (

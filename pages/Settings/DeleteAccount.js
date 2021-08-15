@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import axios from "../../config/@axios";
+import PubSub from "pubsub-js";
 
 import {
   Container,
@@ -20,7 +21,7 @@ import {
   Spinner,
 } from "native-base";
 import { Feather } from "@expo/vector-icons";
-const RemoveMe = () => {
+const DeleteAccount = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const passwordInput = useRef(null);
@@ -34,7 +35,6 @@ const RemoveMe = () => {
   const validate = (obj) => {
     const values = {
       password,
-      oldPassword,
       ...obj,
     };
 
@@ -70,15 +70,16 @@ const RemoveMe = () => {
     setLoading(true);
     setErrorMessage(null);
     try {
-      await axios.delete("profile", {
-        newPassword: password,
+      await axios.post("profile/delete", {
+        password,
       });
+
       setPassword(null);
-      setOldPassword(null);
       Toast.show({
         text: "Your account successfully deleted!",
         buttonText: "Okay",
       });
+      PubSub.publish("auth", "logout");
     } catch (err) {
       setErrorMessage(err.message);
     } finally {
@@ -227,4 +228,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RemoveMe;
+export default DeleteAccount;

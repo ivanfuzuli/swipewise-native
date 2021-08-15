@@ -203,7 +203,6 @@ const Login = () => {
                 </Form>
                 <Divider />
                 <FacebookAuth title="Sign In with Facebook" />
-                <GoogleAuth title="Sign In with Google" />
               </View>
             </View>
           </KeyboardAvoidingView>

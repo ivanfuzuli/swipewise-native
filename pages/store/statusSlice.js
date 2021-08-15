@@ -31,6 +31,11 @@ const initialState = {
 const statusSlice = createSlice({
   name: "status",
   initialState,
+  reducers: {
+    setLoading: (state, action) => {
+      state.loading = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     /**
      * SignUp
@@ -52,5 +57,5 @@ const statusSlice = createSlice({
   },
 });
 
-export const { loginViaToken, setHasTags } = statusSlice.actions;
+export const { setLoading } = statusSlice.actions;
 export default statusSlice.reducer;

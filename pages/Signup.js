@@ -227,7 +227,6 @@ const Signup = ({ navigation }) => {
         </View>
         <Divider />
         <FacebookAuth title="Continue with Facebook" />
-        <GoogleAuth title="Continue with Google" />
         <View style={styles.terms}>
           <Text style={styles.termsText}>
             Click "Sign Up" above to accept Swipewise's

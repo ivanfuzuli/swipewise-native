@@ -6,7 +6,7 @@ import { Container, View, Text } from "native-base";
 import Quotes from "./components/Quotes";
 import Loading from "./components/Loading";
 import { useDispatch, useSelector } from "react-redux";
-import { getQuotes } from "../store/statusSlice";
+import { getQuotes, setLoading } from "../store/statusSlice";
 import { dequeue } from "../store/votesSlice";
 
 import ErrorView from "./components/ErrorView";
@@ -34,6 +34,7 @@ export default function App({ navigation }) {
         const diff = now - waitTimeInMs;
 
         if (lastSync && lastSync > diff) {
+          dispatch(setLoading(false));
           return;
         }
 

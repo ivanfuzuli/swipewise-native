@@ -8,7 +8,7 @@ function getEnvironment() {
       apiUrl: "https://api.swipewiseapp.com",
       amplitudeApiKey: "43d4bd8a314dcf72434237369dcbb02b",
       limit: 15,
-      waitTimeInMinutes: 1,
+      waitTimeInMinutes: 30,
       fbAppId: 580899039611484,
       sentryDsn:
         "https://2dfc33c7af474d26b03707b62e6151fe@o958963.ingest.sentry.io/5907450",

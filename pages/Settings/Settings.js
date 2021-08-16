@@ -12,16 +12,12 @@ import {
   Text,
   View,
 } from "native-base";
-import PubSub from "pubsub-js";
 import { useSelector } from "react-redux";
+import LogoutButton from "./LogoutButton";
 
 const Settings = ({ navigation }) => {
   const email = useSelector((state) => state.auth.user.email);
   const version = Constants.manifest.version;
-  const logout = () => {
-    PubSub.publish("auth", "logout");
-  };
-
   return (
     <Container>
       <Content>
@@ -53,11 +49,7 @@ const Settings = ({ navigation }) => {
               <Icon name="arrow-forward" />
             </Right>
           </ListItem>
-          <ListItem onPress={logout}>
-            <Left>
-              <Text>Logout</Text>
-            </Left>
-          </ListItem>
+          <LogoutButton email={email} />
         </List>
         <View style={styles.version}>
           <Text>Version: ({version})</Text>

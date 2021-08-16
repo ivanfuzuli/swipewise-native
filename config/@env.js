@@ -32,7 +32,7 @@ function getEnvironment() {
       apiUrl: "https://swipewise-dev.herokuapp.com",
       sentryDsn: "",
       amplitudeApiKey: "",
-      limit: 2,
+      limit: 15,
       waitTimeInMinutes: 1,
       fbAppId: 521027949012572,
       googleAppId:

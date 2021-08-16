@@ -11,7 +11,7 @@ import { dequeue } from "../store/votesSlice";
 
 import ErrorView from "./components/ErrorView";
 let timer = null;
-const DURATION = 3000;
+const WAIT_UNTIL = 3000;
 
 export default function App({ navigation }) {
   const dispatch = useDispatch();
@@ -41,7 +41,7 @@ export default function App({ navigation }) {
         setTimerActive(true);
         timer = setTimeout(() => {
           setTimerActive(false);
-        }, DURATION);
+        }, WAIT_UNTIL);
         await dispatch(dequeue());
         await dispatch(getQuotes());
       }

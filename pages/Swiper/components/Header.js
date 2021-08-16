@@ -1,7 +1,8 @@
 import React from "react";
 import { Feather as Icon } from "@expo/vector-icons";
-import { View, TouchableOpacity, StyleSheet, Share } from "react-native";
+import { View, TouchableOpacity, StyleSheet, Image, Share } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import logo from "../../../assets/icon.png";
 
 const Header = ({ quote, isEmpty }) => {
   const navigation = useNavigation();
@@ -27,24 +28,42 @@ const Header = ({ quote, isEmpty }) => {
   };
 
   return (
-    <View style={styles.header}>
-      {!isEmpty && (
-        <TouchableOpacity style={styles.mr10} onPress={handleShare}>
-          <Icon name="share" size={32} color="gray" />
+    <View style={styles.container}>
+      <View>
+        <Image source={logo} style={styles.logo} />
+      </View>
+      <View style={styles.header}>
+        {!isEmpty && (
+          <TouchableOpacity style={styles.mr10} onPress={handleShare}>
+            <Icon name="share" size={32} color="gray" />
+          </TouchableOpacity>
+        )}
+        <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
+          <Icon name="user" size={32} color="gray" />
         </TouchableOpacity>
-      )}
-      <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
-        <Icon name="user" size={32} color="gray" />
-      </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 16,
+  },
+  logo: {
+    flexGrow: 1,
+    width: 48,
+    height: 48,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#f1f1f1",
+  },
   header: {
     flexDirection: "row",
     justifyContent: "flex-end",
-    padding: 16,
   },
 
   mr10: {

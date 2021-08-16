@@ -1,12 +1,20 @@
+import axiosOrg from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setQuotes } from "./quotesSlice";
 import axios from "../../config/@axios";
 import env from "../../config/@env";
 
+const CancelToken = axiosOrg.CancelToken;
+let cancel;
 export const getQuotes = createAsyncThunk(
   "quotes/getQuotesStatus",
   async (_, thunkAPI) => {
+    cancel && cancel();
     const response = await axios.get("quotes", {
+      cancelToken: new CancelToken(function executor(c) {
+        // An executor function receives a cancel function as a parameter
+        cancel = c;
+      }),
       params: {
         limit: env.limit,
       },
@@ -18,7 +26,7 @@ export const getQuotes = createAsyncThunk(
         items: quotes,
       })
     );
-
+    cancel = null;
     return true;
   }
 );

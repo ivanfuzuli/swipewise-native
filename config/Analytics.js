@@ -15,6 +15,7 @@ export const events = {
   SING_UP: "SIGN_UP",
   LOGOUT: "LOGOUT",
   TIME_UP: "TIME_UP",
+  ACCOUNT_DELETED: "ACCOUNT_DELETED",
 };
 
 const canUseAmplitude = apiKey;

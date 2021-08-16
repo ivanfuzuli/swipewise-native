@@ -21,6 +21,7 @@ import {
   Spinner,
 } from "native-base";
 import { Feather } from "@expo/vector-icons";
+import Analytics from "../../config/Analytics";
 const DeleteAccount = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setLoading] = useState(false);
@@ -79,6 +80,8 @@ const DeleteAccount = () => {
         text: "Your account successfully deleted!",
         buttonText: "Okay",
       });
+
+      Analytics.track(Analytics.events.ACCOUNT_DELETED);
       PubSub.publish("auth", "logout");
     } catch (err) {
       setErrorMessage(err.message);

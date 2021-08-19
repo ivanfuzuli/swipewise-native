@@ -14,7 +14,7 @@ const style = {
 };
 
 export default (props) => {
-  const { profile, likeOpacity, nopeOpacity } = {
+  const { quote, likeOpacity, nopeOpacity } = {
     likeOpacity: 0,
     nopeOpacity: 0,
     ...props,
@@ -31,10 +31,10 @@ export default (props) => {
           </Animated.View>
         </View>
         <View style={styles.footer}>
-          <Text style={styles.name}>{profile.name}</Text>
+          <Text style={styles.name}>{quote.name}</Text>
         </View>
       </View>
-      <CardContent profile={profile} />
+      <CardContent quote={quote} />
     </View>
   );
 };
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     borderColor: "#6ee3b4",
   },
   likeLabel: {
-    fontSize: 32,
+    fontSize: 36,
     color: "#6ee3b4",
     fontWeight: "bold",
   },
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     borderColor: "#ec5288",
   },
   nopeLabel: {
-    fontSize: 32,
+    fontSize: 36,
     color: "#ec5288",
     fontWeight: "bold",
   },

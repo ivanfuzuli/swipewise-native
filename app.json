@@ -1,8 +1,9 @@
 {
   "expo": {
-    "name": "swipe",
-    "slug": "swipe",
-    "version": "1.0.0",
+    "name": "Swipewise",
+    "slug": "swipewisdom",
+    "version": "1.0.4",
+    "scheme": "swipewisedom",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -13,20 +14,33 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.can.swipewise"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.ivanfuzuli.swipe"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": ["sentry-expo"],
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "swipewise",
+            "project": "swipewise",
+            "authToken": "40591064d03843dcacdcd631cae51783caa4115f45e24bf291735d888d2bc12e"
+          }
+        }
+      ]
     }
   }
 }

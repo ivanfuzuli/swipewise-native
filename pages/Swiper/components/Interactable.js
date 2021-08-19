@@ -1,20 +1,15 @@
 import React, { useRef } from "react";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 
-import { runSpring, binaryInterpolation, snapPoint } from "./redash";
+import {
+  runSpring,
+  binaryInterpolation,
+  snapPoint,
+} from "../../../helpers/redash";
 import Animated from "react-native-reanimated";
 
-const {
-  Value,
-  event,
-  block,
-  set,
-  cond,
-  eq,
-  Clock,
-  call,
-  clockRunning,
-} = Animated;
+const { Value, debug, event, block, set, cond, eq, Clock, call, clockRunning } =
+  Animated;
 
 export default ({ style, x, y, snapPoints, onSnap, children }) => {
   const ref = useRef(null);
@@ -49,7 +44,6 @@ export default ({ style, x, y, snapPoints, onSnap, children }) => {
               cond(eq(state, State.END), [
                 set(snapPointX, snapPoint(translationX, velocityX, points)),
                 set(spring, runSpring(clock, 0, 1)),
-
                 cond(eq(clockRunning(clock), 0), [
                   call([snapPointX], ([x]) => onSnap({ nativeEvent: { x } })),
                 ]),

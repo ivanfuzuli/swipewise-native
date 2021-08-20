@@ -34,9 +34,14 @@ const Header = ({ quote, isEmpty }) => {
       </View>
       <View style={styles.header}>
         {!isEmpty && (
-          <TouchableOpacity style={styles.mr10} onPress={handleShare}>
-            <Icon name="share" size={32} color="gray" />
-          </TouchableOpacity>
+          <>
+            <TouchableOpacity style={styles.mr10} onPress={handleShare}>
+              <Icon name="share" size={32} color="gray" />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.mr10} onPress={handleShare}>
+              <Icon name="instagram" size={32} color="gray" />
+            </TouchableOpacity>
+          </>
         )}
         <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
           <Icon name="user" size={32} color="gray" />

@@ -10,6 +10,7 @@ import { getQuotes, setLoading } from "../store/statusSlice";
 import { dequeue } from "../store/votesSlice";
 
 import ErrorView from "./components/ErrorView";
+import SlideUp from "./components/SlideUp";
 let timer = null;
 const WAIT_UNTIL = 3000;
 
@@ -72,6 +73,7 @@ export default function App({ navigation }) {
     <Container>
       {(isLoading || isTimerActive) && <Loading />}
       {!isLoading && !isTimerActive && <Quotes {...{ navigation, quotes }} />}
+      <SlideUp />
     </Container>
   );
 }

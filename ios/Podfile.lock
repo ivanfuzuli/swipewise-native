@@ -268,6 +268,8 @@ PODS:
     - React-Core
   - react-native-safe-area-context (3.2.0):
     - React-Core
+  - react-native-view-shot (3.1.2):
+    - React
   - React-RCTActionSheet (0.63.4):
     - React-Core/RCTActionSheetHeaders (= 0.63.4)
   - React-RCTAnimation (0.63.4):
@@ -332,6 +334,8 @@ PODS:
     - React-Core
   - RNCMaskedView (0.1.10):
     - React
+  - RNFS (2.18.0):
+    - React
   - RNGestureHandler (1.10.3):
     - React-Core
   - RNReanimated (2.2.0):
@@ -366,6 +370,8 @@ PODS:
   - RNScreens (3.4.0):
     - React-Core
     - React-RCTImage
+  - RNShare (7.0.0):
+    - React-Core
   - RNSVG (12.1.1):
     - React
   - UMAppLoader (2.2.0)
@@ -421,6 +427,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-view-shot (from `../node_modules/react-native-view-shot`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
   - React-RCTBlob (from `../node_modules/react-native/Libraries/Blob`)
@@ -433,9 +440,11 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
+  - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - UMAppLoader (from `../node_modules/unimodules-app-loader/ios`)
   - "UMCore (from `../node_modules/@unimodules/core/ios`)"
@@ -532,6 +541,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/netinfo"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-view-shot:
+    :path: "../node_modules/react-native-view-shot"
   React-RCTActionSheet:
     :path: "../node_modules/react-native/Libraries/ActionSheetIOS"
   React-RCTAnimation:
@@ -556,12 +567,16 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
+  RNFS:
+    :path: "../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNShare:
+    :path: "../node_modules/react-native-share"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   UMAppLoader:
@@ -621,6 +636,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 58aef7155bc9a9683f5b60b35eccea8722a4f53a
   react-native-netinfo: e849fc21ca2f4128a5726c801a82fc6f4a6db50d
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
+  react-native-view-shot: 4475fde003fe8a210053d1f98fb9e06c1d834e1c
   React-RCTActionSheet: 89a0ca9f4a06c1f93c26067af074ccdce0f40336
   React-RCTAnimation: 1bde3ecc0c104c55df246eda516e0deb03c4e49b
   React-RCTBlob: a97d378b527740cc667e03ebfa183a75231ab0f0
@@ -633,9 +649,11 @@ SPEC CHECKSUMS:
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
   RNCAsyncStorage: 56a3355a10b5d660c48c6e37325ac85ebfd09885
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
+  RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNReanimated: d9da990fc90123f4ffbfdda93d00fc15174863a8
   RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
+  RNShare: 00e7409201e3cab13e0febc41fd4465a83ae8225
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   UMAppLoader: 21af63390e55c82e037fb9752d93114a80ecf16e
   UMCore: 2f671796d7439604a1cf8ac7bbe5809cd5c50437
@@ -645,4 +663,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 9d6bc8070c31f2a5ed6d2cb646d2da7b915d10e3
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.10.2

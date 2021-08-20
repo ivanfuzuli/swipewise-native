@@ -17,6 +17,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
+      "usesAppleSignIn": true,
       "bundleIdentifier": "com.can.swipewise"
     },
     "android": {
@@ -24,7 +25,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.ivanfuzuli.swipe"
+      "package": "com.can.swipe"
     },
     "web": {
       "favicon": "./assets/favicon.png"

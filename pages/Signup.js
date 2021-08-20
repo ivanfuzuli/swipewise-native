@@ -24,6 +24,7 @@ import { useSelector, useDispatch } from "react-redux";
 import FacebookAuth from "./Social/FacebookAuth";
 import GoogleAuth from "./Social/GoogleAuth";
 import Divider from "./Social/Divider";
+import AppleAuth from "./Social/AppleAuth";
 
 const Signup = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -226,6 +227,7 @@ const Signup = ({ navigation }) => {
           </Button>
         </View>
         <Divider />
+        <AppleAuth />
         <FacebookAuth title="Continue with Facebook" />
         <View style={styles.terms}>
           <Text style={styles.termsText}>

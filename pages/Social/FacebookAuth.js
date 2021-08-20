@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#fff",
+    fontSize: 20,
   },
   social_container: {
     margin: 10,

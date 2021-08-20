@@ -29,7 +29,7 @@ function getEnvironment() {
     // assume any other release channel is development
     return {
       envName: "DEVELOPMENT",
-      apiUrl: "https://swipewise-dev.herokuapp.com",
+      apiUrl: "http://192.168.1.102:8080",
       sentryDsn: "",
       amplitudeApiKey: "",
       limit: 15,

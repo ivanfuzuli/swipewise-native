@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getQuotes, setLoading } from "../store/statusSlice";
 import { dequeue } from "../store/votesSlice";
 
+import SlideUp from "./components/SlideUp";
 import ErrorView from "./components/ErrorView";
 let timer = null;
 const WAIT_UNTIL = 3000;
@@ -72,6 +73,7 @@ export default function App({ navigation }) {
     <Container>
       {(isLoading || isTimerActive) && <Loading />}
       {!isLoading && !isTimerActive && <Quotes {...{ navigation, quotes }} />}
+      <SlideUp />
     </Container>
   );
 }

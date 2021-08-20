@@ -139,6 +139,7 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				97B44E2549F34F04B7C54F9B /* Upload Debug Symbols to Sentry */,
 				4A73F60BFAB9652DA53AF950 /* [CP] Copy Pods Resources */,
+				D4E4DCA099E90876EDB2DC58 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -245,6 +246,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export SENTRY_PROPERTIES=sentry.properties\n../node_modules/@sentry/cli/bin/sentry-cli upload-dsym";
+		};
+		D4E4DCA099E90876EDB2DC58 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Swipewise/Pods-Swipewise-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Swipewise/Pods-Swipewise-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		E77A91613F247193B94CD814 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

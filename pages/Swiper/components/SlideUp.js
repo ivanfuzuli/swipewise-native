@@ -23,9 +23,9 @@ const SlideUp = () => {
     RNFS.readFile(uri, "base64").then((res) => {
       let urlString = "data:image/jpeg;base64," + res;
       let options = {
-        url: urlString,
+        url: image1,
         social: Share.Social.INSTAGRAM,
-        type: "image/jpeg",
+        type: "image/png",
       };
       console.log("res", urlString);
       Share.shareSingle(options)

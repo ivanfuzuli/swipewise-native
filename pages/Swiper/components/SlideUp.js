@@ -140,13 +140,18 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     paddingTop: 0,
+    marginLeft: "auto",
+    marginRight: "auto",
+    width: (height / 16) * 8,
   },
 
   linearGradient: { flex: 1, minHeight: height },
   logoContainer: {
     position: "absolute",
     top: 50,
-    left: 20,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "center",
   },
 
   logo: {

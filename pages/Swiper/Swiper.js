@@ -11,7 +11,7 @@ import { dequeue } from "../store/votesSlice";
 
 import SlideUp from "./components/SlideUp";
 import ErrorView from "./components/ErrorView";
-import SlideUp from "./components/SlideUp";
+
 let timer = null;
 const WAIT_UNTIL = 3000;
 

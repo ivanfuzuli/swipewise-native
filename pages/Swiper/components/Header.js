@@ -46,14 +46,11 @@ const Header = ({ quote, isEmpty }) => {
             <TouchableOpacity style={styles.mr10} onPress={handleShare}>
               <Icon name="share" size={32} color="gray" />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.mr10} onPress={handleShare}>
+            <TouchableOpacity style={styles.mr10} onPress={openInstagramShare}>
               <Icon name="instagram" size={32} color="gray" />
             </TouchableOpacity>
           </>
         )}
-        <TouchableOpacity style={styles.mr10} onPress={openInstagramShare}>
-          <Icon name="instagram" size={32} color="gray" />
-        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
           <Icon name="user" size={32} color="gray" />
         </TouchableOpacity>

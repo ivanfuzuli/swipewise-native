@@ -45,6 +45,7 @@
     "react-native": "0.65.1",
     "react-native-fs": "^2.18.0",
     "react-native-gesture-handler": "~1.10.2",
+    "react-native-linear-gradient": "^2.5.6",
     "react-native-reanimated": "~2.2.0",
     "react-native-redash": "16.1.1",
     "react-native-safe-area-context": "3.2.0",
@@ -57,12 +58,10 @@
     "react-redux": "^7.2.2",
     "redux-persist": "^6.0.0",
     "rn-placeholder": "^3.0.3",
-    "rn-sliding-up-panel": "^2.4.5",
     "rn-swipeable-panel": "^1.2.5",
     "sentry-expo": "^4.0.0",
     "styled-components": "^5.3.0",
-    "styled-system": "^5.1.5",
-    "yarn": "^1.22.11"
+    "styled-system": "^5.1.5"
   },
   "devDependencies": {
     "@babel/core": "~7.14.8"

@@ -1,40 +1,61 @@
-import React, { useState, useRef } from "react";
-import { SwipeablePanel } from "rn-swipeable-panel";
-import { View, Text } from "react-native";
+import React, { useRef, useEffect } from "react";
+import { Feather as Icon } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import {
+  StyleSheet,
+  Dimensions,
+  Animated,
+  SafeAreaView,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import ViewShot from "react-native-view-shot";
+import LinearGradient from "react-native-linear-gradient";
 
-import { useSelector } from "react-redux";
-import { Button } from "native-base";
+import { useSelector, useDispatch } from "react-redux";
+import { setShareInstagramOpen } from "../../store/statusSlice";
+import { Button, Text, View, Card, CardItem } from "native-base";
 import Share from "react-native-share";
-import RNFS from "react-native-fs";
+
+const { height } = Dimensions.get("window");
 
 const SlideUp = () => {
+  const dispatch = useDispatch();
   const captureRef = useRef(null);
-
+  const translateY = useRef(new Animated.Value(height));
   const quotes = useSelector((state) => state.quotes.items);
   const currentIndex = useSelector((state) => state.quotes.currentIndex);
-  const currentQuote = quotes[currentIndex];
+  const quote = quotes[currentIndex];
 
-  const [isOpen, setOpen] = useState(true);
+  const closeShare = () => {
+    dispatch(setShareInstagramOpen(false));
+  };
 
   const share = (uri) => {
-    RNFS.readFile(uri, "base64").then((res) => {
-      let urlString = "data:image/jpeg;base64," + res;
-      let options = {
-        url: urlString,
-        social: Share.Social.INSTAGRAM,
-        type: "image/jpeg",
-      };
-      console.log("res", urlString);
-      Share.shareSingle(options)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          err && console.log(err);
-        });
-    });
+    let urlString = "data:image/jpeg;base64," + uri;
+    let options = {
+      url: urlString,
+      social: Share.Social.INSTAGRAM,
+      type: "image/jpeg",
+      saveToFiles: false,
+    };
+
+    Share.shareSingle(options)
+      .then((res) => {
+        closeShare();
+      })
+      .catch((err) => {
+        Alert.alert("Please give photo write access to swipewise.");
+      });
   };
+
+  useEffect(() => {
+    Animated.timing(translateY.current, {
+      toValue: 0,
+      duration: 400,
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
   const handleCapture = () => {
     captureRef.current.capture({}).then((uri) => {
@@ -42,32 +63,97 @@ const SlideUp = () => {
     });
   };
 
-  if (!currentQuote) {
+  if (!quote) {
     return null;
   }
+
   return (
-    <SwipeablePanel
-      openLarge
-      showCloseButton
-      onClose={() => setOpen(false)}
-      fullWidth
-      isActive={isOpen}
+    <Animated.View
+      style={{
+        ...StyleSheet.absoluteFillObject,
+        transform: [
+          {
+            translateY: translateY.current,
+          },
+        ],
+      }}
     >
-      <>
-        <View>
-          <Button onPress={handleCapture}>
-            <Text>Take Photo</Text>
-          </Button>
-        </View>
-        <ViewShot ref={captureRef} options={{ format: "jpg", quality: 0.9 }}>
-          <View>
-            <Text>{currentQuote.quote}</Text>
-            <Text>{currentQuote.author}</Text>
+      <View style={{ position: "absolute", top: 50, right: 20, zIndex: 2 }}>
+        <TouchableOpacity onPress={closeShare}>
+          <AntDesign name="closecircleo" size={24} color="white" />
+        </TouchableOpacity>
+      </View>
+      <ViewShot
+        ref={captureRef}
+        style={{ flex: 1 }}
+        options={{ format: "jpg", quality: 1, result: "base64" }}
+      >
+        <LinearGradient
+          colors={["#4c669f", "#3b5998", "#192f6a"]}
+          style={styles.linearGradient}
+        >
+          <View style={styles.card}>
+            <Text
+              style={{
+                fontSize: 24,
+                color: "#fff",
+              }}
+            >
+              {quote.quote}
+            </Text>
+            <View>
+              <Text style={{ color: "#fff" }}>
+                — {quote.author}
+                {quote.title && ", "}
+                {quote.title}
+              </Text>
+            </View>
           </View>
-        </ViewShot>
-      </>
-    </SwipeablePanel>
+          <View style={styles.logoContainer}>
+            <Text style={styles.logo}>@swipewisedom</Text>
+          </View>
+        </LinearGradient>
+      </ViewShot>
+      <SafeAreaView
+        style={{
+          flexDirection: "row",
+          marginBottom: 5,
+          justifyContent: "center",
+        }}
+      >
+        <Button success rounded onPress={handleCapture}>
+          <Text>
+            <Icon name="share" size={24} color="white" />
+            Share
+          </Text>
+        </Button>
+      </SafeAreaView>
+    </Animated.View>
   );
 };
+
+const styles = StyleSheet.create({
+  card: {
+    flex: 1,
+    justifyContent: "center",
+    zIndex: 1,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 0,
+  },
+
+  linearGradient: { flex: 1, minHeight: height },
+  logoContainer: {
+    position: "absolute",
+    top: 50,
+    left: 20,
+  },
+
+  logo: {
+    color: "#fe4b00",
+    fontWeight: "bold",
+    textAlign: "right",
+  },
+});
 
 export default SlideUp;

@@ -34,16 +34,22 @@ export const getQuotes = createAsyncThunk(
 const initialState = {
   error: null,
   loading: true,
+  shareInstagramOpen: false,
 };
 
 const statusSlice = createSlice({
   name: "status",
   initialState,
   reducers: {
+    setShareInstagramOpen: (state, action) => {
+      state.shareInstagramOpen = action.payload;
+    },
+
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
   },
+
   extraReducers: (builder) => {
     /**
      * SignUp
@@ -65,5 +71,5 @@ const statusSlice = createSlice({
   },
 });
 
-export const { setLoading } = statusSlice.actions;
+export const { setLoading, setShareInstagramOpen } = statusSlice.actions;
 export default statusSlice.reducer;

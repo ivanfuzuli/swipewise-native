@@ -4,8 +4,16 @@ import { View, TouchableOpacity, StyleSheet, Image, Share } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import logo from "../../../assets/icon.png";
 
+import { useDispatch } from "react-redux";
+import { setShareInstagramOpen } from "../../store/statusSlice";
+
 const Header = ({ quote, isEmpty }) => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
+
+  const openInstagramShare = () => {
+    dispatch(setShareInstagramOpen(true));
+  };
 
   const handleShare = async () => {
     try {
@@ -43,6 +51,9 @@ const Header = ({ quote, isEmpty }) => {
             </TouchableOpacity>
           </>
         )}
+        <TouchableOpacity style={styles.mr10} onPress={openInstagramShare}>
+          <Icon name="instagram" size={32} color="gray" />
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
           <Icon name="user" size={32} color="gray" />
         </TouchableOpacity>

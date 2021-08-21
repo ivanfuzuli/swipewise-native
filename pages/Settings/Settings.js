@@ -49,6 +49,7 @@ const Settings = ({ navigation }) => {
               <Icon name="arrow-forward" />
             </Right>
           </ListItem>
+          <LogoutButton email={email} />
           <ListItem onPress={() => navigation.navigate("Delete Account")}>
             <Left>
               <Text>Delete Account</Text>
@@ -57,7 +58,14 @@ const Settings = ({ navigation }) => {
               <Icon name="arrow-forward" />
             </Right>
           </ListItem>
-          <LogoutButton email={email} />
+          <ListItem onPress={() => navigation.navigate("Feedback")}>
+            <Left>
+              <Text>Feedback</Text>
+            </Left>
+            <Right>
+              <Icon name="arrow-forward" />
+            </Right>
+          </ListItem>
         </List>
         <View style={styles.version}>
           <Text>Version: ({version})</Text>

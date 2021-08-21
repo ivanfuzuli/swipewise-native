@@ -14,7 +14,7 @@ import LinearGradient from "react-native-linear-gradient";
 
 import { useSelector, useDispatch } from "react-redux";
 import { setShareInstagramOpen } from "../../store/statusSlice";
-import { Button, Text, View, Card, CardItem } from "native-base";
+import { Button, Text, View } from "native-base";
 import Share from "react-native-share";
 
 const { height } = Dimensions.get("window");

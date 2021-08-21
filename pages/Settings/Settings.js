@@ -41,6 +41,14 @@ const Settings = ({ navigation }) => {
               <Icon name="arrow-forward" />
             </Right>
           </ListItem>
+          <ListItem onPress={() => navigation.navigate("Change Tags")}>
+            <Left>
+              <Text>Change Tags</Text>
+            </Left>
+            <Right>
+              <Icon name="arrow-forward" />
+            </Right>
+          </ListItem>
           <ListItem onPress={() => navigation.navigate("Delete Account")}>
             <Left>
               <Text>Delete Account</Text>

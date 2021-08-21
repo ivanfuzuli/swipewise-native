@@ -1,6 +1,8 @@
 PODS:
   - Amplitude (6.0.0)
   - boost-for-react-native (1.63.0)
+  - BVLinearGradient (2.5.6):
+    - React
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
   - EXAmplitude (10.2.0):
@@ -436,6 +438,7 @@ PODS:
     - Yoga (~> 1.14)
 
 DEPENDENCIES:
+  - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXAmplitude (from `../node_modules/expo-analytics-amplitude/ios`)
   - EXAppleAuthentication (from `../node_modules/expo-apple-authentication/ios`)
@@ -542,6 +545,8 @@ SPEC REPOS:
     - YogaKit
 
 EXTERNAL SOURCES:
+  BVLinearGradient:
+    :path: "../node_modules/react-native-linear-gradient"
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   EXAmplitude:
@@ -674,6 +679,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Amplitude: cc34fcd8dfffc3470bc2e05f3a4abb0178f6d963
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
+  BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: cde416483dac037923206447da6e1454df403714
   EXAmplitude: b3ef1ed2ae853bccd08a685d2f0352c603b215fe

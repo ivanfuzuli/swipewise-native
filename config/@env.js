@@ -1,4 +1,4 @@
-const release = "prod";
+const release = "devel";
 function getEnvironment() {
   if (release.startsWith("prod")) {
     // matches prod-v1, prod-v2, prod-v3

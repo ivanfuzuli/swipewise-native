@@ -10,6 +10,10 @@ const counterSlice = createSlice({
   name: "selected",
   initialState,
   reducers: {
+    resetTags: (state) => {
+      state.selectedTags = [];
+    },
+
     addTag: (state, action) => {
       state.selectedTags.push(action.payload);
     },
@@ -30,6 +34,7 @@ export const {
   removeByIndex,
   addTag,
   removeTag,
+  resetTags,
 } = counterSlice.actions;
 
 // Define a thunk that dispatches those action creators

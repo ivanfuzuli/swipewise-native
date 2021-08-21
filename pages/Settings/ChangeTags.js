@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "../../config/@axios";
 
 import { SafeAreaView } from "react-native";
@@ -7,9 +7,12 @@ import { Button, Text, Container, Toast } from "native-base";
 import Selected from "../SelectTags/components/Selected";
 import ErrorMessage from "../../components/ErrorMessage";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { resetTags } from "../SelectTags/store/selectedSlice";
 
 const ChangeTags = () => {
+  const dispatch = useDispatch();
+
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const selectedTags = useSelector((state) => state.selected.selectedTags);
@@ -32,6 +35,14 @@ const ChangeTags = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    dispatch(resetTags());
+
+    return () => {
+      dispatch(resetTags());
+    };
+  }, []);
 
   return (
     <Container style={{ flex: 1 }}>

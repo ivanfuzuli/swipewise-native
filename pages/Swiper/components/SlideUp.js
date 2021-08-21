@@ -16,7 +16,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { setShareInstagramOpen } from "../../store/statusSlice";
 import { Button, Text, View, Card, CardItem } from "native-base";
 import Share from "react-native-share";
-import RNFS from "react-native-fs";
 
 const { height } = Dimensions.get("window");
 
@@ -33,23 +32,21 @@ const SlideUp = () => {
   };
 
   const share = (uri) => {
-    RNFS.readFile(uri, "base64").then((res) => {
-      let urlString = "data:image/jpeg;base64," + res;
-      let options = {
-        url: urlString,
-        social: Share.Social.INSTAGRAM,
-        type: "image/jpeg",
-        saveToFiles: false,
-      };
+    let urlString = "data:image/jpeg;base64," + uri;
+    let options = {
+      url: urlString,
+      social: Share.Social.INSTAGRAM,
+      type: "image/jpeg",
+      saveToFiles: false,
+    };
 
-      Share.shareSingle(options)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          Alert.alert("Please give photo write access to swipewise.");
-        });
-    });
+    Share.shareSingle(options)
+      .then((res) => {
+        closeShare();
+      })
+      .catch((err) => {
+        Alert.alert("Please give photo write access to swipewise.");
+      });
   };
 
   useEffect(() => {
@@ -147,8 +144,9 @@ const styles = StyleSheet.create({
 
   linearGradient: { flex: 1, minHeight: height },
   logoContainer: {
-    marginBottom: 10,
-    marginRight: 20,
+    position: "absolute",
+    top: 50,
+    left: 20,
   },
 
   logo: {

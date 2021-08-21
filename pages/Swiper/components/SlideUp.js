@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Feather as Icon } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import {
@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Alert,
+  ScrollView,
 } from "react-native";
 import ViewShot from "react-native-view-shot";
 import LinearGradient from "react-native-linear-gradient";
@@ -21,6 +22,8 @@ const { height } = Dimensions.get("window");
 
 const SlideUp = () => {
   const dispatch = useDispatch();
+
+  const [colors, setColors] = useState(["#4c669f", "#3b5998", "#192f6a"]);
   const captureRef = useRef(null);
   const translateY = useRef(new Animated.Value(height));
   const quotes = useSelector((state) => state.quotes.items);
@@ -31,6 +34,23 @@ const SlideUp = () => {
     dispatch(setShareInstagramOpen(false));
   };
 
+  const changeColor = (color) => {
+    switch (color) {
+      case "blue": {
+        setColors(["#4c669f", "#3b5998", "#192f6a"]);
+        break;
+      }
+      case "pink": {
+        setColors(["#cf0100", "#f03762", "#ff0095"]);
+        break;
+      }
+
+      case "green": {
+        setColors(["#013900", "#0d6600", "#468800"]);
+        break;
+      }
+    }
+  };
   const share = (uri) => {
     let urlString = "data:image/jpeg;base64," + uri;
     let options = {
@@ -88,11 +108,11 @@ const SlideUp = () => {
         style={{ flex: 1 }}
         options={{ format: "jpg", quality: 1, result: "base64" }}
       >
-        <LinearGradient
-          colors={["#4c669f", "#3b5998", "#192f6a"]}
-          style={styles.linearGradient}
-        >
-          <View style={styles.card}>
+        <LinearGradient colors={colors} style={styles.linearGradient}>
+          <ScrollView
+            style={styles.card}
+            contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+          >
             <Text
               style={{
                 fontSize: 24,
@@ -108,7 +128,8 @@ const SlideUp = () => {
                 {quote.title}
               </Text>
             </View>
-          </View>
+          </ScrollView>
+
           <View style={styles.logoContainer}>
             <Text style={styles.logo}>@swipewisedom</Text>
           </View>
@@ -116,36 +137,76 @@ const SlideUp = () => {
       </ViewShot>
       <SafeAreaView
         style={{
-          flexDirection: "row",
+          flexDirection: "column",
           marginBottom: 5,
           justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        <Button success rounded onPress={handleCapture}>
-          <Text>
-            <Icon name="share" size={24} color="white" />
-            Share
-          </Text>
-        </Button>
+        <View style={styles.colors}>
+          <TouchableOpacity onPress={() => changeColor("green")}>
+            <View style={[styles.green, styles.color]}></View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => changeColor("pink")}>
+            <View style={[styles.pink, styles.color]}></View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => changeColor("blue")}>
+            <View style={[styles.blue, styles.color]}></View>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <Button success rounded onPress={handleCapture}>
+            <Text>
+              <Icon name="share" size={24} color="white" />
+              Share
+            </Text>
+          </Button>
+        </View>
       </SafeAreaView>
     </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
+  color: {
+    width: 36,
+    height: 36,
+    borderRadius: 50,
+    marginRight: 10,
+    borderWidth: 1,
+    borderColor: "white",
+  },
+  colors: {
+    opacity: 0.6,
+    flexDirection: "row",
+    marginBottom: 15,
+  },
+  green: {
+    backgroundColor: "green",
+  },
+  blue: {
+    backgroundColor: "blue",
+  },
+  pink: {
+    backgroundColor: "#cf0100",
+  },
   card: {
     flex: 1,
-    justifyContent: "center",
     zIndex: 1,
     paddingLeft: 20,
     paddingRight: 20,
-    paddingTop: 0,
+    marginTop: "10%",
+    marginBottom: "10%",
     marginLeft: "auto",
     marginRight: "auto",
     width: (height / 16) * 8,
   },
 
-  linearGradient: { flex: 1, minHeight: height },
+  linearGradient: {
+    flex: 1,
+    minHeight: height,
+    width: "100%",
+  },
   logoContainer: {
     position: "absolute",
     top: 50,

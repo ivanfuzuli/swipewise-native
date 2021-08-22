@@ -8,6 +8,8 @@ import Settings from "./pages/Settings";
 import ChangeEmail from "./pages/Settings/ChangeEmail";
 import ChangePassword from "./pages/Settings/ChangePassword";
 import DeleteAccount from "./pages/Settings/DeleteAccount";
+import ChangeTags from "./pages/Settings/ChangeTags";
+import Feedback from "./pages/Settings/Feedback";
 
 import { useSelector } from "react-redux";
 
@@ -39,7 +41,9 @@ const Routes = () => {
           <Stack.Screen name="Settings" component={Settings} />
           <Stack.Screen name="Change Email" component={ChangeEmail} />
           <Stack.Screen name="Change Password" component={ChangePassword} />
+          <Stack.Screen name="Change Tags" component={ChangeTags} />
           <Stack.Screen name="Delete Account" component={DeleteAccount} />
+          <Stack.Screen name="Feedback" component={Feedback} />
         </Stack.Navigator>
       ) : (
         <Stack.Navigator>

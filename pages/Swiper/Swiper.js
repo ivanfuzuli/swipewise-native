@@ -9,7 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getQuotes, setLoading } from "../store/statusSlice";
 import { dequeue } from "../store/votesSlice";
 
+import SlideUp from "./components/SlideUp";
 import ErrorView from "./components/ErrorView";
+
 let timer = null;
 const WAIT_UNTIL = 3000;
 
@@ -22,6 +24,7 @@ export default function App({ navigation }) {
   const quotes = useSelector((state) => state.quotes.items);
   const lastSync = useSelector((state) => state.quotes.lastSync);
   const hasTags = useSelector((state) => state.auth.hasTags);
+  const shareOpen = useSelector((state) => state.status.shareInstagramOpen);
 
   const [isTimerActive, setTimerActive] = useState(false);
   useEffect(() => {
@@ -72,6 +75,7 @@ export default function App({ navigation }) {
     <Container>
       {(isLoading || isTimerActive) && <Loading />}
       {!isLoading && !isTimerActive && <Quotes {...{ navigation, quotes }} />}
+      {shareOpen && <SlideUp />}
     </Container>
   );
 }

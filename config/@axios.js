@@ -13,6 +13,7 @@ const createMeaningfulMessage = (err) => {
   if (!response) {
     errorMessage = "Please check your internet connection.";
   } else {
+    console.log(response);
     errorMessage = "There was an unexpected error.";
   }
 

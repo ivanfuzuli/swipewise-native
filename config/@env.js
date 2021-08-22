@@ -1,7 +1,6 @@
-import * as Updates from "expo-updates";
-
+const release = "develop";
 function getEnvironment() {
-  if (Updates.releaseChannel.startsWith("prod")) {
+  if (release.startsWith("prod")) {
     // matches prod-v1, prod-v2, prod-v3
     return {
       envName: "PRODUCTION",
@@ -13,7 +12,7 @@ function getEnvironment() {
       sentryDsn:
         "https://2dfc33c7af474d26b03707b62e6151fe@o958963.ingest.sentry.io/5907450",
     }; // prod env settings
-  } else if (Updates.releaseChannel.startsWith("staging")) {
+  } else if (release.startsWith("staging")) {
     // matches staging-v1, staging-v2
     return {
       envName: "STAGING",
@@ -29,7 +28,7 @@ function getEnvironment() {
     // assume any other release channel is development
     return {
       envName: "DEVELOPMENT",
-      apiUrl: "https://swipewise-dev.herokuapp.com",
+      apiUrl: "http://localhost:8080",
       sentryDsn: "",
       amplitudeApiKey: "",
       limit: 15,

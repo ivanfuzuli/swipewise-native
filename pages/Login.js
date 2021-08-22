@@ -29,6 +29,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import ErrorMessage from "../components/ErrorMessage";
 import Divider from "./Social/Divider";
+import AppleAuth from "./Social/AppleAuth";
 import FacebookAuth from "./Social/FacebookAuth";
 import GoogleAuth from "./Social/GoogleAuth";
 
@@ -199,7 +200,8 @@ const Login = () => {
                   </View>
                 </Form>
                 <Divider />
-                <FacebookAuth title="Sign In with Facebook" />
+                <AppleAuth />
+                <FacebookAuth title="Continue with Facebook" />
               </View>
             </View>
           </KeyboardAvoidingView>

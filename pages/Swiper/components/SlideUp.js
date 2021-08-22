@@ -19,6 +19,7 @@ import { Button, Text, View } from "native-base";
 import Share from "react-native-share";
 
 const { height } = Dimensions.get("window");
+const width = height * (9 / 16);
 
 const SlideUp = () => {
   const dispatch = useDispatch();
@@ -193,13 +194,13 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     zIndex: 1,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: 30,
+    paddingRight: 30,
     marginTop: "10%",
     marginBottom: "10%",
     marginLeft: "auto",
     marginRight: "auto",
-    width: (height / 16) * 8,
+    maxWidth: width,
   },
 
   linearGradient: {

@@ -10,6 +10,7 @@ import { Feather as Icon } from "@expo/vector-icons";
 import LottieView from "lottie-react-native";
 import Animated from "react-native-reanimated";
 import runButtonTiming from "../../../animations/runButtonTiming";
+import ClapsButton from "./ClapsButton";
 
 const { width } = Dimensions.get("window");
 
@@ -64,6 +65,7 @@ const Footer = ({ onChange, x }) => {
             </RNAnimated.View>
           </View>
         </Pressable>
+        <ClapsButton circle={styles.circle} />
         <Pressable onPress={like}>
           <View style={styles.circle}>
             <LottieView

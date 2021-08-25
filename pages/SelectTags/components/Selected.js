@@ -45,13 +45,15 @@ const Selected = () => {
               key={tag.id}
             >
               <View style={styles.selectbox}>
-                <View style={styles.selecticon}>
-                  {isSelected(tag.id) && (
-                    <AntDesign name="check" size={18} color="green" />
-                  )}
-                </View>
                 <View>
                   <Text style={styles.text}>{tag.name}</Text>
+                </View>
+                <View style={styles.selecticon}>
+                  {isSelected(tag.id) ? (
+                    <AntDesign name="check" size={18} color="green" />
+                  ) : (
+                    <AntDesign name="plus" size={18} color="black" />
+                  )}
                 </View>
               </View>
             </TouchableOpacity>

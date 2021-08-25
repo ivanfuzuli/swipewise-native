@@ -18,7 +18,7 @@ export const signup = createAsyncThunk(
     await SecureStore.setItemAsync("token", token);
     const user = jwt_decode(token);
     await Analytics.identify(user.sub);
-    await Analytics.track(Analytics.events.SING_UP);
+    await Analytics.track(Analytics.events.SIGN_UP);
 
     return { user, hasTags };
   }

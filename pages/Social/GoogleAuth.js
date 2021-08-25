@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import * as Auth from "../store/authSlice";
 import * as SecureStore from "expo-secure-store";
 
+import Analytics from "../../config/Analytics";
 import env from "../../config/@env";
 const API_URL = env.apiUrl;
 const GOOGLE_APP_ID = env.googleAppId;
@@ -38,6 +39,12 @@ const GoogleAuth = ({ title }) => {
   const tryLogin = async () => {
     const { token, hasTags } = response.params;
     await SecureStore.setItemAsync("token", token);
+
+    if (hasTags === "1") {
+      Analytics.track(Analytics.events.SIGN_UP);
+      Analytics.track(Analytics.events.SIGN_UP_WITH_GOOGLE);
+    }
+
     dispatch(
       Auth.loginViaToken({
         token,

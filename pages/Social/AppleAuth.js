@@ -15,7 +15,7 @@ function AppleAuth() {
   const tryLogin = async ({ token, hasTags }) => {
     await SecureStore.setItemAsync("token", token);
 
-    if (parseInt(hasTags) === 1) {
+    if (parseInt(hasTags) === 0) {
       Analytics.track(Analytics.events.SIGN_UP);
       Analytics.track(Analytics.events.SIGN_UP_WITH_APPLE);
     }

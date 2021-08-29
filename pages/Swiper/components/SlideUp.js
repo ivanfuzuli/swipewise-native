@@ -128,7 +128,7 @@ const SlideUp = () => {
           </ScrollView>
 
           <View style={styles.logoContainer}>
-            <Text style={styles.logo}>@swipewisedom</Text>
+            <Text style={styles.logo}>@swipewisdom</Text>
           </View>
         </LinearGradient>
       </ViewShot>

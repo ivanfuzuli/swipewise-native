@@ -34,7 +34,7 @@ const FacebookAuth = ({ title }) => {
     const { token, hasTags } = response.params;
     await SecureStore.setItemAsync("token", token);
 
-    if (hasTags === "1") {
+    if (parseInt(hasTags) === 0) {
       Analytics.track(Analytics.events.SIGN_UP);
       Analytics.track(Analytics.events.SIGN_UP_WITH_FACEBOOK);
     }

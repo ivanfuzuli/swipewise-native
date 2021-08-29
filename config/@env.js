@@ -6,7 +6,7 @@ function getEnvironment() {
       envName: "PRODUCTION",
       apiUrl: "https://api.swipewiseapp.com",
       amplitudeApiKey: "43d4bd8a314dcf72434237369dcbb02b",
-      limit: 15,
+      limit: 30,
       waitTimeInMinutes: 30,
       fbAppId: 580899039611484,
       sentryDsn:
@@ -18,7 +18,7 @@ function getEnvironment() {
       envName: "STAGING",
       apiUrl: "https://swipewise-dev.herokuapp.com",
       amplitudeApiKey: "43d4bd8a314dcf72434237369dcbb02b",
-      limit: 15,
+      limit: 30,
       fbAppId: 521027949012572,
       waitTimeInMinutes: 30,
       googleAppId:
@@ -31,7 +31,7 @@ function getEnvironment() {
       apiUrl: "https://swipewise-dev.herokuapp.com",
       sentryDsn: "",
       amplitudeApiKey: "",
-      limit: 15,
+      limit: 30,
       waitTimeInMinutes: 1,
       fbAppId: 521027949012572,
       googleAppId:

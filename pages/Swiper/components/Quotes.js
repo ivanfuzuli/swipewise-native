@@ -105,7 +105,7 @@ class Quotes extends React.PureComponent {
             </Interactable>
           )}
         </View>
-        {!isEmpty && <Footer onChange={onSnap} x={x} y={y} />}
+        {!isEmpty && <Footer quote={quote} onChange={onSnap} x={x} y={y} />}
       </SafeAreaView>
     );
   }

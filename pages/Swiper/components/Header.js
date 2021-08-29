@@ -6,6 +6,7 @@ import logo from "../../../assets/icon.png";
 
 import { useDispatch } from "react-redux";
 import { setShareInstagramOpen } from "../../store/statusSlice";
+import ClapsSvg from "./svgs/ClapsSvg";
 
 const Header = ({ quote, isEmpty }) => {
   const dispatch = useDispatch();
@@ -41,6 +42,10 @@ const Header = ({ quote, isEmpty }) => {
         <Image source={logo} style={styles.logo} />
       </View>
       <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.mr10}
+          onPress={() => navigation.navigate("Favourites")}
+        ></TouchableOpacity>
         {!isEmpty && (
           <>
             <TouchableOpacity style={styles.mr10} onPress={handleShare}>
@@ -51,6 +56,20 @@ const Header = ({ quote, isEmpty }) => {
             </TouchableOpacity>
           </>
         )}
+
+        <TouchableOpacity
+          style={{ marginLeft: 10 }}
+          onPress={() => navigation.navigate("Favorites")}
+        >
+          <View
+            style={{
+              height: 32,
+              width: 32,
+            }}
+          >
+            <ClapsSvg color="#000" />
+          </View>
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
           <Icon name="user" size={32} color="gray" />
         </TouchableOpacity>

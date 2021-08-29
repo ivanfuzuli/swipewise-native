@@ -35,6 +35,7 @@ const initialState = {
   error: null,
   loading: true,
   shareInstagramOpen: false,
+  currentQuote: null,
 };
 
 const statusSlice = createSlice({
@@ -47,6 +48,10 @@ const statusSlice = createSlice({
 
     setLoading: (state, action) => {
       state.loading = action.payload;
+    },
+
+    setCurrentQuote: (state, action) => {
+      state.currentQuote = action.payload;
     },
   },
 
@@ -71,5 +76,6 @@ const statusSlice = createSlice({
   },
 });
 
-export const { setLoading, setShareInstagramOpen } = statusSlice.actions;
+export const { setLoading, setCurrentQuote, setShareInstagramOpen } =
+  statusSlice.actions;
 export default statusSlice.reducer;

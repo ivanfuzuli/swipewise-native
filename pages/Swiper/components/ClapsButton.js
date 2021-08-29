@@ -1,12 +1,32 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Pressable, View, Text, StyleSheet, Animated } from "react-native";
 import LottieView from "lottie-react-native";
 import debounce from "lodash/debounce";
+import { useSelector, useDispatch } from "react-redux";
+import { sendVotes } from "../../store/votesSlice";
 
 const MAX_CLAPS = 30;
-const ClapsButton = ({ circle }) => {
+const SEND_DEBOUNCE = 2000;
+const ClapsButton = ({ quote, circleStyle }) => {
+  const dispatch = useDispatch();
+
+  const sendDebounced = useRef(
+    debounce((quote_id, count) => {
+      const vote = {
+        quote_id,
+        type: "clap",
+        count,
+      };
+      dispatch(sendVotes(vote));
+    }, SEND_DEBOUNCE)
+  );
+
   const debounced = useRef(null);
+  const quoteIdRef = useRef(null);
+
   const [count, setCount] = useState(0);
+  const countRef = useRef(0);
+
   const [isActive, setActive] = useState(false);
   const translateAnimRef = useRef(new Animated.Value(0));
 
@@ -21,15 +41,26 @@ const ClapsButton = ({ circle }) => {
       useNativeDriver: true,
     }).start(({ finished }) => {
       if (finished) {
+        sendDebounced.current(quoteIdRef.current, countRef.current);
         setActive(false);
         translateAnimRef.current.setValue(0);
       }
     });
   };
 
+  useEffect(() => {
+    setCount(0);
+    countRef.current = 0;
+    quoteIdRef.current = quote._id;
+  }, [quote._id]);
+
   const claps = () => {
     if (count < MAX_CLAPS) {
-      setCount((state) => state + 1);
+      setCount((state) => {
+        const count = state + 1;
+        countRef.current = count;
+        return count;
+      });
     }
     clapsRef.current.play();
     clearTimeout(timeout.current);
@@ -55,7 +86,7 @@ const ClapsButton = ({ circle }) => {
   return (
     <View>
       <Pressable onPress={claps}>
-        <View style={circle}>
+        <View style={circleStyle}>
           <LottieView
             ref={clapsRef}
             style={{
@@ -79,7 +110,7 @@ const ClapsButton = ({ circle }) => {
               {
                 translateY: translateAnimRef.current.interpolate({
                   inputRange: [0, 1],
-                  outputRange: [-40, -180],
+                  outputRange: [-50, -180],
                 }),
               },
             ],

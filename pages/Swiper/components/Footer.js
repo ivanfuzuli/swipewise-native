@@ -16,7 +16,7 @@ const { width } = Dimensions.get("window");
 
 const { Clock, Value } = Animated;
 
-const Footer = ({ onChange, x }) => {
+const Footer = ({ quote, onChange, x }) => {
   const likeRef = useRef(null);
   const timeout = useRef(null);
 
@@ -65,7 +65,7 @@ const Footer = ({ onChange, x }) => {
             </RNAnimated.View>
           </View>
         </Pressable>
-        <ClapsButton circle={styles.circle} />
+        <ClapsButton quote={quote} circleStyle={styles.circle} />
         <Pressable onPress={like}>
           <View style={styles.circle}>
             <LottieView

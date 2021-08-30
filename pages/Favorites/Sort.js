@@ -1,23 +1,25 @@
-import React, { useState } from "react";
-import { Text, View } from "react-native";
+import React from "react";
+import { View } from "react-native";
 import { ButtonGroup } from "react-native-elements";
 
-const Order = ({ setOrder }) => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+const Order = ({ setSort, sort }) => {
+  let selectedIndex = 1;
+  if (sort === "popular") {
+    selectedIndex = 0;
+  }
+
   const updateIndex = (index) => {
     if (index === selectedIndex) {
       return;
     }
 
     if (index === 0) {
-      setOrder("popular");
+      setSort("popular");
     } else {
-      setOrder("newest");
+      setSort("newest");
     }
-
-    setSelectedIndex(index);
   };
-  const buttons = ["Most Liked", "Newest"];
+  const buttons = ["Most Popular", "Newest"];
 
   return (
     <View style={{ flexDirection: "column" }}>

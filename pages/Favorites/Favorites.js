@@ -1,77 +1,54 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useMemo } from "react";
 import axios from "../../config/@axios";
 
 import {
   RefreshControl,
   SafeAreaView,
-  View,
   FlatList,
   StyleSheet,
-  Text,
 } from "react-native";
 
 import Item from "./Item";
-import Order from "./Order";
+import Sort from "./Sort";
 import Panel from "./Panel";
-import ErrorMessage from "../../components/ErrorMessage";
+import ListEmpty from "./ListEmpty";
 
-const LIMIT = 15;
+import ErrorMessage from "../../components/ErrorMessage";
+import { useSelector, useDispatch } from "react-redux";
+import { getClaps, setSort } from "../store/clapsSlice";
 
 const Favorites = ({ navigation }) => {
-  const offsetRef = useRef(0);
-  const totalRef = useRef(LIMIT);
-  const completedRef = useRef(false);
-  const orderRef = useRef("popular");
+  const dispatch = useDispatch();
+  const isScrolled = useRef(false);
 
-  const [isLoading, setLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [quotes, setQuotes] = useState([]);
+  const sort = useSelector((state) => state.claps.sort);
+  const errorMessage = useSelector((state) => state.claps.error);
+  const isLoading = useSelector((state) => state.claps.loading);
 
-  const refresh = async (offset, reset) => {
-    try {
-      setLoading(true);
-      setErrorMessage(null);
-      const result = await axios.get(
-        `claps?offset=${offset}&limit=${LIMIT}&sort=${orderRef.current}`
-      );
-      const { data, headers } = result;
-      totalRef.current = parseInt(headers["x-total-count"]);
+  const byId = useSelector((state) => state.claps.byId);
+  const allIds = useSelector((state) => state.claps.allIds);
 
-      if (reset) {
-        setQuotes(data);
-      } else {
-        setQuotes((prev) => [...prev, ...data]);
-      }
-    } catch (e) {
-      setErrorMessage(e.message);
-    } finally {
-      setLoading(false);
+  const quotes = useMemo(() => {
+    if (sort === "popular") {
+      return allIds.popular.map((id) => {
+        return byId[id];
+      });
     }
-  };
+
+    return allIds.newest.map((id) => {
+      return byId[id];
+    });
+  }, [sort, allIds]);
 
   useEffect(() => {
-    refresh(0);
-  }, []);
+    dispatch(getClaps(false));
+  }, [sort]);
 
   handleRefresh = () => {
-    const completed = completedRef.current;
-    const total = totalRef.current;
-    const offset = offsetRef.current;
-
-    let nextOffset = offset + LIMIT;
-
-    if (completed) {
+    if (!isScrolled.current) {
       return;
     }
-
-    if (nextOffset >= total) {
-      nextOffset = total;
-      completed.current = true;
-    }
-
-    offsetRef.current = nextOffset;
-
-    refresh(nextOffset);
+    dispatch(getClaps(true));
   };
 
   const renderItem = ({ item }) => {
@@ -85,49 +62,38 @@ const Favorites = ({ navigation }) => {
     );
   };
 
-  const reset = () => {
-    offsetRef.current = 0;
-    totalRef.current = LIMIT;
-    completedRef.current = false;
+  const refresh = () => {
+    dispatch(getClaps(false));
   };
 
-  const resetAndRefresh = () => {
-    reset();
-    refresh(0, true);
-  };
-
-  const setOrder = (order) => {
-    setQuotes([]);
-    orderRef.current = order;
-    resetAndRefresh();
+  const handleSetSort = (type) => {
+    dispatch(setSort(type));
   };
 
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <Order setOrder={setOrder} />
+        <Sort setSort={handleSetSort} sort={sort} />
         <ErrorMessage message={errorMessage} />
         <FlatList
           data={quotes}
           refreshControl={
             <RefreshControl
+              enabled
               refreshing={isLoading}
-              onRefresh={resetAndRefresh}
+              onRefresh={refresh}
+              tintColor={"red"}
+              ti
             />
           }
           renderItem={renderItem}
           keyExtractor={(item) => item._id}
           onEndReached={handleRefresh}
+          onMomentumScrollBegin={() => (isScrolled.current = true)}
           onEndReachedThreshold={0.5}
         />
-        {!isLoading && !errorMessage && quotes.length < 1 && (
-          <View style={styles.center}>
-            <Text>
-              There is no favorite quote yet. Please clap a few quotes.
-            </Text>
-          </View>
-        )}
       </SafeAreaView>
+      {!isLoading && !errorMessage && quotes.length < 1 && <ListEmpty />}
       <Panel />
     </>
   );

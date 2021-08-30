@@ -5,7 +5,7 @@ const initialState = {
   rated: false,
 };
 
-const quotesSlice = createSlice({
+const statsSlice = createSlice({
   name: "stats",
   initialState,
   reducers: {
@@ -22,5 +22,5 @@ const quotesSlice = createSlice({
   },
 });
 
-export const { incTotalSessions, resetSession, setRated } = quotesSlice.actions;
-export default quotesSlice.reducer;
+export const { incTotalSessions, resetSession, setRated } = statsSlice.actions;
+export default statsSlice.reducer;

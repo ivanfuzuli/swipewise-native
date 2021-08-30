@@ -1,10 +1,5 @@
-import React, { useRef, useState } from "react";
-import {
-  StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableWithoutFeedback,
-} from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
 
 import axios from "../../config/@axios";
 import PubSub from "pubsub-js";
@@ -20,15 +15,10 @@ import {
   Button,
   Toast,
 } from "native-base";
-import { Feather } from "@expo/vector-icons";
 
 const ChangeEmail = () => {
   const [errorMessage, setErrorMessage] = useState(null);
-  const passwordInput = useRef(null);
-
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [secureTextEntry, setSecureTextEntry] = useState(true);
 
   const [errors, setErrors] = useState({});
   const [isDirty, setDirty] = useState(false);
@@ -36,7 +26,6 @@ const ChangeEmail = () => {
   const validate = (obj) => {
     const values = {
       email,
-      password,
       ...obj,
     };
 
@@ -53,13 +42,6 @@ const ChangeEmail = () => {
     } else {
       localErrors.email = null;
     }
-
-    if (!values.password) {
-      localErrors.password = "Password is required!";
-    } else {
-      localErrors.password = null;
-    }
-
     setErrors(localErrors);
     return isValid(localErrors);
   };
@@ -73,15 +55,6 @@ const ChangeEmail = () => {
     validate({ email: text });
   };
 
-  const handlePasswordChange = (text) => {
-    setPassword(text);
-    validate({ password: text });
-  };
-
-  const toggleSecureTextEntry = () => {
-    setSecureTextEntry((entry) => !entry);
-  };
-
   const handleSubmit = async () => {
     setDirty(true);
     setErrorMessage(null);
@@ -90,12 +63,12 @@ const ChangeEmail = () => {
       try {
         await axios.put("profile/email", {
           newEmail: email.trim(),
-          password,
         });
 
         Toast.show({
           text: "Your e-mail has been successfully changed! Please login again.",
           buttonText: "Okay",
+          duration: 10 * 1000,
         });
 
         PubSub.publish("auth", "logout");
@@ -126,9 +99,6 @@ const ChangeEmail = () => {
               <Item floatingLabel>
                 <Label>New E-mail</Label>
                 <Input
-                  onSubmitEditing={() => {
-                    passwordInput.current._root.focus();
-                  }}
                   keyboardType="email-address"
                   returnKeyType={"next"}
                   onChangeText={handleEmailChange}
@@ -140,37 +110,6 @@ const ChangeEmail = () => {
               </Item>
               {isDirty && errors.email && (
                 <Text style={styles.error}>{errors.email}</Text>
-              )}
-              <View style={styles.lastItem}>
-                <Item floatingLabel>
-                  <Label>Password</Label>
-                  <Input
-                    autoCapitalize="none"
-                    returnKeyType={"done"}
-                    onChangeText={handlePasswordChange}
-                    value={password}
-                    getRef={(input) => {
-                      passwordInput.current = input;
-                    }}
-                    secureTextEntry={secureTextEntry}
-                  />
-                </Item>
-
-                <View style={styles.eye}>
-                  <TouchableWithoutFeedback onPress={toggleSecureTextEntry}>
-                    <View>
-                      {!secureTextEntry && (
-                        <Feather name="eye" size={24} color="black" />
-                      )}
-                      {secureTextEntry && (
-                        <Feather name="eye-off" size={24} color="black" />
-                      )}
-                    </View>
-                  </TouchableWithoutFeedback>
-                </View>
-              </View>
-              {isDirty && errors.password && (
-                <Text style={styles.error}>{errors.password}</Text>
               )}
               <View style={styles.buttons}>
                 <Button onPress={handleSubmit} bordered full rounded primary>

@@ -23,13 +23,10 @@ import { Feather } from "@expo/vector-icons";
 const ChangePassword = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setLoading] = useState(false);
-  const passwordInput = useRef(null);
 
+  const passwordInput = useRef(null);
   const [password, setPassword] = useState("");
-  const [oldPassword, setOldPassword] = useState("");
   const [secureTextEntry, setSecureTextEntry] = useState(true);
-  const [oldPasswordSecureTextEntry, setOldPasswordSecureTextEntry] =
-    useState(true);
 
   const [errors, setErrors] = useState({});
   const [isDirty, setDirty] = useState(false);
@@ -37,21 +34,12 @@ const ChangePassword = () => {
   const validate = (obj) => {
     const values = {
       password,
-      oldPassword,
       ...obj,
     };
 
     const localErrors = {
       ...errors,
     };
-
-    if (!values.email) {
-      localErrors.email = "Email is required!";
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-      localErrors.email = "Invalid email address.";
-    } else {
-      localErrors.email = null;
-    }
 
     if (!values.password) {
       localErrors.password = "Password is required!";
@@ -67,18 +55,9 @@ const ChangePassword = () => {
     return Object.values(errors).every((item) => !!item === false);
   };
 
-  const handleOldPasswordChange = (text) => {
-    setOldPassword(text);
-    validate({ email: text });
-  };
-
   const handlePasswordChange = (text) => {
     setPassword(text);
     validate({ password: text });
-  };
-
-  const toggleOldPasswordSecureTextEntry = () => {
-    setOldPasswordSecureTextEntry((entry) => !entry);
   };
 
   const toggleSecureTextEntry = () => {
@@ -91,11 +70,9 @@ const ChangePassword = () => {
     setErrorMessage(null);
     try {
       await axios.put("profile/password", {
-        oldPassword: oldPassword,
         newPassword: password,
       });
       setPassword(null);
-      setOldPassword(null);
       Toast.show({
         text: "Your password has been successfully changed!",
         buttonText: "Okay",
@@ -125,41 +102,7 @@ const ChangePassword = () => {
               <View>
                 <Text style={styles.heading}>Change Password</Text>
               </View>
-              <View style={styles.lastItem}>
-                <Item floatingLabel>
-                  <Label>Old Password</Label>
-                  <Input
-                    onSubmitEditing={() => {
-                      passwordInput.current._root.focus();
-                    }}
-                    autoCapitalize="none"
-                    returnKeyType={"next"}
-                    onChangeText={handleOldPasswordChange}
-                    value={oldPassword}
-                    secureTextEntry={oldPasswordSecureTextEntry}
-                  />
-                </Item>
-
-                <View style={styles.eye}>
-                  <TouchableWithoutFeedback
-                    onPress={toggleOldPasswordSecureTextEntry}
-                  >
-                    <View>
-                      {!oldPasswordSecureTextEntry && (
-                        <Feather name="eye" size={24} color="black" />
-                      )}
-                      {oldPasswordSecureTextEntry && (
-                        <Feather name="eye-off" size={24} color="black" />
-                      )}
-                    </View>
-                  </TouchableWithoutFeedback>
-                </View>
-              </View>
-              {isDirty && errors.password && (
-                <Text style={styles.error}>{errors.password}</Text>
-              )}
-
-              <View style={styles.lastItem}>
+              <View>
                 <Item floatingLabel>
                   <Label>New Password</Label>
                   <Input

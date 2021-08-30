@@ -1,10 +1,13 @@
 import React from "react";
+import env from "../../../config/@env";
+
 import { View, StyleSheet, SafeAreaView, Dimensions } from "react-native";
 import Animated from "react-native-reanimated";
 import Analytics from "../../../config/Analytics";
 
 import Footer from "./Footer";
 import Empty from "./Empty";
+import Rate, { AndroidMarket } from "react-native-rate";
 
 import Interactable from "./Interactable";
 import Card from "./Card";
@@ -12,6 +15,7 @@ import Header from "./Header";
 import { connect } from "react-redux";
 import { sendVotes } from "../../store/votesSlice";
 import { incIndex } from "../../store/quotesSlice";
+import { incTotalSessions, setRated } from "../../store/statsSlice";
 
 const { Value, interpolateNode, concat } = Animated;
 const { width, height } = Dimensions.get("window");
@@ -25,8 +29,28 @@ const A = width * Math.cos(α) + height * Math.sin(α);
 class Quotes extends React.PureComponent {
   x = new Value(0);
   y = new Value(0);
+  rateCount = 0;
+
   componentDidMount = () => {
     Analytics.track(Analytics.events.QUOTES_PAGE_OPENED);
+    this.props.incTotalSessions();
+  };
+
+  rate = () => {
+    if (this.props.rated || this.props.totalSessions < 1) {
+      return;
+    }
+
+    const options = {
+      AppleAppID: env.AppleAppID,
+      preferredAndroidMarket: AndroidMarket.Google,
+      preferInApp: true,
+      openAppStoreIfInAppFails: true,
+    };
+
+    Rate.rate(options, (success) => {
+      this.props.setRated(true);
+    });
   };
 
   onSnap = ({ nativeEvent: { x } }) => {
@@ -43,6 +67,10 @@ class Quotes extends React.PureComponent {
       };
       this.props.sendVotes(vote);
       this.props.incIndex();
+      this.rateCount = this.rateCount + 1;
+      if (up && this.rateCount > 4) {
+        this.rate();
+      }
     }
   };
 
@@ -50,6 +78,7 @@ class Quotes extends React.PureComponent {
     const { onSnap } = this;
     const { quotes } = this.props;
     const { currentIndex } = this.props;
+
     const x = this.x;
     const y = this.y;
 
@@ -94,7 +123,13 @@ class Quotes extends React.PureComponent {
           )}
           {!isEmpty && (
             <Interactable
-              key={currentIndex}
+              key={
+                this.props.totalSessions.toString() +
+                "_" +
+                currentIndex.toString() +
+                "_" +
+                this.props.rated.toString()
+              }
               snapPoints={[{ x: -1 * A }, { x: 0 }, { x: A }]}
               style={{ ...StyleSheet.absoluteFill, zIndex: 2 }}
               {...{ onSnap, x, y }}
@@ -133,6 +168,13 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state, ownProps) => ({
   currentIndex: state.quotes.currentIndex,
+  totalSessions: state.stats.totalSessions,
+  rated: state.stats.rated,
 });
 
-export default connect(mapStateToProps, { sendVotes, incIndex })(Quotes);
+export default connect(mapStateToProps, {
+  sendVotes,
+  setRated,
+  incTotalSessions,
+  incIndex,
+})(Quotes);

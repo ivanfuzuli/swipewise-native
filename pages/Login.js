@@ -202,6 +202,7 @@ const Login = () => {
                 <Divider />
                 <AppleAuth />
                 <FacebookAuth title="Continue with Facebook" />
+                <GoogleAuth title="Continue with Google" />
               </View>
             </View>
           </KeyboardAvoidingView>

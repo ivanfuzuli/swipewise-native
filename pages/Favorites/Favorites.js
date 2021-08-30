@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useMemo } from "react";
-import axios from "../../config/@axios";
 
 import {
   RefreshControl,
@@ -20,6 +19,7 @@ import { getClaps, setSort } from "../store/clapsSlice";
 const Favorites = ({ navigation }) => {
   const dispatch = useDispatch();
   const isScrolled = useRef(false);
+  const flatlistRef = useRef(null);
 
   const sort = useSelector((state) => state.claps.sort);
   const errorMessage = useSelector((state) => state.claps.error);
@@ -67,7 +67,13 @@ const Favorites = ({ navigation }) => {
   };
 
   const handleSetSort = (type) => {
+    flatlistRef.current.scrollToOffset({ animated: true, offset: 0 });
+    isScrolled.current = false;
     dispatch(setSort(type));
+  };
+
+  const handleMomentum = () => {
+    isScrolled.current = true;
   };
 
   return (
@@ -76,6 +82,7 @@ const Favorites = ({ navigation }) => {
         <Sort setSort={handleSetSort} sort={sort} />
         <ErrorMessage message={errorMessage} />
         <FlatList
+          ref={flatlistRef}
           data={quotes}
           refreshControl={
             <RefreshControl
@@ -89,7 +96,7 @@ const Favorites = ({ navigation }) => {
           renderItem={renderItem}
           keyExtractor={(item) => item._id}
           onEndReached={handleRefresh}
-          onMomentumScrollBegin={() => (isScrolled.current = true)}
+          onMomentumScrollBegin={handleMomentum}
           onEndReachedThreshold={0.5}
         />
       </SafeAreaView>

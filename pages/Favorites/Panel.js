@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { SwipeablePanel } from "rn-swipeable-panel";
 import { setCurrentQuote } from "../store/statusSlice";
+
 export default Modal = ({ open, onClose }) => {
   const dispatch = useDispatch();
   const currentQuote = useSelector((state) => state.status.currentQuote);
@@ -30,11 +31,6 @@ export default Modal = ({ open, onClose }) => {
   const openInstagramShare = () => {};
   return (
     <SwipeablePanel {...panelProps} isActive={isActive}>
-      <View style={{ padding: 20 }}>
-        <Text h3>{currentQuote?.author}</Text>
-        <Text h4>{currentQuote?.title}</Text>
-        <Text style={{ fontSize: 16 }}>{currentQuote?.quote}</Text>
-      </View>
       <View
         style={{
           justifyContent: "center",
@@ -68,6 +64,11 @@ export default Modal = ({ open, onClose }) => {
         <TouchableOpacity style={styles.mr10} onPress={openInstagramShare}>
           <Icon name="instagram" size={32} color="gray" />
         </TouchableOpacity>
+      </View>
+      <View style={{ padding: 20 }}>
+        <Text h3>{currentQuote?.author}</Text>
+        <Text h4>{currentQuote?.title}</Text>
+        <Text style={{ fontSize: 16 }}>{currentQuote?.quote}</Text>
       </View>
     </SwipeablePanel>
   );

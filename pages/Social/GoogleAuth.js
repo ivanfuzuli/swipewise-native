@@ -25,7 +25,10 @@ const discovery = {
 
 const config = {
   clientId: GOOGLE_APP_ID,
-  scopes: ["https://www.googleapis.com/auth/userinfo.profile"],
+  scopes: [
+    "https://www.googleapis.com/auth/userinfo.email",
+    "https://www.googleapis.com/auth/userinfo.profile",
+  ],
   redirectUri: API_URL + "/auth/google",
   usePKCE: false,
 };

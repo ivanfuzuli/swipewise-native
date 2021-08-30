@@ -32,7 +32,7 @@ function getEnvironment() {
     // assume any other release channel is development
     return {
       envName: "DEVELOPMENT",
-      apiUrl: "https://swipewise-dev.herokuapp.com",
+      apiUrl: "http://localhost:8080",
       sentryDsn: "",
       amplitudeApiKey: "",
       limit: 50,
@@ -40,7 +40,7 @@ function getEnvironment() {
       fbAppId: 521027949012572,
       AppleAppID: "1581004412",
       googleAppId:
-        "90841678000-o8cu6dmpj60390eil53119j0fvugklr4.apps.googleusercontent.com",
+        "90841678000-35h5sdae7d5u5ec7opk3adkar1oqjiv1.apps.googleusercontent.com",
     }; // dev env settings
   }
 }

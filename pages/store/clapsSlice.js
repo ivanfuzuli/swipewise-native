@@ -123,6 +123,9 @@ const clapsReducer = createSlice({
     });
 
     builder.addCase(getClaps.rejected, (state, action) => {
+      if (axiosOrginal.isCancel(action.error)) {
+        return;
+      }
       state.loading = false;
       state.error = action.error.message;
     });

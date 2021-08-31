@@ -12,7 +12,7 @@ import Sort from "./Sort";
 import Panel from "./Panel";
 import ListEmpty from "./ListEmpty";
 
-import ErrorMessage from "../../components/ErrorMessage";
+import ErrorMessage from "@src/components/ErrorMessage";
 import { useSelector, useDispatch } from "react-redux";
 import { getClaps, setSort } from "../store/clapsSlice";
 

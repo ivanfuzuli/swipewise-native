@@ -71,9 +71,10 @@
   },
   "devDependencies": {
     "@babel/core": "~7.14.8",
+    "babel-preset-expo": "^8.4.1",
     "react-native-codegen": "^0.0.7"
   },
   "private": true,
-  "name": "swipe-app",
+  "name": "swipe",
   "version": "1.0.0"
 }

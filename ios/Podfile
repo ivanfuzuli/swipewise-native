@@ -4,6 +4,8 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '11.0'
 
+pod 'GoogleSignIn', '~> 5.0.2'
+
 target 'Swipewise' do
   use_unimodules!
   config = use_native_modules!
@@ -19,3 +21,4 @@ target 'Swipewise' do
     end
   end
 end
+

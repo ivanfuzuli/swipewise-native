@@ -6,19 +6,23 @@ import { Feather as Icon } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 
 import { SwipeablePanel } from "rn-swipeable-panel";
-import { setCurrentQuote } from "../store/statusSlice";
+import {
+  setModalQuoteId,
+  setCurrentQuote,
+  setShareInstagramOpen,
+} from "../store/statusSlice";
 import openShare from "@src/utils/openShare";
 import Claps from "./Claps";
 
 export default Modal = ({ open, onClose }) => {
   const dispatch = useDispatch();
-  const id = useSelector((state) => state.status.currentQuote);
+  const id = useSelector((state) => state.status.modalQuoteId);
   const byId = useSelector((state) => state.claps.byId);
   const currentQuote = byId[id];
   const isActive = id ? true : false;
 
   const handleClose = () => {
-    dispatch(setCurrentQuote(null));
+    dispatch(setModalQuoteId(null));
   };
 
   const [panelProps, setPanelProps] = useState({
@@ -33,7 +37,10 @@ export default Modal = ({ open, onClose }) => {
   const handleShare = () => {
     openShare(currentQuote.author, currentQuote.title, currentQuote.quote);
   };
-  const openInstagramShare = () => {};
+  const openInstagramShare = () => {
+    dispatch(setCurrentQuote(currentQuote.quote));
+    dispatch(setShareInstagramOpen(true));
+  };
 
   return (
     <SwipeablePanel {...panelProps} isActive={isActive}>

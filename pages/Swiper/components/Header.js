@@ -6,7 +6,10 @@ import logo from "@src/assets/icon.png";
 
 import openShare from "@src/utils/openShare";
 import { useDispatch } from "react-redux";
-import { setShareInstagramOpen } from "@src/pages/store/statusSlice";
+import {
+  setShareInstagramOpen,
+  setCurrentQuote,
+} from "@src/pages/store/statusSlice";
 import ClapsSvg from "./svgs/ClapsSvg";
 
 const Header = ({ quote, isEmpty }) => {
@@ -14,6 +17,7 @@ const Header = ({ quote, isEmpty }) => {
   const navigation = useNavigation();
 
   const openInstagramShare = () => {
+    dispatch(setCurrentQuote(quote));
     dispatch(setShareInstagramOpen(true));
   };
 

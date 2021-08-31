@@ -2,10 +2,11 @@ import React from "react";
 import { Feather as Icon } from "@expo/vector-icons";
 import { View, TouchableOpacity, StyleSheet, Image, Share } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import logo from "../../../assets/icon.png";
+import logo from "@src/assets/icon.png";
 
+import openShare from "@src/utils/openShare";
 import { useDispatch } from "react-redux";
-import { setShareInstagramOpen } from "../../store/statusSlice";
+import { setShareInstagramOpen } from "@src/pages/store/statusSlice";
 import ClapsSvg from "./svgs/ClapsSvg";
 
 const Header = ({ quote, isEmpty }) => {
@@ -16,24 +17,8 @@ const Header = ({ quote, isEmpty }) => {
     dispatch(setShareInstagramOpen(true));
   };
 
-  const handleShare = async () => {
-    try {
-      const result = await Share.share({
-        message: `A quote for you from swipewise:\n"${quote.quote}" by ${quote.author}`,
-      });
-
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      alert(error.message);
-    }
+  const handleShare = () => {
+    openShare(quote.author, quote.title, quote.quote);
   };
 
   return (

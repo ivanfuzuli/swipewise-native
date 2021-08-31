@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { SwipeablePanel } from "rn-swipeable-panel";
 import { setCurrentQuote } from "../store/statusSlice";
+import openShare from "@src/utils/openShare";
 
 export default Modal = ({ open, onClose }) => {
   const dispatch = useDispatch();
@@ -27,7 +28,9 @@ export default Modal = ({ open, onClose }) => {
     // ...or any prop you want
   });
 
-  const handleShare = () => {};
+  const handleShare = () => {
+    openShare(currentQuote.author, currentQuote.title, currentQuote.quote);
+  };
   const openInstagramShare = () => {};
   return (
     <SwipeablePanel {...panelProps} isActive={isActive}>

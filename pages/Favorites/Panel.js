@@ -8,12 +8,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { SwipeablePanel } from "rn-swipeable-panel";
 import { setCurrentQuote } from "../store/statusSlice";
 import openShare from "@src/utils/openShare";
+import Claps from "./Claps";
 
 export default Modal = ({ open, onClose }) => {
   const dispatch = useDispatch();
-  const currentQuote = useSelector((state) => state.status.currentQuote);
-
-  const isActive = currentQuote ? true : false;
+  const id = useSelector((state) => state.status.currentQuote);
+  const byId = useSelector((state) => state.claps.byId);
+  const currentQuote = byId[id];
+  const isActive = id ? true : false;
 
   const handleClose = () => {
     dispatch(setCurrentQuote(null));
@@ -32,6 +34,7 @@ export default Modal = ({ open, onClose }) => {
     openShare(currentQuote.author, currentQuote.title, currentQuote.quote);
   };
   const openInstagramShare = () => {};
+
   return (
     <SwipeablePanel {...panelProps} isActive={isActive}>
       <View
@@ -41,26 +44,11 @@ export default Modal = ({ open, onClose }) => {
           marginTop: 20,
         }}
       >
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            marginRight: 25,
-            flexDirection: "row",
-          }}
-        >
-          <View>
-            <Icon name="thumbs-down" size={32} color="gray" />
-          </View>
-          <View style={{ padding: 5 }}>
-            <Text style={{ color: "grey", fontWeight: "bold" }}>
-              +{currentQuote?.count}
-            </Text>
-          </View>
-          <View>
-            <Icon name="thumbs-up" size={32} color="gray" />
-          </View>
-        </View>
+        <Claps
+          count={currentQuote?.count}
+          quote_id={currentQuote?.quote._id}
+          id={id}
+        />
         <TouchableOpacity style={{ marginRight: 10 }} onPress={handleShare}>
           <Icon name="share" size={32} color="gray" />
         </TouchableOpacity>
@@ -69,9 +57,9 @@ export default Modal = ({ open, onClose }) => {
         </TouchableOpacity>
       </View>
       <View style={{ padding: 20 }}>
-        <Text h3>{currentQuote?.author}</Text>
-        <Text h4>{currentQuote?.title}</Text>
-        <Text style={{ fontSize: 16 }}>{currentQuote?.quote}</Text>
+        <Text h3>{currentQuote?.quote?.author}</Text>
+        <Text h4>{currentQuote?.quote?.title}</Text>
+        <Text style={{ fontSize: 16 }}>{currentQuote?.quote?.quote}</Text>
       </View>
     </SwipeablePanel>
   );

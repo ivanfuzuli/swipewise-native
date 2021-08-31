@@ -4,17 +4,10 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
 import { setCurrentQuote } from "../store/statusSlice";
 
-const Item = ({ count, title, author, quote }) => {
+const Item = ({ id, count, title, author, quote }) => {
   const dispatch = useDispatch();
   const handlePress = () => {
-    dispatch(
-      setCurrentQuote({
-        count,
-        title,
-        author,
-        quote,
-      })
-    );
+    dispatch(setCurrentQuote(id));
   };
 
   return (

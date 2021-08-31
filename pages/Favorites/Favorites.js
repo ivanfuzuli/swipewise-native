@@ -38,7 +38,7 @@ const Favorites = ({ navigation }) => {
     return allIds.newest.map((id) => {
       return byId[id];
     });
-  }, [sort, allIds]);
+  }, [sort, allIds, byId]);
 
   useEffect(() => {
     dispatch(getClaps(false));
@@ -54,6 +54,7 @@ const Favorites = ({ navigation }) => {
   const renderItem = ({ item }) => {
     return (
       <Item
+        id={item._id}
         count={item.count}
         title={item.quote.title}
         author={item.quote.author}

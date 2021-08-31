@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { Pressable, View, Text, StyleSheet, Animated } from "react-native";
 import LottieView from "lottie-react-native";
 import debounce from "lodash/debounce";
-import { useSelector, useDispatch } from "react-redux";
-import { sendVotes } from "../../store/votesSlice";
+import { useDispatch } from "react-redux";
+import { sendClap } from "../../store/votesSlice";
 
 const MAX_CLAPS = 30;
 const SEND_DEBOUNCE = 2000;
@@ -17,7 +17,7 @@ const ClapsButton = ({ quote, circleStyle }) => {
         type: "clap",
         count,
       };
-      dispatch(sendVotes(vote));
+      dispatch(sendClap(vote));
     }, SEND_DEBOUNCE)
   );
 

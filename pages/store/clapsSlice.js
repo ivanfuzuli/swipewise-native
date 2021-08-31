@@ -77,6 +77,11 @@ const clapsReducer = createSlice({
     setSort: (state, action) => {
       state.sort = action.payload;
     },
+
+    setCount: (state, action) => {
+      const { id, count } = action.payload;
+      state.byId[id].count = count;
+    },
   },
 
   extraReducers: (builder) => {
@@ -132,5 +137,5 @@ const clapsReducer = createSlice({
   },
 });
 
-export const { setSort, setOffset } = clapsReducer.actions;
+export const { setSort, setCount } = clapsReducer.actions;
 export default clapsReducer.reducer;

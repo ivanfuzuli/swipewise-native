@@ -5,6 +5,7 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
   Linking,
+  Platform,
 } from "react-native";
 
 import {
@@ -227,8 +228,12 @@ const Signup = ({ navigation }) => {
           </Button>
         </View>
         <Divider />
-        <AppleAuth />
-        <FacebookAuth title="Continue with Facebook" />
+        {Platform.OS === "ios" && (
+          <>
+            <AppleAuth />
+            <FacebookAuth title="Continue with Facebook" />
+          </>
+        )}
         <GoogleAuth title="Continue with Google" />
         <View style={styles.terms}>
           <Text style={styles.termsText}>

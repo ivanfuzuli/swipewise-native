@@ -99,9 +99,8 @@ const ClapsButton = ({ quote, circleStyle }) => {
       </Pressable>
       <Animated.View
         style={[
-          styles.bubble,
+          styles.container,
           {
-            display: isActive ? "flex" : "none",
             opacity: translateAnimRef.current.interpolate({
               inputRange: [0, 1],
               outputRange: [1, -1],
@@ -117,7 +116,9 @@ const ClapsButton = ({ quote, circleStyle }) => {
           },
         ]}
       >
-        <Text style={styles.bubbleText}>+{count}</Text>
+        <View style={[styles.bubble, { display: isActive ? "flex" : "none" }]}>
+          <Text style={styles.bubbleText}>+{count}</Text>
+        </View>
       </Animated.View>
     </View>
   );
@@ -129,20 +130,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     margin: 5,
   },
-  bubble: {
+  container: {
     transform: [
       {
         translateY: 0,
       },
     ],
+    position: "absolute",
+    right: 10,
+  },
+  bubble: {
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 50,
-
-    right: 10,
     height: 42,
     width: 42,
-    position: "absolute",
     backgroundColor: "#000",
   },
 });

@@ -200,8 +200,12 @@ const Login = () => {
                   </View>
                 </Form>
                 <Divider />
-                <AppleAuth />
-                <FacebookAuth title="Continue with Facebook" />
+                {Platform.OS === "ios" && (
+                  <>
+                    <AppleAuth />
+                    <FacebookAuth title="Continue with Facebook" />
+                  </>
+                )}
                 <GoogleAuth title="Continue with Google" />
               </View>
             </View>

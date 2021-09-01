@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     padding: 16,
+    elevation: 2,
   },
   circle: {
     width: 64,

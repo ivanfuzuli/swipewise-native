@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <resources>
   <string name="app_name">Swipewise</string>
+  <string name="server_client_id">90841678000-1eifddq8mlcd6r1npl48p3a6dcssg8il.apps.googleusercontent.com</string>
 </resources>

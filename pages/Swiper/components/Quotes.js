@@ -37,7 +37,7 @@ class Quotes extends React.PureComponent {
   };
 
   rate = () => {
-    if (this.props.rated || this.props.totalSessions < 1) {
+    if (this.props.rated || this.props.totalSessions < 2) {
       return;
     }
 

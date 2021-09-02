@@ -1,5 +1,4 @@
 import React from "react";
-import env from "../../../config/@env";
 
 import { View, StyleSheet, SafeAreaView, Dimensions } from "react-native";
 import Animated from "react-native-reanimated";
@@ -7,11 +6,12 @@ import Analytics from "../../../config/Analytics";
 
 import Footer from "./Footer";
 import Empty from "./Empty";
-import Rate, { AndroidMarket } from "react-native-rate";
 
 import Interactable from "./Interactable";
 import Card from "./Card";
 import Header from "./Header";
+import RateModal from "./RateModal";
+
 import { connect } from "react-redux";
 import { sendVotes } from "../../store/votesSlice";
 import { incIndex } from "../../store/quotesSlice";
@@ -31,26 +31,29 @@ class Quotes extends React.PureComponent {
   y = new Value(0);
   rateCount = 0;
 
+  state = {
+    isRateOpen: false,
+  };
   componentDidMount = () => {
     Analytics.track(Analytics.events.QUOTES_PAGE_OPENED);
     this.props.incTotalSessions();
   };
 
-  rate = () => {
+  openRateModalIfPossible = () => {
+    if (this.rateCount < 4) {
+      return;
+    }
+
     if (this.props.rated || this.props.totalSessions < 2) {
       return;
     }
 
-    const options = {
-      AppleAppID: env.AppleAppID,
-      preferredAndroidMarket: AndroidMarket.Google,
-      preferInApp: true,
-      openAppStoreIfInAppFails: true,
-    };
+    this.props.setRated(true);
+    this.setState({ isRateOpen: true });
+  };
 
-    Rate.rate(options, (success) => {
-      this.props.setRated(true);
-    });
+  closeRateModal = () => {
+    this.setState({ isRateOpen: false });
   };
 
   onSnap = ({ nativeEvent: { x } }) => {
@@ -67,9 +70,10 @@ class Quotes extends React.PureComponent {
       };
       this.props.sendVotes(vote);
       this.props.incIndex();
+
       this.rateCount = this.rateCount + 1;
-      if (up && this.rateCount > 4) {
-        this.rate();
+      if (up) {
+        this.openRateModalIfPossible();
       }
     }
   };
@@ -128,7 +132,9 @@ class Quotes extends React.PureComponent {
                 "_" +
                 currentIndex.toString() +
                 "_" +
-                this.props.rated.toString()
+                this.props.rated.toString() +
+                "-" +
+                this.state.isRateOpen.toString()
               }
               snapPoints={[{ x: -1 * A }, { x: 0 }, { x: A }]}
               style={{ ...StyleSheet.absoluteFill, zIndex: 2 }}
@@ -141,6 +147,10 @@ class Quotes extends React.PureComponent {
           )}
         </View>
         {!isEmpty && <Footer quote={quote} onChange={onSnap} x={x} y={y} />}
+        <RateModal
+          open={this.state.isRateOpen}
+          onClose={this.closeRateModal.bind(this)}
+        />
       </SafeAreaView>
     );
   }
@@ -166,7 +176,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
   currentIndex: state.quotes.currentIndex,
   totalSessions: state.stats.totalSessions,
   rated: state.stats.rated,

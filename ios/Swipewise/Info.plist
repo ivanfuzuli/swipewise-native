@@ -2,13 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>We need to save quote pictures to your album.</string>
-  <key>LSApplicationQueriesSchemes</key>
-  <array>
-    <string>instagram-stories</string>
-    <string>instagram</string>
-  </array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>instagram-stories</string>
+		<string>instagram</string>
+	</array>
 	<key>CFBundleAllowMixedLocalizations</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -35,7 +37,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>swipewisedom</string>
-				<string>com.can.swipewise</string>
+				<string>com.googleusercontent.apps.90841678000-hn35ejb4os501qqmb5a039j10h0gs23o</string>
 			</array>
 		</dict>
 	</array>

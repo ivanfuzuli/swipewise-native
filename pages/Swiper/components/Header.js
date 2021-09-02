@@ -2,37 +2,27 @@ import React from "react";
 import { Feather as Icon } from "@expo/vector-icons";
 import { View, TouchableOpacity, StyleSheet, Image, Share } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import logo from "../../../assets/icon.png";
+import logo from "@src/assets/icon.png";
 
+import openShare from "@src/utils/openShare";
 import { useDispatch } from "react-redux";
-import { setShareInstagramOpen } from "../../store/statusSlice";
+import {
+  setShareInstagramOpen,
+  setCurrentQuote,
+} from "@src/pages/store/statusSlice";
+import ClapsSvg from "./svgs/ClapsSvg";
 
 const Header = ({ quote, isEmpty }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
   const openInstagramShare = () => {
+    dispatch(setCurrentQuote(quote));
     dispatch(setShareInstagramOpen(true));
   };
 
-  const handleShare = async () => {
-    try {
-      const result = await Share.share({
-        message: `A quote for you from swipewise:\n"${quote.quote}" by ${quote.author}`,
-      });
-
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      alert(error.message);
-    }
+  const handleShare = () => {
+    openShare(quote.author, quote.title, quote.quote);
   };
 
   return (
@@ -41,6 +31,10 @@ const Header = ({ quote, isEmpty }) => {
         <Image source={logo} style={styles.logo} />
       </View>
       <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.mr10}
+          onPress={() => navigation.navigate("Favourites")}
+        ></TouchableOpacity>
         {!isEmpty && (
           <>
             <TouchableOpacity style={styles.mr10} onPress={handleShare}>
@@ -51,6 +45,20 @@ const Header = ({ quote, isEmpty }) => {
             </TouchableOpacity>
           </>
         )}
+
+        <TouchableOpacity
+          style={{ marginLeft: 10 }}
+          onPress={() => navigation.navigate("Favorites")}
+        >
+          <View
+            style={{
+              height: 32,
+              width: 32,
+            }}
+          >
+            <ClapsSvg color="#000" />
+          </View>
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
           <Icon name="user" size={32} color="gray" />
         </TouchableOpacity>

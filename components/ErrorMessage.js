@@ -17,7 +17,7 @@ const ErrorMessage = ({ message }) => {
 
 const styles = StyleSheet.create({
   errorContainer: {
-    width: "100%",
+    width: "auto",
     borderColor: "red",
     backgroundColor: "#f9461c",
     margin: 10,

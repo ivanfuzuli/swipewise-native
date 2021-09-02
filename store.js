@@ -31,6 +31,12 @@ const rootReducer = (state, action) => {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
+const middlewares = [];
+if (__DEV__) {
+  const createDebugger = require("redux-flipper").default;
+  middlewares.push(createDebugger());
+}
+
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
@@ -38,7 +44,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(middlewares),
 });
 
 PubSub.subscribe("auth", async (_, data) => {

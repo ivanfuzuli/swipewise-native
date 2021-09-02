@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "../../config/@axios";
+import axios from "@src/config/@axios";
 
 import { Alert, StyleSheet, View } from "react-native";
 import * as AppleAuthentication from "expo-apple-authentication";
@@ -8,11 +8,18 @@ import { useDispatch } from "react-redux";
 import * as Auth from "../store/authSlice";
 import * as SecureStore from "expo-secure-store";
 
+import Analytics from "@src/config/Analytics";
 function AppleAuth() {
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
   const tryLogin = async ({ token, hasTags }) => {
     await SecureStore.setItemAsync("token", token);
+
+    if (parseInt(hasTags) === 0) {
+      Analytics.track(Analytics.events.SIGN_UP);
+      Analytics.track(Analytics.events.SIGN_UP_WITH_APPLE);
+    }
+
     dispatch(
       Auth.loginViaToken({
         token,

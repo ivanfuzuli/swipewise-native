@@ -10,6 +10,7 @@ import ChangePassword from "./pages/Settings/ChangePassword";
 import DeleteAccount from "./pages/Settings/DeleteAccount";
 import ChangeTags from "./pages/Settings/ChangeTags";
 import Feedback from "./pages/Settings/Feedback";
+import Favorites from "./pages/Favorites/Favorites";
 
 import { useSelector } from "react-redux";
 
@@ -44,6 +45,7 @@ const Routes = () => {
           <Stack.Screen name="Change Tags" component={ChangeTags} />
           <Stack.Screen name="Delete Account" component={DeleteAccount} />
           <Stack.Screen name="Feedback" component={Feedback} />
+          <Stack.Screen name="Favorites" component={Favorites} />
         </Stack.Navigator>
       ) : (
         <Stack.Navigator>

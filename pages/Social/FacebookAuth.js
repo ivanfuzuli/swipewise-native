@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import * as Auth from "../store/authSlice";
 import * as SecureStore from "expo-secure-store";
 
+import Analytics from "../../config/Analytics";
 import env from "../../config/@env";
 const API_URL = env.apiUrl;
 const FB_APP_ID = env.fbAppId;
@@ -18,7 +19,7 @@ const discovery = {
 
 const config = {
   clientId: FB_APP_ID,
-  scopes: ["public_profile"],
+  scopes: ["email", "public_profile"],
   redirectUri: API_URL + "/auth/facebook",
   usePKCE: false,
 };
@@ -32,6 +33,12 @@ const FacebookAuth = ({ title }) => {
   const tryLogin = async () => {
     const { token, hasTags } = response.params;
     await SecureStore.setItemAsync("token", token);
+
+    if (parseInt(hasTags) === 0) {
+      Analytics.track(Analytics.events.SIGN_UP);
+      Analytics.track(Analytics.events.SIGN_UP_WITH_FACEBOOK);
+    }
+
     dispatch(
       Auth.loginViaToken({
         token,

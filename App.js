@@ -18,6 +18,7 @@ import { store, persistor } from "./store";
 import Routes from "./Routes";
 import NetworkStatus from "./components/NetworkStatus";
 import AmplitudeAnalytics from "./components/AmplitudeAnalytics";
+import InstagramShell from "./pages/Instagram/InstagramShell";
 
 export default function App() {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
@@ -69,6 +70,7 @@ export default function App() {
           <NetworkStatus />
           <AmplitudeAnalytics />
           <Routes />
+          <InstagramShell />
         </Root>
       </PersistGate>
     </Provider>

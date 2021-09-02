@@ -1,4 +1,5 @@
 import React from "react";
+
 import { View, StyleSheet, SafeAreaView, Dimensions } from "react-native";
 import Animated from "react-native-reanimated";
 import Analytics from "../../../config/Analytics";
@@ -9,9 +10,12 @@ import Empty from "./Empty";
 import Interactable from "./Interactable";
 import Card from "./Card";
 import Header from "./Header";
+import RateModal from "./RateModal";
+
 import { connect } from "react-redux";
 import { sendVotes } from "../../store/votesSlice";
 import { incIndex } from "../../store/quotesSlice";
+import { incTotalSessions, setRated } from "../../store/statsSlice";
 
 const { Value, interpolateNode, concat } = Animated;
 const { width, height } = Dimensions.get("window");
@@ -25,8 +29,31 @@ const A = width * Math.cos(α) + height * Math.sin(α);
 class Quotes extends React.PureComponent {
   x = new Value(0);
   y = new Value(0);
+  rateCount = 0;
+
+  state = {
+    isRateOpen: false,
+  };
   componentDidMount = () => {
     Analytics.track(Analytics.events.QUOTES_PAGE_OPENED);
+    this.props.incTotalSessions();
+  };
+
+  openRateModalIfPossible = () => {
+    if (this.rateCount < 4) {
+      return;
+    }
+
+    if (this.props.rated || this.props.totalSessions < 2) {
+      return;
+    }
+
+    this.props.setRated(true);
+    this.setState({ isRateOpen: true });
+  };
+
+  closeRateModal = () => {
+    this.setState({ isRateOpen: false });
   };
 
   onSnap = ({ nativeEvent: { x } }) => {
@@ -43,6 +70,11 @@ class Quotes extends React.PureComponent {
       };
       this.props.sendVotes(vote);
       this.props.incIndex();
+
+      this.rateCount = this.rateCount + 1;
+      if (up) {
+        this.openRateModalIfPossible();
+      }
     }
   };
 
@@ -50,6 +82,7 @@ class Quotes extends React.PureComponent {
     const { onSnap } = this;
     const { quotes } = this.props;
     const { currentIndex } = this.props;
+
     const x = this.x;
     const y = this.y;
 
@@ -94,7 +127,15 @@ class Quotes extends React.PureComponent {
           )}
           {!isEmpty && (
             <Interactable
-              key={currentIndex}
+              key={
+                this.props.totalSessions.toString() +
+                "_" +
+                currentIndex.toString() +
+                "_" +
+                this.props.rated.toString() +
+                "-" +
+                this.state.isRateOpen.toString()
+              }
               snapPoints={[{ x: -1 * A }, { x: 0 }, { x: A }]}
               style={{ ...StyleSheet.absoluteFill, zIndex: 2 }}
               {...{ onSnap, x, y }}
@@ -105,7 +146,11 @@ class Quotes extends React.PureComponent {
             </Interactable>
           )}
         </View>
-        {!isEmpty && <Footer onChange={onSnap} x={x} y={y} />}
+        {!isEmpty && <Footer quote={quote} onChange={onSnap} x={x} y={y} />}
+        <RateModal
+          open={this.state.isRateOpen}
+          onClose={this.closeRateModal.bind(this)}
+        />
       </SafeAreaView>
     );
   }
@@ -131,8 +176,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
   currentIndex: state.quotes.currentIndex,
+  totalSessions: state.stats.totalSessions,
+  rated: state.stats.rated,
 });
 
-export default connect(mapStateToProps, { sendVotes, incIndex })(Quotes);
+export default connect(mapStateToProps, {
+  sendVotes,
+  setRated,
+  incTotalSessions,
+  incIndex,
+})(Quotes);

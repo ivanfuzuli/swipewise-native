@@ -20,7 +20,7 @@ const Item = ({ id, count, title, author, quote }) => {
           <ListItem.Title>{author}</ListItem.Title>
           <ListItem.Subtitle>{title}</ListItem.Subtitle>
           <ListItem.Content>
-            <Text numberOfLines={3}>{quote}</Text>
+            <Text numberOfLines={4}>{quote}</Text>
           </ListItem.Content>
         </ListItem.Content>
       </ListItem>

@@ -26,26 +26,34 @@ export const getClaps = createAsyncThunk(
     const offset = state.claps.offset[sort];
 
     cancel && cancel();
-    const response = await axios.get(`claps`, {
-      cancelToken: new CancelToken(function executor(c) {
-        // An executor function receives a cancel function as a parameter
-        cancel = c;
-      }),
-      params: {
-        offset,
-        limit: LIMIT,
-        sort,
-      },
-    });
+    try {
+      const response = await axios.get(`claps`, {
+        cancelToken: new CancelToken(function executor(c) {
+          // An executor function receives a cancel function as a parameter
+          cancel = c;
+        }),
+        params: {
+          offset,
+          limit: LIMIT,
+          sort,
+        },
+      });
 
-    const quotes = response.data;
-    const total = response.headers["x-total-count"];
-    cancel = null;
-    return {
-      quotes,
-      total,
-      append,
-    };
+      const quotes = response.data;
+      const total = response.headers["x-total-count"];
+      cancel = null;
+      return {
+        quotes,
+        total,
+        append,
+      };
+    } catch (e) {
+      if (axiosOrginal.isCancel(e)) {
+        return Promise.reject();
+      }
+
+      return thunkAPI.rejectWithValue(e.message);
+    }
   }
 );
 
@@ -128,11 +136,8 @@ const clapsReducer = createSlice({
     });
 
     builder.addCase(getClaps.rejected, (state, action) => {
-      if (axiosOrginal.isCancel(action.error)) {
-        return;
-      }
       state.loading = false;
-      state.error = action.error.message;
+      state.error = action.payload;
     });
   },
 });

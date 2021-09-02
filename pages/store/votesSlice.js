@@ -19,7 +19,9 @@ const votesReducer = createSlice({
 
     removeQueue: (state, action) => {
       const votes = action.payload;
-      state.queue = state.queue.filter((el) => !votes.includes(el));
+      state.queue = state.queue.filter(
+        (el) => !votes.some((item) => item.quote_id === el.quote_id)
+      );
     },
 
     emptyQueue: (state) => {

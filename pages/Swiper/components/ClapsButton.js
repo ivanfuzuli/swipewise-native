@@ -22,18 +22,19 @@ const ClapsButton = ({ quote, circleStyle }) => {
   );
 
   const debounced = useRef(null);
-  const quoteIdRef = useRef(null);
+  const voteRef = useRef({});
 
   const [count, setCount] = useState(0);
-  const countRef = useRef(0);
 
   const [isActive, setActive] = useState(false);
+  const [isDisabled, setDisabled] = useState(false);
+
   const translateAnimRef = useRef(new Animated.Value(0));
 
   const clapsRef = useRef(null);
   const timeout = useRef(null);
 
-  const start = () => {
+  const start = (quoteId) => {
     setActive(true);
     Animated.timing(translateAnimRef.current, {
       toValue: 1,
@@ -41,7 +42,7 @@ const ClapsButton = ({ quote, circleStyle }) => {
       useNativeDriver: true,
     }).start(({ finished }) => {
       if (finished) {
-        sendDebounced.current(quoteIdRef.current, countRef.current);
+        sendDebounced.current(quoteId, voteRef.current[quoteId]);
         setActive(false);
         translateAnimRef.current.setValue(0);
       }
@@ -49,16 +50,25 @@ const ClapsButton = ({ quote, circleStyle }) => {
   };
 
   useEffect(() => {
-    setCount(0);
-    countRef.current = 0;
-    quoteIdRef.current = quote._id;
+    setDisabled(true);
+    const timer = setTimeout(() => {
+      setDisabled(false);
+      setCount(0);
+      voteRef.current[quote._id] = 0;
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, [quote._id]);
 
   const claps = () => {
+    const quoteId = quote._id;
+
     if (count < MAX_CLAPS) {
       setCount((state) => {
         const count = state + 1;
-        countRef.current = count;
+        voteRef.current[quote._id] = count;
         return count;
       });
     }
@@ -74,17 +84,18 @@ const ClapsButton = ({ quote, circleStyle }) => {
       );
 
       if (!debounced.current) {
-        debounced.current = debounce(start, 1000);
+        debounced.current = debounce((id) => start(id), 1000);
       }
 
-      debounced.current();
+      debounced.current(quoteId);
       return;
     }
-
-    start();
+    start(quoteId);
   };
+
   return (
     <View>
+      {isDisabled && <View style={styles.disabled}></View>}
       <Pressable onPress={claps}>
         <View style={circleStyle}>
           <LottieView
@@ -125,6 +136,12 @@ const ClapsButton = ({ quote, circleStyle }) => {
 };
 
 const styles = StyleSheet.create({
+  disabled: {
+    position: "absolute",
+    zIndex: 2,
+    elevation: 2,
+    ...StyleSheet.absoluteFillObject,
+  },
   bubbleText: {
     color: "#fff",
     fontSize: 16,

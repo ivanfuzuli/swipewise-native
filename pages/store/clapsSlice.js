@@ -20,8 +20,10 @@ export const getClaps = createAsyncThunk(
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
     const sort = state.claps.sort;
+    const filter = sort === "popular" ? state.claps.filter : null;
+    const offset =
+      sort === "popular" ? state.claps.offset.popular[filter] : null;
 
-    const offset = state.claps.offset[sort];
     cancel && cancel();
     try {
       const response = await axios.get(`claps`, {
@@ -33,6 +35,7 @@ export const getClaps = createAsyncThunk(
           offset,
           limit: LIMIT,
           sort,
+          filter,
         },
       });
 
@@ -56,22 +59,37 @@ export const getClaps = createAsyncThunk(
 const initialState = {
   offset: {
     newest: 0,
-    popular: 0,
+    popular: {
+      day: 0,
+      week: 0,
+      month: 0,
+      all: 0,
+    },
   },
   total: {
     newest: 0,
-    popular: 0,
+    popular: {
+      day: 0,
+      week: 0,
+      month: 0,
+      all: 0,
+    },
   },
-
   sort: "popular",
+  filter: "all",
   limit: LIMIT,
   error: null,
   byId: {},
   allIds: {
     newest: [],
-    popular: [],
+    popular: {
+      day: [],
+      week: [],
+      month: [],
+      all: [],
+    },
   },
-  loading: false,
+  loading: true,
 };
 
 const clapsReducer = createSlice({
@@ -80,30 +98,21 @@ const clapsReducer = createSlice({
   reducers: {
     resetSession: (state, action) => {
       const sort = state.sort;
+      const filter = state.filter;
 
       return {
         ...initialState,
         sort,
+        filter,
       };
     },
 
-    limitSize: (state) => {
-      state.allIds.newest = take(state.allIds.newest, 100);
-      state.total.newest = state.allIds.newest.length;
-
-      const newestOffset = state.allIds.newest.length - state.limit;
-      state.offset.newest = newestOffset > 1 ? newestOffset : 0;
-
-      state.allIds.popular = take(state.allIds.popular, 100);
-      state.total.popular = state.allIds.popular.length;
-
-      const popularOffset = state.allIds.popular.length;
-      state.offset.popular = popularOffset > 1 ? popularOffset : 0;
-    },
     setSort: (state, action) => {
       state.sort = action.payload;
     },
-
+    setFilter: (state, action) => {
+      state.filter = action.payload;
+    },
     setCount: (state, action) => {
       const { id, count } = action.payload;
       state.byId[id].count = count;
@@ -118,14 +127,15 @@ const clapsReducer = createSlice({
 
     builder.addCase(getClaps.fulfilled, (state, action) => {
       const { quotes, total } = action.payload;
-      const offset = state.offset[state.sort];
+      const { sort, filter } = state;
+      const offset =
+        sort === "popular" ? state.offset[sort][filter] : state.offset.newest;
 
       let nextOffset = offset + LIMIT;
       if (nextOffset > total) {
         nextOffset = total;
       }
 
-      const { sort } = state;
       state.error = null;
       state.loading = false;
 
@@ -135,14 +145,26 @@ const clapsReducer = createSlice({
         return obj;
       }, {});
 
-      state.offset[state.sort] = nextOffset;
-      state.total[state.sort] = total;
+      if (sort === "popular") {
+        state.offset.popular[filter] = nextOffset;
+        state.total.popular[filter] = total;
+      } else {
+        state.offset.newest = nextOffset;
+        state.total.newest = total;
+      }
 
       state.byId = deepmerge(state.byId, byId, {
         arrayMerge: combineMerge,
       });
 
-      state.allIds[sort] = prepareArray(state.allIds[state.sort], allIds);
+      if (sort === "popular") {
+        state.allIds.popular[filter] = prepareArray(
+          state.allIds.popular[filter],
+          allIds
+        );
+      } else {
+        state.allIds.newest = prepareArray(state.allIds[state.sort], allIds);
+      }
     });
 
     builder.addCase(getClaps.rejected, (state, action) => {
@@ -152,6 +174,6 @@ const clapsReducer = createSlice({
   },
 });
 
-export const { setSort, setCount, resetSession, limitSize } =
+export const { setSort, setCount, setFilter, resetSession } =
   clapsReducer.actions;
 export default clapsReducer.reducer;

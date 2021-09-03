@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 
 import {
   RefreshControl,
@@ -9,17 +9,20 @@ import {
 
 import Item from "./Item";
 import Sort from "./Sort";
+import Filter from "./Filter";
+
 import Panel from "./Panel";
 import ListEmpty from "./ListEmpty";
 import ListFooter from "./ListFooter";
+import Loading from "./Loading";
 
 import ErrorMessage from "@src/components/ErrorMessage";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getClaps,
   setSort,
+  setFilter,
   resetSession,
-  limitSize,
 } from "../store/clapsSlice";
 
 const Favorites = ({ navigation }) => {
@@ -29,6 +32,8 @@ const Favorites = ({ navigation }) => {
   const isAppend = useRef(false);
 
   const sort = useSelector((state) => state.claps.sort);
+  const filter = useSelector((state) => state.claps.filter);
+
   const errorMessage = useSelector((state) => state.claps.error);
   const isLoading = useSelector((state) => state.claps.loading);
 
@@ -38,30 +43,21 @@ const Favorites = ({ navigation }) => {
   const upperLoading = !isAppend.current && isLoading;
   const downLoading = isAppend.current && isLoading;
 
-  const quotes = useMemo(() => {
-    if (sort === "popular") {
-      return allIds.popular.map((id) => {
-        return byId[id];
-      });
-    }
+  const items = sort === "popular" ? allIds.popular[filter] : allIds.newest;
 
-    return allIds.newest.map((id) => {
+  const quotes = useMemo(() => {
+    return items.map((id) => {
       return byId[id];
     });
-  }, [sort, allIds, byId]);
+  }, [sort, items, filter, byId]);
 
   useEffect(() => {
-    if (allIds[sort].length === 0) {
+    if (items.length === 0) {
+      isScrolled.current = false;
       isAppend.current = false;
       dispatch(getClaps());
     }
-  }, [sort]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(limitSize());
-    };
-  }, []);
+  }, [sort, filter]);
 
   const handleEndReached = () => {
     if (!isScrolled.current) {
@@ -97,6 +93,12 @@ const Favorites = ({ navigation }) => {
     dispatch(setSort(type));
   };
 
+  const handleSetFilter = (type) => {
+    flatlistRef.current.scrollToOffset({ animated: true, offset: 0 });
+    isScrolled.current = false;
+    dispatch(setFilter(type));
+  };
+
   const handleMomentum = () => {
     isScrolled.current = true;
   };
@@ -105,7 +107,12 @@ const Favorites = ({ navigation }) => {
     <>
       <SafeAreaView style={styles.container}>
         <Sort setSort={handleSetSort} sort={sort} />
+        {sort === "popular" ? (
+          <Filter setFilter={handleSetFilter} filter={filter} />
+        ) : null}
+
         <ErrorMessage message={errorMessage} />
+        {isLoading && quotes.length < 1 && <Loading></Loading>}
         <FlatList
           ref={flatlistRef}
           data={quotes}
@@ -115,7 +122,6 @@ const Favorites = ({ navigation }) => {
               refreshing={upperLoading}
               onRefresh={refresh}
               tintColor={"red"}
-              ti
             />
           }
           ListFooterComponent={<ListFooter loading={downLoading} />}

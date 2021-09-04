@@ -10,7 +10,7 @@ const prepareArray = (allIds, newIds) => {
   return [...next, ...newIds];
 };
 
-const LIMIT = 15;
+const LIMIT = 30;
 
 const CancelToken = axiosOrginal.CancelToken;
 let cancel;

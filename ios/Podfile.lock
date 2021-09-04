@@ -463,10 +463,16 @@ PODS:
   - RNScreens (3.4.0):
     - React-Core
     - React-RCTImage
+  - RNSentry (3.0.1):
+    - React-Core
+    - Sentry (= 7.2.6)
   - RNShare (7.0.0):
     - React-Core
   - RNSVG (12.1.1):
     - React
+  - Sentry (7.2.6):
+    - Sentry/Core (= 7.2.6)
+  - Sentry/Core (7.2.6)
   - UMAppLoader (2.2.0)
   - UMCore (7.1.1)
   - UMReactNativeAdapter (6.3.5):
@@ -565,6 +571,7 @@ DEPENDENCIES:
   - RNRate (from `../node_modules/react-native-rate`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - UMAppLoader (from `../node_modules/unimodules-app-loader/ios`)
@@ -594,6 +601,7 @@ SPEC REPOS:
     - libevent
     - lottie-ios
     - OpenSSL-Universal
+    - Sentry
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -723,6 +731,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSentry:
+    :path: "../node_modules/@sentry/react-native"
   RNShare:
     :path: "../node_modules/react-native-share"
   RNSVG:
@@ -821,8 +831,10 @@ SPEC CHECKSUMS:
   RNRate: cb88d5a0aa7be8bfae67dafbbbba2c9cd5e6faf2
   RNReanimated: 9c13c86454bfd54dab7505c1a054470bfecd2563
   RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
+  RNSentry: 701496f68e915395d2871a2b402a03df4d6ee51f
   RNShare: 00e7409201e3cab13e0febc41fd4465a83ae8225
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
+  Sentry: be2f8f7a63e5274cc83d0813e40c1680119c0153
   UMAppLoader: 21af63390e55c82e037fb9752d93114a80ecf16e
   UMCore: 2f671796d7439604a1cf8ac7bbe5809cd5c50437
   UMReactNativeAdapter: f808906d586a16cebdc3844d86e1bdb8f114a873

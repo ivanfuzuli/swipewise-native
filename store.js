@@ -17,7 +17,7 @@ import {
 
 const persistConfig = {
   key: "root",
-  blacklist: ["status"],
+  blacklist: ["status", "claps"],
   storage: AsyncStorage,
 };
 

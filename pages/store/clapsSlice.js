@@ -5,25 +5,25 @@ import axios from "../../config/@axios";
 import combineMerge from "../../config/combineMerge";
 import deepmerge from "deepmerge";
 
-const prepareArray = (allIds, newIds, append) => {
+const prepareArray = (allIds, newIds) => {
   const next = allIds.filter((el) => !newIds.includes(el));
-  if (append) {
-    return [...next, ...newIds];
-  }
-  return [...newIds, ...next];
+  return [...next, ...newIds];
 };
 
-const LIMIT = 15;
+const LIMIT = 30;
 
 const CancelToken = axiosOrginal.CancelToken;
 let cancel;
 export const getClaps = createAsyncThunk(
   "claps/getClapsStatus",
-  async ({ append }, thunkAPI) => {
+  async (_, thunkAPI) => {
     const state = thunkAPI.getState();
     const sort = state.claps.sort;
-
-    const offset = state.claps.offset[sort];
+    const filter = sort === "popular" ? state.claps.filter : null;
+    const offset =
+      sort === "popular"
+        ? state.claps.offset.popular[filter]
+        : state.claps.offset.newest;
 
     cancel && cancel();
     try {
@@ -36,6 +36,7 @@ export const getClaps = createAsyncThunk(
           offset,
           limit: LIMIT,
           sort,
+          filter,
         },
       });
 
@@ -45,7 +46,6 @@ export const getClaps = createAsyncThunk(
       return {
         quotes,
         total,
-        append,
       };
     } catch (e) {
       if (axiosOrginal.isCancel(e)) {
@@ -60,32 +60,60 @@ export const getClaps = createAsyncThunk(
 const initialState = {
   offset: {
     newest: 0,
-    popular: 0,
+    popular: {
+      day: 0,
+      week: 0,
+      month: 0,
+      all: 0,
+    },
   },
   total: {
     newest: 0,
-    popular: 0,
+    popular: {
+      day: 0,
+      week: 0,
+      month: 0,
+      all: 0,
+    },
   },
-
   sort: "popular",
+  filter: "day",
   limit: LIMIT,
   error: null,
   byId: {},
   allIds: {
     newest: [],
-    popular: [],
+    popular: {
+      day: [],
+      week: [],
+      month: [],
+      all: [],
+    },
   },
-  loading: false,
+  loading: true,
 };
 
 const clapsReducer = createSlice({
   name: "claps",
   initialState,
   reducers: {
+    resetSession: (state, action) => {
+      const sort = state.sort;
+      const filter = state.filter;
+
+      return {
+        ...initialState,
+        sort,
+        filter,
+      };
+    },
+
     setSort: (state, action) => {
       state.sort = action.payload;
     },
-
+    setFilter: (state, action) => {
+      state.filter = action.payload;
+    },
     setCount: (state, action) => {
       const { id, count } = action.payload;
       state.byId[id].count = count;
@@ -99,15 +127,16 @@ const clapsReducer = createSlice({
     });
 
     builder.addCase(getClaps.fulfilled, (state, action) => {
-      const { quotes, total, append } = action.payload;
-      const offset = state.offset[state.sort];
+      const { quotes, total } = action.payload;
+      const { sort, filter } = state;
+      const offset =
+        sort === "popular" ? state.offset[sort][filter] : state.offset.newest;
 
       let nextOffset = offset + LIMIT;
       if (nextOffset > total) {
         nextOffset = total;
       }
 
-      const { sort } = state;
       state.error = null;
       state.loading = false;
 
@@ -117,22 +146,26 @@ const clapsReducer = createSlice({
         return obj;
       }, {});
 
-      state.offset = nextOffset;
-      state.total = total;
-
-      if (!append) {
-        state.offset = LIMIT;
+      if (sort === "popular") {
+        state.offset.popular[filter] = nextOffset;
+        state.total.popular[filter] = total;
+      } else {
+        state.offset.newest = nextOffset;
+        state.total.newest = total;
       }
 
       state.byId = deepmerge(state.byId, byId, {
         arrayMerge: combineMerge,
       });
 
-      state.allIds[sort] = prepareArray(
-        state.allIds[state.sort],
-        allIds,
-        append
-      );
+      if (sort === "popular") {
+        state.allIds.popular[filter] = prepareArray(
+          state.allIds.popular[filter],
+          allIds
+        );
+      } else {
+        state.allIds.newest = prepareArray(state.allIds[state.sort], allIds);
+      }
     });
 
     builder.addCase(getClaps.rejected, (state, action) => {
@@ -142,5 +175,6 @@ const clapsReducer = createSlice({
   },
 });
 
-export const { setSort, setCount } = clapsReducer.actions;
+export const { setSort, setCount, setFilter, resetSession } =
+  clapsReducer.actions;
 export default clapsReducer.reducer;

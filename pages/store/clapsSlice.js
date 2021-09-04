@@ -77,7 +77,7 @@ const initialState = {
     },
   },
   sort: "popular",
-  filter: "all",
+  filter: "day",
   limit: LIMIT,
   error: null,
   byId: {},

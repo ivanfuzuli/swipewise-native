@@ -35,7 +35,11 @@ export default Modal = ({ open, onClose }) => {
   });
 
   const handleShare = () => {
-    openShare(currentQuote.author, currentQuote.title, currentQuote.quote);
+    openShare(
+      currentQuote?.quote?.author,
+      currentQuote?.quote?.title,
+      currentQuote?.quote?.quote
+    );
   };
   const openInstagramShare = () => {
     dispatch(setCurrentQuote(currentQuote.quote));

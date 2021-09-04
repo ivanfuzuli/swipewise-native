@@ -1,7 +1,6 @@
 import axiosOrginal from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../config/@axios";
-import take from "lodash/take";
 
 import combineMerge from "../../config/combineMerge";
 import deepmerge from "deepmerge";
@@ -22,7 +21,9 @@ export const getClaps = createAsyncThunk(
     const sort = state.claps.sort;
     const filter = sort === "popular" ? state.claps.filter : null;
     const offset =
-      sort === "popular" ? state.claps.offset.popular[filter] : null;
+      sort === "popular"
+        ? state.claps.offset.popular[filter]
+        : state.claps.offset.newest;
 
     cancel && cancel();
     try {

@@ -54,10 +54,16 @@ const Favorites = ({ navigation }) => {
   useEffect(() => {
     if (items.length === 0) {
       isScrolled.current = false;
-      isAppend.current = false;
+      isAppend.current = true;
       dispatch(getClaps());
     }
   }, [sort, filter]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetSession());
+    };
+  }, []);
 
   const handleEndReached = () => {
     if (!isScrolled.current) {
@@ -112,7 +118,7 @@ const Favorites = ({ navigation }) => {
         ) : null}
 
         <ErrorMessage message={errorMessage} />
-        {isLoading && quotes.length < 1 && <Loading></Loading>}
+        {downLoading && quotes.length < 1 && <Loading></Loading>}
         <FlatList
           ref={flatlistRef}
           data={quotes}
@@ -124,7 +130,9 @@ const Favorites = ({ navigation }) => {
               tintColor={"red"}
             />
           }
-          ListFooterComponent={<ListFooter loading={downLoading} />}
+          ListFooterComponent={
+            <ListFooter loading={quotes.length > 0 && downLoading} />
+          }
           renderItem={renderItem}
           keyExtractor={(item) => item._id}
           onEndReached={handleEndReached}

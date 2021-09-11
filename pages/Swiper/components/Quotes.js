@@ -1,6 +1,12 @@
 import React from "react";
 
-import { View, StyleSheet, SafeAreaView, Dimensions } from "react-native";
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  Dimensions,
+  Platform,
+} from "react-native";
 import Animated from "react-native-reanimated";
 import Analytics from "../../../config/Analytics";
 
@@ -40,6 +46,10 @@ class Quotes extends React.PureComponent {
   };
 
   openRateModalIfPossible = () => {
+    if (Platform.OS !== "ios") {
+      return;
+    }
+
     if (this.rateCount < 4) {
       return;
     }

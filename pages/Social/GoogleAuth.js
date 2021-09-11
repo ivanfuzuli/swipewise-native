@@ -16,7 +16,6 @@ import Analytics from "../../config/Analytics";
 import env from "../../config/@env";
 import google from "../../assets/google.logo.png";
 
-const API_URL = env.apiUrl;
 const GOOGLE_APP_ID = env.googleAppId;
 
 GoogleSignin.configure({
@@ -26,7 +25,6 @@ GoogleSignin.configure({
   ], // what API you want to access on behalf of the user, default is email and profile
   webClientId: GOOGLE_APP_ID, // client ID of type WEB for your server (needed to verify user ID and offline access)
   offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
-  hostedDomain: API_URL, // specifies a hosted domain restriction
   loginHint: "", // [iOS] The user's ID, or email address, to be prefilled in the authentication UI if possible. [See docs here](https://developers.google.com/identity/sign-in/ios/api/interface_g_i_d_sign_in.html#a0a68c7504c31ab0b728432565f6e33fd)
   forceCodeForRefreshToken: false, // [Android] related to `serverAuthCode`, read the docs link below *.
   // accountName: "Swipewise", // [Android] specifies an account name on the device that should be used
@@ -56,6 +54,7 @@ const GoogleAuth = ({ title }) => {
 
   signIn = async () => {
     try {
+      setLoading(true);
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       const { idToken } = userInfo;
@@ -104,7 +103,7 @@ const GoogleAuth = ({ title }) => {
 const styles = StyleSheet.create({
   loading: {
     zIndex: 2,
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: "rgba(255,255,255,0.5)",
     opacity: 0.3,
     position: "absolute",
     top: 0,

@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   social_container: {
     margin: 10,
-    borderRadius: 50,
+    borderRadius: 5,
     backgroundColor: "#3a559f",
     flexDirection: "row",
     justifyContent: "center",

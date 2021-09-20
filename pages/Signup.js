@@ -6,20 +6,12 @@ import {
   TouchableOpacity,
   Linking,
   Platform,
+  View,
 } from "react-native";
 
-import {
-  Form,
-  Item,
-  View,
-  Label,
-  Text,
-  Input,
-  Button,
-  Spinner,
-} from "native-base";
+import { Button, Input, Text } from "react-native-elements";
+
 import { Feather } from "@expo/vector-icons";
-import * as RootNavigation from "../RootNavigation.js";
 
 import { useSelector, useDispatch } from "react-redux";
 import FacebookAuth from "./Social/FacebookAuth";
@@ -128,7 +120,7 @@ const Signup = ({ navigation }) => {
 
   return (
     <View>
-      <Form style={styles.form}>
+      <View style={styles.form}>
         <View>
           <Text style={styles.heading}>Sign Up</Text>
         </View>
@@ -139,64 +131,51 @@ const Signup = ({ navigation }) => {
           </View>
         )}
         <View style={styles.item}>
-          <Item floatingLabel>
-            <Label>E-mail</Label>
-            <Input
-              onSubmitEditing={() => {
-                usernameRef.current._root.focus();
-              }}
-              keyboardType="email-address"
-              returnKeyType={"next"}
-              onChangeText={handleEmailChange}
-              value={email}
-              autoCapitalize="none"
-              autoCompleteType="email"
-              autoCorrect={false}
-              textContentType="emailAddress"
-            />
-          </Item>
+          <Input
+            onSubmitEditing={() => {
+              usernameRef.current.focus();
+            }}
+            placeholder="E-mail"
+            keyboardType="email-address"
+            returnKeyType={"next"}
+            onChangeText={handleEmailChange}
+            value={email}
+            autoCapitalize="none"
+            autoCompleteType="email"
+            autoCorrect={false}
+            textContentType="emailAddress"
+            errorMessage={isDirty && errors.email && errors.email}
+          />
         </View>
-        {isDirty && errors.email && (
-          <Text style={styles.error}>{errors.email}</Text>
-        )}
         <View style={styles.item}>
-          <Item floatingLabel>
-            <Label>Username</Label>
-            <Input
-              onSubmitEditing={() => {
-                passwordRef.current._root.focus();
-              }}
-              getRef={(input) => {
-                usernameRef.current = input;
-              }}
-              keyboardType="email-address"
-              returnKeyType={"next"}
-              onChangeText={handleUsernameChange}
-              value={username}
-              autoCapitalize="none"
-            />
-          </Item>
+          <Input
+            placeholder="Username"
+            onSubmitEditing={() => {
+              passwordRef.current.focus();
+            }}
+            ref={usernameRef}
+            keyboardType="email-address"
+            returnKeyType={"next"}
+            onChangeText={handleUsernameChange}
+            value={username}
+            autoCapitalize="none"
+            errorMessage={isDirty && errors.username && errors.username}
+          />
         </View>
-        {isDirty && errors.username && (
-          <Text style={styles.error}>{errors.username}</Text>
-        )}
         <View style={styles.item}>
-          <Item floatingLabel>
-            <Label>Password</Label>
-            <Input
-              onSubmitEditing={() => {
-                passwordRef.current._root.focus();
-              }}
-              autoCapitalize="none"
-              returnKeyType={"done"}
-              onChangeText={handlePasswordChange}
-              value={password}
-              getRef={(input) => {
-                passwordRef.current = input;
-              }}
-              secureTextEntry={secureTextEntry}
-            />
-          </Item>
+          <Input
+            placeholder="Password"
+            onSubmitEditing={() => {
+              passwordRef.current.focus();
+            }}
+            autoCapitalize="none"
+            returnKeyType={"done"}
+            onChangeText={handlePasswordChange}
+            value={password}
+            ref={passwordRef}
+            secureTextEntry={secureTextEntry}
+            errorMessage={isDirty && errors.password && errors.password}
+          />
 
           <View style={styles.eye}>
             <TouchableWithoutFeedback onPress={toggleSecureTextEntry}>
@@ -211,21 +190,13 @@ const Signup = ({ navigation }) => {
             </TouchableWithoutFeedback>
           </View>
         </View>
-        {isDirty && errors.password && (
-          <Text style={styles.error}>{errors.password}</Text>
-        )}
         <View style={styles.buttons}>
           <Button
             onPress={handleSubmit}
-            bordered
-            full
-            rounded
-            primary
-            disabled={loading}
-          >
-            {loading && <Spinner size={24} color="blue" />}
-            <Text>Sign Up</Text>
-          </Button>
+            loading={loading}
+            type="outline"
+            title="Sign Up"
+          ></Button>
         </View>
         <Divider />
         {Platform.OS === "ios" && (
@@ -255,7 +226,7 @@ const Signup = ({ navigation }) => {
             <Text style={styles.termsLink}> Privacy Policy.</Text>
           </TouchableOpacity>
         </View>
-      </Form>
+      </View>
     </View>
   );
 };
@@ -306,7 +277,7 @@ const styles = StyleSheet.create({
   eye: {
     position: "absolute",
     right: 15,
-    top: 15,
+    top: 5,
   },
 
   terms: {

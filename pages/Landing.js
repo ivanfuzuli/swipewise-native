@@ -8,9 +8,10 @@ import {
   Platform,
   ScrollView,
   SafeAreaView,
+  View,
 } from "react-native";
 
-import { Container, View, Text } from "native-base";
+import { Text } from "react-native-elements";
 import Signup from "./Signup";
 
 const Landing = ({ navigation }) => {
@@ -19,33 +20,31 @@ const Landing = ({ navigation }) => {
   }, []);
 
   return (
-    <Container>
-      <SafeAreaView style={{ flex: 1 }}>
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
+    <SafeAreaView style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
         >
-          <ScrollView
-            contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
-          >
-            <View style={styles.gradient}>
-              <Pressable onPress={() => navigation.navigate("Swipe")}>
-                <Text style={styles.heading}>Swipewise</Text>
-              </Pressable>
-              <Signup navigation={navigation} />
-              <View style={styles.buttons}>
-                <View>
-                  <Text>Already have account? </Text>
-                </View>
-                <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-                  <Text style={styles.termsLink}> Login </Text>
-                </TouchableOpacity>
+          <View style={styles.gradient}>
+            <Pressable onPress={() => navigation.navigate("Swipe")}>
+              <Text style={styles.heading}>Swipewise</Text>
+            </Pressable>
+            <Signup navigation={navigation} />
+            <View style={styles.buttons}>
+              <View>
+                <Text>Already have account? </Text>
               </View>
+              <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+                <Text style={styles.termsLink}> Login </Text>
+              </TouchableOpacity>
             </View>
-          </ScrollView>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-    </Container>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 

@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   social_container: {
     margin: 10,
-    borderRadius: 50,
+    borderRadius: 5,
     height: 50,
     borderColor: "#000",
     borderWidth: 1,

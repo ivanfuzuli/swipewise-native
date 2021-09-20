@@ -62,7 +62,7 @@ function AppleAuth() {
       <AppleAuthentication.AppleAuthenticationButton
         buttonType={AppleAuthentication.AppleAuthenticationButtonType.CONTINUE}
         buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
-        cornerRadius={50}
+        cornerRadius={5}
         style={{ width: "100%", height: 54 }}
         onPress={handlePress}
       />

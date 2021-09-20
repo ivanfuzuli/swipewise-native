@@ -7,20 +7,12 @@ import {
   Linking,
   SafeAreaView,
   ScrollView,
+  View,
 } from "react-native";
 
 import Analytics from "../config/Analytics";
-import {
-  Container,
-  Form,
-  Item,
-  View,
-  Label,
-  Text,
-  Input,
-  Button,
-  Spinner,
-} from "native-base";
+import { Button, Input, Text } from "react-native-elements";
+
 import { Feather } from "@expo/vector-icons";
 import env from "../config/@env";
 
@@ -113,7 +105,7 @@ const Login = () => {
     Analytics.track(Analytics.events.LOGIN_PAGE_OPENED);
   }, []);
   return (
-    <Container>
+    <View style={styles.container}>
       <SafeAreaView style={{ flex: 1 }}>
         <ScrollView
           contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
@@ -125,44 +117,40 @@ const Login = () => {
               <View>
                 <Text style={styles.heading}>Login</Text>
               </View>
-              <ErrorMessage message={errorMessage} />
+              <View style={{ width: "100%" }}>
+                <ErrorMessage message={errorMessage} />
+              </View>
               <View>
-                <Form style={styles.form}>
-                  <Item floatingLabel>
-                    <Label>E-mail</Label>
+                <View style={styles.form}>
+                  <Input
+                    onSubmitEditing={() => {
+                      passwordInput.current.focus();
+                    }}
+                    keyboardType="email-address"
+                    returnKeyType={"next"}
+                    onChangeText={handleEmailChange}
+                    value={email}
+                    autoCapitalize="none"
+                    autoCompleteType="email"
+                    autoCorrect={false}
+                    placeholder="E-mail"
+                  />
+                  {isDirty && errors.email && (
+                    <Text style={styles.error}>{errors.email}</Text>
+                  )}
+                  <View>
                     <Input
                       onSubmitEditing={() => {
                         passwordInput.current._root.focus();
                       }}
-                      keyboardType="email-address"
-                      returnKeyType={"next"}
-                      onChangeText={handleEmailChange}
-                      value={email}
                       autoCapitalize="none"
-                      autoCompleteType="email"
-                      autoCorrect={false}
+                      returnKeyType={"done"}
+                      onChangeText={handlePasswordChange}
+                      value={password}
+                      ref={passwordInput}
+                      secureTextEntry={secureTextEntry}
+                      placeholder="Password"
                     />
-                  </Item>
-                  {isDirty && errors.email && (
-                    <Text style={styles.error}>{errors.email}</Text>
-                  )}
-                  <View style={styles.lastItem}>
-                    <Item floatingLabel>
-                      <Label>Password</Label>
-                      <Input
-                        onSubmitEditing={() => {
-                          passwordInput.current._root.focus();
-                        }}
-                        autoCapitalize="none"
-                        returnKeyType={"done"}
-                        onChangeText={handlePasswordChange}
-                        value={password}
-                        getRef={(input) => {
-                          passwordInput.current = input;
-                        }}
-                        secureTextEntry={secureTextEntry}
-                      />
-                    </Item>
 
                     <View style={styles.eye}>
                       <TouchableWithoutFeedback onPress={toggleSecureTextEntry}>
@@ -181,24 +169,20 @@ const Login = () => {
                     <Text style={styles.error}>{errors.password}</Text>
                   )}
                   <View style={styles.forgot}>
-                    <Button onPress={handleForgot} transparent>
-                      <Text>Forgot Password?</Text>
-                    </Button>
+                    <Button
+                      onPress={handleForgot}
+                      type="clear"
+                      title="Forgot Password?"
+                    ></Button>
                   </View>
                   <View style={styles.buttons}>
                     <Button
                       onPress={handleSubmit}
-                      bordered
-                      full
-                      rounded
-                      primary
-                      disabled={loading}
-                    >
-                      {loading && <Spinner size={24} color="blue" />}
-                      <Text>Login</Text>
-                    </Button>
+                      title="Login"
+                      loading={loading}
+                    ></Button>
                   </View>
-                </Form>
+                </View>
                 <Divider />
                 {Platform.OS === "ios" && (
                   <>
@@ -212,13 +196,18 @@ const Login = () => {
           </KeyboardAvoidingView>
         </ScrollView>
       </SafeAreaView>
-    </Container>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   lastItem: {
     margin: 15,
+  },
+
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
   },
 
   buttons: {

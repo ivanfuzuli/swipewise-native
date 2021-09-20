@@ -1,18 +1,8 @@
 import React, { useState } from "react";
 import PubSub from "pubsub-js";
 
-import { Modal, StyleSheet, Pressable } from "react-native";
-import {
-  Container,
-  Content,
-  ListItem,
-  List,
-  Left,
-  Right,
-  Icon,
-  Text,
-  View,
-} from "native-base";
+import { Modal, StyleSheet, Pressable, View } from "react-native";
+import { Text, ListItem } from "react-native-elements";
 const LogoutButton = ({ email }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const handlePress = () => {
@@ -24,10 +14,10 @@ const LogoutButton = ({ email }) => {
 
   return (
     <>
-      <ListItem onPress={handlePress}>
-        <Left>
+      <ListItem bottomDivider onPress={handlePress}>
+        <ListItem.Content>
           <Text>Logout</Text>
-        </Left>
+        </ListItem.Content>
       </ListItem>
       <Modal
         animationType="slide"

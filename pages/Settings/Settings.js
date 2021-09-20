@@ -1,17 +1,7 @@
 import Constants from "expo-constants";
 import React from "react";
-import { StyleSheet } from "react-native";
-import {
-  Container,
-  Content,
-  ListItem,
-  List,
-  Left,
-  Right,
-  Icon,
-  Text,
-  View,
-} from "native-base";
+import { StyleSheet, View } from "react-native";
+import { ListItem, Text } from "react-native-elements";
 import { useSelector } from "react-redux";
 import LogoutButton from "./LogoutButton";
 
@@ -19,59 +9,57 @@ const Settings = ({ navigation }) => {
   const email = useSelector((state) => state.auth.user.email);
   const version = Constants.manifest.version;
   return (
-    <Container>
-      <Content>
-        <View style={styles.profile}>
-          <Text style={styles.profile_text}>{email}</Text>
-        </View>
-        <List>
-          <ListItem onPress={() => navigation.navigate("Change Email")}>
-            <Left>
-              <Text>Change E-Mail</Text>
-            </Left>
-            <Right>
-              <Icon name="arrow-forward" />
-            </Right>
-          </ListItem>
-          <ListItem onPress={() => navigation.navigate("Change Password")}>
-            <Left>
-              <Text>Change Password</Text>
-            </Left>
-            <Right>
-              <Icon name="arrow-forward" />
-            </Right>
-          </ListItem>
-          <ListItem onPress={() => navigation.navigate("Change Tags")}>
-            <Left>
-              <Text>Change Tags</Text>
-            </Left>
-            <Right>
-              <Icon name="arrow-forward" />
-            </Right>
-          </ListItem>
-          <LogoutButton email={email} />
-          <ListItem onPress={() => navigation.navigate("Delete Account")}>
-            <Left>
-              <Text>Delete Account</Text>
-            </Left>
-            <Right>
-              <Icon name="arrow-forward" />
-            </Right>
-          </ListItem>
-          <ListItem onPress={() => navigation.navigate("Feedback")}>
-            <Left>
-              <Text>Feedback</Text>
-            </Left>
-            <Right>
-              <Icon name="arrow-forward" />
-            </Right>
-          </ListItem>
-        </List>
-        <View style={styles.version}>
-          <Text>Version: ({version})</Text>
-        </View>
-      </Content>
-    </Container>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
+      <View style={styles.profile}>
+        <Text style={styles.profile_text}>{email}</Text>
+      </View>
+      <ListItem
+        bottomDivider
+        onPress={() => navigation.navigate("Change Email")}
+      >
+        <ListItem.Content>
+          <ListItem.Title>Change E-Mail</ListItem.Title>
+        </ListItem.Content>
+        <ListItem.Chevron />
+      </ListItem>
+      <ListItem
+        bottomDivider
+        onPress={() => navigation.navigate("Change Password")}
+      >
+        <ListItem.Content>
+          <ListItem.Title>Change Password</ListItem.Title>
+        </ListItem.Content>
+        <ListItem.Chevron />
+      </ListItem>
+      <ListItem
+        bottomDivider
+        onPress={() => navigation.navigate("Change Tags")}
+      >
+        <ListItem.Content>
+          <ListItem.Title>Change Tags</ListItem.Title>
+        </ListItem.Content>
+        <ListItem.Chevron />
+      </ListItem>
+      <LogoutButton email={email} />
+      <ListItem
+        bottomDivider
+        onPress={() => navigation.navigate("Delete Account")}
+      >
+        <ListItem.Content>
+          <ListItem.Title>Delete Account</ListItem.Title>
+        </ListItem.Content>
+        <ListItem.Chevron />
+      </ListItem>
+      <ListItem bottomDivider onPress={() => navigation.navigate("Feedback")}>
+        <ListItem.Content>
+          <ListItem.Title>Feedback</ListItem.Title>
+        </ListItem.Content>
+        <ListItem.Chevron />
+      </ListItem>
+      <View style={styles.version}>
+        <Text>Version: ({version})</Text>
+      </View>
+    </View>
   );
 };
 

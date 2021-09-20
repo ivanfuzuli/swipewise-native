@@ -9,13 +9,14 @@ import {
   TouchableOpacity,
   Alert,
   ScrollView,
+  View,
 } from "react-native";
 import ViewShot from "react-native-view-shot";
 import LinearGradient from "react-native-linear-gradient";
 
 import { useSelector, useDispatch } from "react-redux";
 import { setShareInstagramOpen } from "@src/pages/store/statusSlice";
-import { Button, Text, View } from "native-base";
+import { Button, Text } from "react-native-elements";
 import Share from "react-native-share";
 
 const { height } = Dimensions.get("window");
@@ -162,12 +163,13 @@ const InstagramModal = ({ quote }) => {
           </TouchableOpacity>
         </View>
         <View>
-          <Button success rounded onPress={handleCapture}>
-            <Text>
-              <Icon name="share" size={24} color="white" />
-              Share
-            </Text>
-          </Button>
+          <Button
+            title="Share"
+            raised
+            buttonStyle={{ backgroundColor: "green" }}
+            icon={<Icon name="share" size={24} color="white" />}
+            onPress={handleCapture}
+          ></Button>
         </View>
       </SafeAreaView>
     </Animated.View>

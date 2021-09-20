@@ -1,7 +1,7 @@
 import React from "react";
 
 import { View, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
-import { Text } from "native-base";
+import { Text } from "react-native-elements";
 import { AntDesign } from "@expo/vector-icons";
 
 import { useDispatch, useSelector } from "react-redux";

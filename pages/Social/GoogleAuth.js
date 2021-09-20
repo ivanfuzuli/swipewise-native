@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Image, TouchableOpacity, Alert } from "react-native";
-import { Text } from "native-base";
+import { Text } from "react-native-elements";
 import axios from "@src/config/@axios";
 
 import {

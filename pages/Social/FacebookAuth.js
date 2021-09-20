@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
-import { Text } from "native-base";
+import { Text } from "react-native-elements";
 
 import { useAuthRequest } from "expo-auth-session";
 import { useDispatch } from "react-redux";

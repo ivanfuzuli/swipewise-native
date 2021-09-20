@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import { StyleSheet, Dimensions, SafeAreaView } from "react-native";
-import { View, Text, Container, Button } from "native-base";
+import { StyleSheet, Dimensions, SafeAreaView, View } from "react-native";
+import { Text, Button } from "react-native-elements";
 import LottieView from "lottie-react-native";
 import { getQuotes } from "../../store/statusSlice";
 import Header from "./Header";
@@ -31,9 +31,7 @@ const ErrorView = () => {
           It may be related to your internet connection.
         </Text>
         <Text style={styles.center}>
-          <Button onPress={handlePress}>
-            <Text>Refresh</Text>
-          </Button>
+          <Button title="Refresh" onPress={handlePress}></Button>
         </Text>
       </View>
     </SafeAreaView>

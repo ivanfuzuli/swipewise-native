@@ -1,8 +1,8 @@
 import env from "../../../config/@env";
 import Analytics from "../../../config/Analytics";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Dimensions } from "react-native";
-import { View, Text } from "native-base";
+import { StyleSheet, Dimensions, View } from "react-native";
+import { Text } from "react-native-elements";
 import LottieView from "lottie-react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { getQuotes } from "../../store/statusSlice";

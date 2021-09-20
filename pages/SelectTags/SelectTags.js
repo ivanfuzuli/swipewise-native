@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView, View } from "react-native";
 
-import { Container, View, Text, Spinner, Button } from "native-base";
+import { Text, Button } from "react-native-elements";
 
 import { useDispatch, useSelector } from "react-redux";
 import Selected from "./components/Selected";
@@ -48,7 +48,7 @@ const BookSelect = ({ navigation }) => {
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Container>
+      <View style={{ flex: 1, backgroundColor: "white" }}>
         <View style={styles.container}>
           <ErrorMessage message={errorMessage} />
           <View style={styles.main}>
@@ -56,16 +56,14 @@ const BookSelect = ({ navigation }) => {
           </View>
           <View style={styles.footer}>
             <Button
-              full
               onPress={handleNext}
               disabled={isLoading || isDisabled}
-            >
-              {isLoading && <Spinner size={24} color="blue" />}
-              <Text>Continue</Text>
-            </Button>
+              loading={isLoading}
+              title="Continue"
+            ></Button>
           </View>
         </View>
-      </Container>
+      </View>
     </SafeAreaView>
   );
 };
@@ -84,7 +82,6 @@ const styles = StyleSheet.create({
   },
 
   footer: {
-    marginBottom: 50,
     alignItems: "flex-end",
   },
 });

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { StyleSheet, Dimensions } from "react-native";
-import { View, Text, Container, Button } from "native-base";
+import { StyleSheet, Dimensions, View } from "react-native";
+import { Text, Button } from "react-native-elements";
 import LottieView from "lottie-react-native";
 
 import { useDispatch } from "react-redux";
@@ -36,7 +36,7 @@ const Loading = () => {
     };
   }, []);
   return (
-    <Container>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       <View style={styles.container}>
         <Text style={styles.heading}>Preparing...</Text>
 
@@ -52,9 +52,7 @@ const Loading = () => {
         <Text style={styles.center}>This could be take a while.</Text>
         {retry && (
           <View style={styles.button}>
-            <Button onPress={handleOpenLoading} bordered full rounded primary>
-              <Text>Retry</Text>
-            </Button>
+            <Button onPress={handleOpenLoading} title="Retry!"></Button>
           </View>
         )}
       </View>
@@ -68,7 +66,7 @@ const Loading = () => {
           />
         </View>
       )}
-    </Container>
+    </View>
   );
 };
 

@@ -4,21 +4,13 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import axios from "../../config/@axios";
 
-import {
-  Container,
-  Form,
-  Item,
-  View,
-  Label,
-  Text,
-  Input,
-  Button,
-  Toast,
-  Spinner,
-} from "native-base";
+import { Text, Input, Button } from "react-native-elements";
+import Toast from "react-native-root-toast";
+
 import { Feather } from "@expo/vector-icons";
 const ChangePassword = () => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -73,9 +65,9 @@ const ChangePassword = () => {
         newPassword: password,
       });
       setPassword(null);
-      Toast.show({
-        text: "Your password has been successfully changed!",
-        buttonText: "Okay",
+
+      Toast.show("Your password has been successfully changed!", {
+        duration: Toast.durations.LONG,
       });
     } catch (err) {
       setErrorMessage(err.message);
@@ -89,7 +81,7 @@ const ChangePassword = () => {
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <Container>
+      <View style={{ flex: 1, backgroundColor: "#fff" }}>
         <View style={styles.Container}>
           <View>
             {errorMessage && (
@@ -98,24 +90,23 @@ const ChangePassword = () => {
                 <Text style={styles.errorWhite}>{errorMessage}</Text>
               </View>
             )}
-            <Form style={styles.form}>
+            <View style={styles.form}>
               <View>
                 <Text style={styles.heading}>Change Password</Text>
               </View>
               <View>
-                <Item floatingLabel>
-                  <Label>New Password</Label>
-                  <Input
-                    autoCapitalize="none"
-                    returnKeyType={"done"}
-                    onChangeText={handlePasswordChange}
-                    value={password}
-                    getRef={(input) => {
-                      passwordInput.current = input;
-                    }}
-                    secureTextEntry={secureTextEntry}
-                  />
-                </Item>
+                <Input
+                  autoCapitalize="none"
+                  returnKeyType={"done"}
+                  onChangeText={handlePasswordChange}
+                  value={password}
+                  getRef={(input) => {
+                    passwordInput.current = input;
+                  }}
+                  secureTextEntry={secureTextEntry}
+                  errorMessage={isDirty && errors.password}
+                  placeholder="New Password"
+                />
 
                 <View style={styles.eye}>
                   <TouchableWithoutFeedback onPress={toggleSecureTextEntry}>
@@ -130,26 +121,18 @@ const ChangePassword = () => {
                   </TouchableWithoutFeedback>
                 </View>
               </View>
-              {isDirty && errors.password && (
-                <Text style={styles.error}>{errors.password}</Text>
-              )}
               <View style={styles.buttons}>
                 <Button
                   onPress={handleSubmit}
-                  bordered
-                  full
-                  rounded
-                  primary
                   disabled={isLoading}
-                >
-                  {isLoading && <Spinner size={24} color="blue" />}
-                  <Text>Change Password</Text>
-                </Button>
+                  loading={isLoading}
+                  title="Change Password"
+                ></Button>
               </View>
-            </Form>
+            </View>
           </View>
         </View>
-      </Container>
+      </View>
     </KeyboardAvoidingView>
   );
 };

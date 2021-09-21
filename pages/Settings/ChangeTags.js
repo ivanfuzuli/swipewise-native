@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../config/@axios";
 
-import { SafeAreaView } from "react-native";
-import { Button, Text, Container, Toast } from "native-base";
+import { SafeAreaView, View } from "react-native";
+import { Button } from "react-native-elements";
 
 import Selected from "../SelectTags/components/Selected";
 import ErrorMessage from "../../components/ErrorMessage";
+import Toast from "react-native-root-toast";
 
 import { useDispatch, useSelector } from "react-redux";
 import { resetTags } from "../SelectTags/store/selectedSlice";
@@ -24,10 +25,8 @@ const ChangeTags = () => {
     setErrorMessage(null);
     try {
       await axios.put("profile/tags", { tags: selectedTags });
-      Toast.show({
-        text: "Your tags successfully changed!",
-        duration: 5000,
-        buttonText: "Okay",
+      Toast.show("Your tags successfully changed!", {
+        duration: Toast.durations.LONG,
       });
     } catch (err) {
       setErrorMessage(err.message);
@@ -45,15 +44,18 @@ const ChangeTags = () => {
   }, []);
 
   return (
-    <Container style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       <ErrorMessage message={errorMessage} />
       <Selected />
       <SafeAreaView style={{ justifyContent: "center", flexDirection: "row" }}>
-        <Button onPress={handleNext} disabled={isLoading || isDisabled}>
-          <Text>Continue</Text>
-        </Button>
+        <Button
+          onPress={handleNext}
+          title="Continue"
+          disabled={isLoading || isDisabled}
+          loading={isLoading}
+        ></Button>
       </SafeAreaView>
-    </Container>
+    </View>
   );
 };
 

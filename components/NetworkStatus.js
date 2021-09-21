@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import NetInfo from "@react-native-community/netinfo";
 
-import { Toast } from "native-base";
+import Toast from "react-native-root-toast";
 import { useDispatch } from "react-redux";
 import { dequeue } from "../pages/store/votesSlice";
 const NetworkStatus = () => {
@@ -19,9 +19,8 @@ const NetworkStatus = () => {
       }
 
       if (!state.isConnected) {
-        Toast.show({
-          text: "There is a connection problem.",
-          buttonText: "Okay",
+        Toast.show("There is a connection problem.", {
+          duration: Toast.durations.LONG,
         });
       }
       connectedRef.current = state.isConnected;

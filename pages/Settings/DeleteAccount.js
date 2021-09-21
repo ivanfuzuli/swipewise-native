@@ -4,24 +4,17 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import axios from "../../config/@axios";
 import PubSub from "pubsub-js";
 
-import {
-  Container,
-  Form,
-  Item,
-  View,
-  Label,
-  Text,
-  Input,
-  Button,
-  Toast,
-  Spinner,
-} from "native-base";
+import { Text, Input, Button } from "react-native-elements";
 import { Feather } from "@expo/vector-icons";
 import Analytics from "../../config/Analytics";
+
+import Toast from "react-native-root-toast";
+
 const DeleteAccount = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setLoading] = useState(false);
@@ -76,9 +69,8 @@ const DeleteAccount = () => {
       });
 
       setPassword(null);
-      Toast.show({
-        text: "Your account successfully deleted!",
-        buttonText: "Okay",
+      Toast.show("Your account successfully deleted!", {
+        duration: Toast.durations.LONG,
       });
 
       Analytics.track(Analytics.events.ACCOUNT_DELETED);
@@ -95,7 +87,7 @@ const DeleteAccount = () => {
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <Container>
+      <View style={{ flex: 1, backgroundColor: "white" }}>
         <View style={styles.Container}>
           <View>
             {errorMessage && (
@@ -104,7 +96,7 @@ const DeleteAccount = () => {
                 <Text style={styles.errorWhite}>{errorMessage}</Text>
               </View>
             )}
-            <Form style={styles.form}>
+            <View style={styles.form}>
               <View>
                 <Text style={styles.heading}>Delete Account</Text>
               </View>
@@ -115,20 +107,17 @@ const DeleteAccount = () => {
                 </Text>
               </View>
               <View style={styles.lastItem}>
-                <Item floatingLabel>
-                  <Label>Password</Label>
-                  <Input
-                    autoCapitalize="none"
-                    returnKeyType={"done"}
-                    onChangeText={handlePasswordChange}
-                    value={password}
-                    getRef={(input) => {
-                      passwordInput.current = input;
-                    }}
-                    secureTextEntry={secureTextEntry}
-                  />
-                </Item>
-
+                <Input
+                  autoCapitalize="none"
+                  returnKeyType={"done"}
+                  onChangeText={handlePasswordChange}
+                  value={password}
+                  getRef={(input) => {
+                    passwordInput.current = input;
+                  }}
+                  secureTextEntry={secureTextEntry}
+                  errorMessage={isDirty && errors.password}
+                />
                 <View style={styles.eye}>
                   <TouchableWithoutFeedback onPress={toggleSecureTextEntry}>
                     <View>
@@ -142,9 +131,6 @@ const DeleteAccount = () => {
                   </TouchableWithoutFeedback>
                 </View>
               </View>
-              {isDirty && errors.password && (
-                <Text style={styles.error}>{errors.password}</Text>
-              )}
               <View style={styles.buttons}>
                 <Button
                   onPress={handleSubmit}
@@ -152,15 +138,14 @@ const DeleteAccount = () => {
                   rounded
                   danger
                   disabled={isLoading}
-                >
-                  {isLoading && <Spinner size={24} color="blue" />}
-                  <Text>Delete My Account</Text>
-                </Button>
+                  loading={isLoading}
+                  title="Delete My Account"
+                ></Button>
               </View>
-            </Form>
+            </View>
           </View>
         </View>
-      </Container>
+      </View>
     </KeyboardAvoidingView>
   );
 };

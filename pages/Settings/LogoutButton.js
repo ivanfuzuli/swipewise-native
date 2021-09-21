@@ -16,7 +16,7 @@ const LogoutButton = ({ email }) => {
     <>
       <ListItem bottomDivider onPress={handlePress}>
         <ListItem.Content>
-          <Text>Logout</Text>
+          <ListItem.Title>Logout</ListItem.Title>
         </ListItem.Content>
       </ListItem>
       <Modal

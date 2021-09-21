@@ -1,20 +1,10 @@
 import React, { useRef, useState } from "react";
-import { StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
+import { StyleSheet, KeyboardAvoidingView, Platform, View } from "react-native";
 
 import axios from "../../config/@axios";
 
-import {
-  Container,
-  Form,
-  Item,
-  View,
-  Label,
-  Text,
-  Input,
-  Button,
-  Toast,
-  Textarea,
-} from "native-base";
+import { Text, Input, Button } from "react-native-elements";
+import Toast from "react-native-root-toast";
 
 const ChangeEmail = () => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -86,10 +76,8 @@ const ChangeEmail = () => {
 
         setEmail("");
         setFeedback("");
-        Toast.show({
-          text: "Your feedback succcessfully delivered to us. Thank you!.",
-          timeout: 5000,
-          buttonText: "Okay",
+        Toast.show("Your feedback succcessfully delivered to us. Thank you!.", {
+          duration: Toast.durations.LONG,
         });
       } catch (err) {
         setErrorMessage(err.message);
@@ -104,7 +92,7 @@ const ChangeEmail = () => {
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <Container>
+      <View style={{ flex: 1, backgroundColor: "white" }}>
         <View style={styles.Container}>
           <View>
             {errorMessage && (
@@ -113,62 +101,49 @@ const ChangeEmail = () => {
                 <Text style={styles.errorWhite}>{errorMessage}</Text>
               </View>
             )}
-            <Form style={styles.form}>
+            <View style={styles.form}>
               <View>
                 <Text style={styles.heading}>Feedback</Text>
               </View>
-              <Item floatingLabel>
-                <Label>E-mail</Label>
-                <Input
-                  onSubmitEditing={() => {
-                    feedbackInput.current._root.focus();
-                  }}
-                  keyboardType="email-address"
-                  returnKeyType={"next"}
-                  onChangeText={handleEmailChange}
-                  value={email}
-                  autoCapitalize="none"
-                  autoCompleteType="email"
-                  autoCorrect={false}
-                />
-              </Item>
-              {isDirty && errors.email && (
-                <Text style={styles.error}>{errors.email}</Text>
-              )}
-              <View style={styles.lastItem}>
-                <Textarea
-                  rowSpan={5}
-                  height={100}
-                  bordered
-                  placeholder="Feedback"
-                  autoCapitalize="none"
-                  returnKeyType={"done"}
-                  onChangeText={handleFeedbackChange}
-                  value={feedback}
-                  getRef={(input) => {
-                    feedbackInput.current = input;
-                  }}
-                />
-              </View>
-              {isDirty && errors.feedback && (
-                <Text style={styles.error}>{errors.feedback}</Text>
-              )}
+              <Input
+                onSubmitEditing={() => {
+                  feedbackInput.current.focus();
+                }}
+                keyboardType="email-address"
+                returnKeyType={"next"}
+                onChangeText={handleEmailChange}
+                value={email}
+                autoCapitalize="none"
+                autoCompleteType="email"
+                autoCorrect={false}
+                errorMessage={isDirty && errors.email}
+                placeholder="E-mail Address"
+              />
+              <Input
+                rowSpan={5}
+                multiline
+                height={100}
+                bordered
+                placeholder="Feedback"
+                autoCapitalize="none"
+                returnKeyType={"done"}
+                onChangeText={handleFeedbackChange}
+                value={feedback}
+                ref={feedbackInput}
+                errorMessage={isDirty && errors.feedback}
+              />
               <View style={styles.buttons}>
                 <Button
                   onPress={handleSubmit}
                   disabled={isLoading}
-                  bordered
-                  full
-                  rounded
-                  primary
-                >
-                  <Text>Send Feedback</Text>
-                </Button>
+                  loading={isLoading}
+                  title="Send Feedback"
+                ></Button>
               </View>
-            </Form>
+            </View>
           </View>
         </View>
-      </Container>
+      </View>
     </KeyboardAvoidingView>
   );
 };

@@ -194,7 +194,6 @@ const Signup = ({ navigation }) => {
           <Button
             onPress={handleSubmit}
             loading={loading}
-            type="outline"
             title="Sign Up"
           ></Button>
         </View>

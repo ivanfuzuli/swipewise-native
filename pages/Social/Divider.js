@@ -1,6 +1,6 @@
 import React from "react";
-import { View, Text } from "native-base";
-import { StyleSheet } from "react-native";
+import { Text } from "react-native-elements";
+import { StyleSheet, View } from "react-native";
 
 const Divider = () => {
   return (

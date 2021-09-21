@@ -1,7 +1,8 @@
 import env from "../../config/@env";
 
 import React, { useEffect, useState } from "react";
-import { Container, View, Text } from "native-base";
+import { View } from "react-native";
+import { Text } from "react-native-elements";
 
 import Quotes from "./components/Quotes";
 import Loading from "./components/Loading";
@@ -56,13 +57,11 @@ export default function App({ navigation }) {
 
   if (!hasTags) {
     return (
-      <Container
-        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-      >
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <View>
           <Text>Please select at least 3 tags.</Text>
         </View>
-      </Container>
+      </View>
     );
   }
 
@@ -71,9 +70,9 @@ export default function App({ navigation }) {
   }
 
   return (
-    <Container>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       {(isLoading || isTimerActive) && <Loading />}
       {!isLoading && !isTimerActive && <Quotes {...{ navigation, quotes }} />}
-    </Container>
+    </View>
   );
 }

@@ -1,20 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
+import { StyleSheet, KeyboardAvoidingView, Platform, View } from "react-native";
 
 import axios from "../../config/@axios";
 import PubSub from "pubsub-js";
+import Toast from "react-native-root-toast";
 
-import {
-  Container,
-  Form,
-  Item,
-  View,
-  Label,
-  Text,
-  Input,
-  Button,
-  Toast,
-} from "native-base";
+import { Text, Input, Button } from "react-native-elements";
 
 const ChangeEmail = () => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -65,11 +56,10 @@ const ChangeEmail = () => {
           newEmail: email.trim(),
         });
 
-        Toast.show({
-          text: "Your e-mail has been successfully changed! Please login again.",
-          buttonText: "Okay",
-          duration: 10 * 1000,
-        });
+        Toast.show(
+          "Your e-mail has been successfully changed! Please login again.",
+          { duration: Toast.durations.LONG }
+        );
 
         PubSub.publish("auth", "logout");
       } catch (err) {
@@ -83,7 +73,7 @@ const ChangeEmail = () => {
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <Container>
+      <View style={{ flex: 1, backgroundColor: "white" }}>
         <View style={styles.Container}>
           <View>
             {errorMessage && (
@@ -92,34 +82,28 @@ const ChangeEmail = () => {
                 <Text style={styles.errorWhite}>{errorMessage}</Text>
               </View>
             )}
-            <Form style={styles.form}>
+            <View style={styles.form}>
               <View>
                 <Text style={styles.heading}>Change E-mail</Text>
               </View>
-              <Item floatingLabel>
-                <Label>New E-mail</Label>
-                <Input
-                  keyboardType="email-address"
-                  returnKeyType={"next"}
-                  onChangeText={handleEmailChange}
-                  value={email}
-                  autoCapitalize="none"
-                  autoCompleteType="email"
-                  autoCorrect={false}
-                />
-              </Item>
-              {isDirty && errors.email && (
-                <Text style={styles.error}>{errors.email}</Text>
-              )}
+              <Input
+                placeholder="E-mail address"
+                keyboardType="email-address"
+                returnKeyType={"next"}
+                onChangeText={handleEmailChange}
+                value={email}
+                autoCapitalize="none"
+                autoCompleteType="email"
+                autoCorrect={false}
+                errorMessage={isDirty && errors.email}
+              />
               <View style={styles.buttons}>
-                <Button onPress={handleSubmit} bordered full rounded primary>
-                  <Text>Change E-mail</Text>
-                </Button>
+                <Button onPress={handleSubmit} title="Change E-mail"></Button>
               </View>
-            </Form>
+            </View>
           </View>
         </View>
-      </Container>
+      </View>
     </KeyboardAvoidingView>
   );
 };

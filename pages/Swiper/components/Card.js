@@ -1,6 +1,6 @@
 // @flow
 import * as React from "react";
-import { Text } from "native-base";
+import { Text } from "react-native-elements";
 
 import { StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";

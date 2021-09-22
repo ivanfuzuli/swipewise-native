@@ -1,30 +1,39 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import { StyleSheet, View } from "react-native";
 import { Text } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
+
+import ShareContainer from "./ShareContainer";
 
 const CardComponent = ({ quote }) => {
   return (
     <View style={{ flex: 1, elevation: 0 }}>
       <View style={styles.card}>
+        <View></View>
         <View>
-          <ScrollView>
-            <Text
-              style={{
-                fontSize: 24,
-              }}
-            >
-              {quote.quote}
+          <View>
+            <ScrollView>
+              <Text
+                style={{
+                  fontSize: 24,
+                }}
+              >
+                {quote.quote}
+              </Text>
+            </ScrollView>
+          </View>
+          <View>
+            <Text>
+              — {quote.author}
+              {quote.title && ", "}
+              {quote.title}
             </Text>
-          </ScrollView>
+          </View>
         </View>
-        <View footer>
-          <Text>
-            — {quote.author}
-            {quote.title && ", "}
-            {quote.title}
-          </Text>
+        <View style={styles.footer}>
+          <ShareContainer quote={quote} />
         </View>
       </View>
     </View>
@@ -36,6 +45,14 @@ CardComponent.propTypes = {
 };
 
 const styles = StyleSheet.create({
+  mr10: {
+    marginRight: 10,
+  },
+  footer: {
+    flexDirection: "row",
+    alignSelf: "flex-end",
+    justifyContent: "flex-end",
+  },
   card: {
     borderWidth: 1,
     borderColor: "#d1d1d1",
@@ -43,7 +60,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-between",
     zIndex: 1,
   },
 });

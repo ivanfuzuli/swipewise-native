@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    color: "#fe4b00",
+    color: "white",
     fontWeight: "bold",
     textAlign: "right",
   },

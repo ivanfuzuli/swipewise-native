@@ -4,26 +4,10 @@ import { View, TouchableOpacity, StyleSheet, Image, Share } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import logo from "@src/assets/icon.png";
 
-import openShare from "@src/utils/openShare";
-import { useDispatch } from "react-redux";
-import {
-  setShareInstagramOpen,
-  setCurrentQuote,
-} from "@src/pages/store/statusSlice";
 import ClapsSvg from "./svgs/ClapsSvg";
 
 const Header = ({ quote, isEmpty }) => {
-  const dispatch = useDispatch();
   const navigation = useNavigation();
-
-  const openInstagramShare = () => {
-    dispatch(setCurrentQuote(quote));
-    dispatch(setShareInstagramOpen(true));
-  };
-
-  const handleShare = () => {
-    openShare(quote.author, quote.title, quote.quote);
-  };
 
   return (
     <View style={styles.container}>
@@ -35,17 +19,6 @@ const Header = ({ quote, isEmpty }) => {
           style={styles.mr10}
           onPress={() => navigation.navigate("Favourites")}
         ></TouchableOpacity>
-        {!isEmpty && (
-          <>
-            <TouchableOpacity style={styles.mr10} onPress={handleShare}>
-              <Icon name="share" size={32} color="gray" />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.mr10} onPress={openInstagramShare}>
-              <Icon name="instagram" size={32} color="gray" />
-            </TouchableOpacity>
-          </>
-        )}
-
         <TouchableOpacity
           style={{ marginLeft: 10 }}
           onPress={() => navigation.navigate("Favorites")}

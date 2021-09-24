@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 
 import {
-  RefreshControl,
   SafeAreaView,
   FlatList,
+  RefreshControl,
   StyleSheet,
 } from "react-native";
 
@@ -14,7 +14,6 @@ import Filter from "./Filter";
 import Panel from "./Panel";
 import ListEmpty from "./ListEmpty";
 import ListFooter from "./ListFooter";
-import Loading from "./Loading";
 
 import ErrorMessage from "@src/components/ErrorMessage";
 import { useSelector, useDispatch } from "react-redux";
@@ -27,21 +26,17 @@ import {
 
 const Favorites = ({ navigation }) => {
   const dispatch = useDispatch();
-  const isScrolled = useRef(false);
   const flatlistRef = useRef(null);
-  const isAppend = useRef(false);
 
   const sort = useSelector((state) => state.claps.sort);
   const filter = useSelector((state) => state.claps.filter);
 
   const errorMessage = useSelector((state) => state.claps.error);
   const isLoading = useSelector((state) => state.claps.loading);
+  const [isRefresh, setRefresh] = useState(false);
 
   const byId = useSelector((state) => state.claps.byId);
   const allIds = useSelector((state) => state.claps.allIds);
-
-  const upperLoading = !isAppend.current && isLoading;
-  const downLoading = isAppend.current && isLoading;
 
   const items = sort === "popular" ? allIds.popular[filter] : allIds.newest;
 
@@ -53,8 +48,7 @@ const Favorites = ({ navigation }) => {
 
   useEffect(() => {
     if (items.length === 0) {
-      isScrolled.current = false;
-      isAppend.current = true;
+      setRefresh(false);
       dispatch(getClaps());
     }
   }, [sort, filter]);
@@ -66,11 +60,7 @@ const Favorites = ({ navigation }) => {
   }, []);
 
   const handleEndReached = () => {
-    if (!isScrolled.current) {
-      return;
-    }
-
-    isAppend.current = true;
+    setRefresh(false);
     dispatch(getClaps());
   };
 
@@ -87,26 +77,19 @@ const Favorites = ({ navigation }) => {
   };
 
   const refresh = () => {
+    setRefresh(true);
     dispatch(resetSession());
-    isScrolled.current = false;
-    isAppend.current = false;
     dispatch(getClaps());
   };
 
   const handleSetSort = (type) => {
     flatlistRef.current.scrollToOffset({ animated: true, offset: 0 });
-    isScrolled.current = false;
     dispatch(setSort(type));
   };
 
   const handleSetFilter = (type) => {
     flatlistRef.current.scrollToOffset({ animated: true, offset: 0 });
-    isScrolled.current = false;
     dispatch(setFilter(type));
-  };
-
-  const handleMomentum = () => {
-    isScrolled.current = true;
   };
 
   return (
@@ -118,29 +101,25 @@ const Favorites = ({ navigation }) => {
         ) : null}
 
         <ErrorMessage message={errorMessage} />
-        {downLoading && quotes.length < 1 && <Loading></Loading>}
         <FlatList
           ref={flatlistRef}
           data={quotes}
+          ListFooterComponent={<ListFooter loading={!isRefresh && isLoading} />}
           refreshControl={
             <RefreshControl
               enabled
-              refreshing={upperLoading}
+              refreshing={isRefresh && isLoading}
               onRefresh={refresh}
               tintColor={"red"}
             />
           }
-          ListFooterComponent={
-            <ListFooter loading={quotes.length > 0 && downLoading} />
-          }
           renderItem={renderItem}
           keyExtractor={(item) => item._id}
           onEndReached={handleEndReached}
-          onMomentumScrollBegin={handleMomentum}
           onEndReachedThreshold={0.5}
         />
       </SafeAreaView>
-      {!isLoading && !errorMessage && quotes.length < 1 && <ListEmpty />}
+      {!isLoading && quotes.length < 1 && <ListEmpty />}
       <Panel />
     </>
   );

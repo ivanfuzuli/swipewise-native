@@ -4,9 +4,7 @@ import { View, TouchableOpacity, StyleSheet, Image, Share } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import logo from "@src/assets/icon.png";
 
-import ClapsSvg from "./svgs/ClapsSvg";
-
-const Header = ({ quote, isEmpty }) => {
+const Header = () => {
   const navigation = useNavigation();
 
   return (
@@ -19,21 +17,8 @@ const Header = ({ quote, isEmpty }) => {
           style={styles.mr10}
           onPress={() => navigation.navigate("Favourites")}
         ></TouchableOpacity>
-        <TouchableOpacity
-          style={{ marginLeft: 10 }}
-          onPress={() => navigation.navigate("Favorites")}
-        >
-          <View
-            style={{
-              height: 32,
-              width: 32,
-            }}
-          >
-            <ClapsSvg color="#000" />
-          </View>
-        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
-          <Icon name="user" size={32} color="gray" />
+          <Icon name="settings" size={32} color="gray" />
         </TouchableOpacity>
       </View>
     </View>

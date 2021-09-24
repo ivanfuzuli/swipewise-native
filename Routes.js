@@ -1,6 +1,6 @@
 import React from "react";
 import Landing from "./pages/Landing";
-import Swiper from "./pages/Swiper";
+
 import Login from "./pages/Login";
 import SelectTags from "./pages/SelectTags";
 
@@ -18,6 +18,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import { navigationRef } from "./RootNavigation";
+import BottomBar from "./pages/components/BottomBar";
 const Stack = createStackNavigator();
 
 const Routes = () => {
@@ -29,7 +30,7 @@ const Routes = () => {
         <Stack.Navigator initialRouteName="Swipe">
           <Stack.Screen
             name="Swipe"
-            component={Swiper}
+            component={BottomBar}
             options={{
               headerShown: false, // change this to `false`
             }}

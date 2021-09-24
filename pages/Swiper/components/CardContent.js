@@ -11,7 +11,9 @@ const CardComponent = ({ quote }) => {
   return (
     <View style={{ flex: 1, elevation: 0 }}>
       <View style={styles.card}>
-        <View></View>
+        <View style={styles.header}>
+          <ShareContainer quote={quote} />
+        </View>
         <View>
           <View>
             <ScrollView>
@@ -32,9 +34,7 @@ const CardComponent = ({ quote }) => {
             </Text>
           </View>
         </View>
-        <View style={styles.footer}>
-          <ShareContainer quote={quote} />
-        </View>
+        <View></View>
       </View>
     </View>
   );
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   mr10: {
     marginRight: 10,
   },
-  footer: {
+  header: {
     flexDirection: "row",
     alignSelf: "flex-end",
     justifyContent: "flex-end",
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#d1d1d1",
     backgroundColor: "#fff",
-    padding: 10,
+    padding: 25,
     borderRadius: 5,
     flex: 1,
     justifyContent: "space-between",

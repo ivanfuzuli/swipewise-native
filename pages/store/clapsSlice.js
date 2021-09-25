@@ -16,7 +16,7 @@ const CancelToken = axiosOrginal.CancelToken;
 let cancel;
 export const getClaps = createAsyncThunk(
   "claps/getClapsStatus",
-  async (_, thunkAPI) => {
+  async ({ sub }, thunkAPI) => {
     const state = thunkAPI.getState();
     const sort = state.claps.sort;
     const filter = sort === "popular" ? state.claps.filter : null;
@@ -37,6 +37,7 @@ export const getClaps = createAsyncThunk(
           limit: LIMIT,
           sort,
           filter,
+          sub: sub,
         },
       });
 

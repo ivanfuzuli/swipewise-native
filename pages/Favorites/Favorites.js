@@ -1,11 +1,6 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 
-import {
-  SafeAreaView,
-  FlatList,
-  RefreshControl,
-  StyleSheet,
-} from "react-native";
+import { View, FlatList, RefreshControl, StyleSheet } from "react-native";
 
 import Item from "./Item";
 import Sort from "./Sort";
@@ -24,7 +19,7 @@ import {
   resetSession,
 } from "../store/clapsSlice";
 
-const Favorites = ({ navigation }) => {
+const Favorites = ({ sub }) => {
   const dispatch = useDispatch();
   const flatlistRef = useRef(null);
 
@@ -49,7 +44,7 @@ const Favorites = ({ navigation }) => {
   useEffect(() => {
     if (items.length === 0) {
       setRefresh(false);
-      dispatch(getClaps());
+      dispatch(getClaps({ sub }));
     }
   }, [sort, filter]);
 
@@ -61,7 +56,7 @@ const Favorites = ({ navigation }) => {
 
   const handleEndReached = () => {
     setRefresh(false);
-    dispatch(getClaps());
+    dispatch(getClaps({ sub }));
   };
 
   const renderItem = ({ item }) => {
@@ -79,7 +74,7 @@ const Favorites = ({ navigation }) => {
   const refresh = () => {
     setRefresh(true);
     dispatch(resetSession());
-    dispatch(getClaps());
+    dispatch(getClaps({ sub }));
   };
 
   const handleSetSort = (type) => {
@@ -94,7 +89,7 @@ const Favorites = ({ navigation }) => {
 
   return (
     <>
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <Sort setSort={handleSetSort} sort={sort} />
         {sort === "popular" ? (
           <Filter setFilter={handleSetFilter} filter={filter} />
@@ -118,7 +113,7 @@ const Favorites = ({ navigation }) => {
           onEndReached={handleEndReached}
           onEndReachedThreshold={0.5}
         />
-      </SafeAreaView>
+      </View>
       {!isLoading && quotes.length < 1 && <ListEmpty />}
       <Panel />
     </>
@@ -128,7 +123,7 @@ const Favorites = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 5,
+    margin: 0,
   },
   center: {
     flex: 1,

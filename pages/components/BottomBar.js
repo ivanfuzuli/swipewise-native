@@ -2,8 +2,8 @@ import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Swiper from "@src/pages/Swiper/Swiper";
-import Favorites from "@src/pages/Favorites/Favorites";
-import { Feather, AntDesign } from "@expo/vector-icons";
+import Profile from "@src/pages/Profile/Profile";
+import { AntDesign } from "@expo/vector-icons";
 const Tab = createBottomTabNavigator();
 
 export default function BottomBar() {
@@ -39,7 +39,7 @@ export default function BottomBar() {
       />
       <Tab.Screen
         name="Profile"
-        component={Favorites}
+        component={Profile}
         options={{
           headerShown: false, // change this to `false`
         }}

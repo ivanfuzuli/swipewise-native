@@ -7,6 +7,7 @@ import SelectTags from "./pages/SelectTags";
 import Settings from "./pages/Settings";
 import ChangeEmail from "./pages/Settings/ChangeEmail";
 import ChangePassword from "./pages/Settings/ChangePassword";
+import ChangeUsername from "./pages/Settings/ChangeUsername";
 import DeleteAccount from "./pages/Settings/DeleteAccount";
 import ChangeTags from "./pages/Settings/ChangeTags";
 import Feedback from "./pages/Settings/Feedback";
@@ -43,6 +44,7 @@ const Routes = () => {
           <Stack.Screen name="Settings" component={Settings} />
           <Stack.Screen name="Change Email" component={ChangeEmail} />
           <Stack.Screen name="Change Password" component={ChangePassword} />
+          <Stack.Screen name="Change Username" component={ChangeUsername} />
           <Stack.Screen name="Change Tags" component={ChangeTags} />
           <Stack.Screen name="Delete Account" component={DeleteAccount} />
           <Stack.Screen name="Feedback" component={Feedback} />

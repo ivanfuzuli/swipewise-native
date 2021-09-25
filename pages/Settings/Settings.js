@@ -24,6 +24,15 @@ const Settings = ({ navigation }) => {
       </ListItem>
       <ListItem
         bottomDivider
+        onPress={() => navigation.navigate("Change Username")}
+      >
+        <ListItem.Content>
+          <ListItem.Title>Change Username</ListItem.Title>
+        </ListItem.Content>
+        <ListItem.Chevron />
+      </ListItem>
+      <ListItem
+        bottomDivider
         onPress={() => navigation.navigate("Change Password")}
       >
         <ListItem.Content>

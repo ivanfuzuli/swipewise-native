@@ -3,7 +3,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Swiper from "@src/pages/Swiper/Swiper";
 import Profile from "@src/pages/Profile/Profile";
-import { AntDesign } from "@expo/vector-icons";
+import { Feather, AntDesign } from "@expo/vector-icons";
+import UserStack from "./UserStack";
+
 const Tab = createBottomTabNavigator();
 
 export default function BottomBar() {
@@ -32,7 +34,7 @@ export default function BottomBar() {
     >
       <Tab.Screen
         name="Home"
-        component={Swiper}
+        component={UserStack}
         options={{
           headerShown: false, // change this to `false`
         }}

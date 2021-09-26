@@ -24,7 +24,6 @@ export default function App({ navigation }) {
   const quotes = useSelector((state) => state.quotes.items);
   const lastSync = useSelector((state) => state.quotes.lastSync);
   const hasTags = useSelector((state) => state.auth.hasTags);
-  const shareOpen = useSelector((state) => state.status.shareInstagramOpen);
 
   const [isTimerActive, setTimerActive] = useState(false);
   useEffect(() => {

@@ -46,7 +46,7 @@ const Favorites = ({ sub }) => {
       setRefresh(false);
       dispatch(getClaps({ sub }));
     }
-  }, [sort, filter]);
+  }, [sort, sub, filter]);
 
   useEffect(() => {
     return () => {

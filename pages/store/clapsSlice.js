@@ -133,7 +133,7 @@ const clapsReducer = createSlice({
       const offset =
         sort === "popular" ? state.offset[sort][filter] : state.offset.newest;
 
-      let nextOffset = offset + LIMIT;
+      let nextOffset = parseInt(offset + LIMIT);
       if (nextOffset > total) {
         nextOffset = total;
       }

@@ -15,17 +15,19 @@ import { useFocusEffect } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Profile = ({ route, navigation }) => {
-  const _id = useSelector((state) => state.auth.user.sub);
-  const sub = _id;
+  const userid = useSelector((state) => state.auth.user.sub);
+  const id = route.params?.id;
+  const sub = id ? id : userid;
 
   const [isLoading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
 
+  const endpoint = id ? `me/${id}` : "me/info";
   useFocusEffect(
     useCallback(() => {
       setLoading(true);
       axios
-        .get("me/info")
+        .get(endpoint)
         .then(({ data }) => {
           setUsername(data.username);
           setLoading(false);
@@ -34,7 +36,7 @@ const Profile = ({ route, navigation }) => {
         .finally(() => {
           setLoading(false);
         });
-    }, [])
+    }, [id])
   );
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -42,13 +44,21 @@ const Profile = ({ route, navigation }) => {
         <View style={styles.avatar_container}>
           {!isLoading ? <Avatar seed={sub} /> : <AvatarPlaceholder />}
           {!isLoading ? (
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <Text style={styles.username}>@{username}</Text>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Change Username")}
-              >
-                <Icon name="edit" size={24} color="gray" />
-              </TouchableOpacity>
+              {!id && (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("Change Username")}
+                >
+                  <Icon name="edit" size={24} color="gray" />
+                </TouchableOpacity>
+              )}
             </View>
           ) : (
             <UsernamePlaceholder />

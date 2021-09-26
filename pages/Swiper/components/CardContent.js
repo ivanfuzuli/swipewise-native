@@ -6,6 +6,7 @@ import { Text } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 
 import ShareContainer from "./ShareContainer";
+import LikedByAvatars from "./LikedByAvatars";
 
 const CardComponent = ({ quote }) => {
   return (
@@ -34,7 +35,13 @@ const CardComponent = ({ quote }) => {
             </Text>
           </View>
         </View>
-        <View></View>
+        <View>
+          <LikedByAvatars
+            users={quote.liked_by}
+            id={quote._id}
+            count={quote.liked_by_count}
+          />
+        </View>
       </View>
     </View>
   );

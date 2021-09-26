@@ -2,12 +2,11 @@ import React, { useRef } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Feather as Icon } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
-import { setCount } from "../store/clapsSlice";
 import { sendClap } from "../store/votesSlice";
 import debounce from "lodash/debounce";
 const SEND_DEBOUNCE = 2000;
 
-const Claps = ({ count, id, quote_id }) => {
+const Claps = ({ count, id, quote_id, setCount }) => {
   const dispatch = useDispatch();
   const debouncedRef = useRef(
     debounce((quote_id, count) => {
@@ -32,12 +31,7 @@ const Claps = ({ count, id, quote_id }) => {
     if (newCount > 30) {
       newCount = 30;
     }
-    dispatch(
-      setCount({
-        id,
-        count: newCount,
-      })
-    );
+    setCount(id, newCount);
 
     debouncedRef.current(quote_id, newCount);
   };

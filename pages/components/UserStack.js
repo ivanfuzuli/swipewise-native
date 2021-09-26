@@ -8,9 +8,9 @@ const Stack = createStackNavigator();
 
 const UserStack = () => {
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName="Quotes">
       <Stack.Screen
-        name="Home"
+        name="Quotes"
         component={Swiper}
         options={{
           headerShown: true, // change this to `false`

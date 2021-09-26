@@ -5,7 +5,6 @@ import status from "./pages/store/statusSlice";
 import quotes from "./pages/store/quotesSlice";
 import votes from "./pages/store/votesSlice";
 import stats from "./pages/store/statsSlice";
-import claps from "./pages/store/clapsSlice";
 
 export default combineReducers({
   selected,
@@ -14,5 +13,4 @@ export default combineReducers({
   quotes,
   votes,
   stats,
-  claps,
 });

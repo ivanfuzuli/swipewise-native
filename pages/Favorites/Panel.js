@@ -14,10 +14,10 @@ import {
 import openShare from "@src/utils/openShare";
 import Claps from "./Claps";
 
-export default Modal = ({ open, onClose }) => {
+export default Modal = ({ byId, setCount }) => {
   const dispatch = useDispatch();
   const id = useSelector((state) => state.status.modalQuoteId);
-  const byId = useSelector((state) => state.claps.byId);
+
   const currentQuote = byId[id];
   const isActive = id ? true : false;
 
@@ -59,6 +59,7 @@ export default Modal = ({ open, onClose }) => {
           count={currentQuote?.count}
           quote_id={currentQuote?.quote._id}
           id={id}
+          setCount={setCount}
         />
         <TouchableOpacity style={{ marginRight: 10 }} onPress={handleShare}>
           <Icon name="share" size={32} color="gray" />

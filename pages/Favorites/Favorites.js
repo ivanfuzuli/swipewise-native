@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
-
+import { useImmerReducer } from "use-immer";
 import { View, FlatList, RefreshControl, StyleSheet } from "react-native";
+import axios from "@src/config/@axios";
+import axiosOrginal from "axios";
 
 import Item from "./Item";
 import Sort from "./Sort";
@@ -10,53 +12,104 @@ import Panel from "./Panel";
 import ListEmpty from "./ListEmpty";
 import ListFooter from "./ListFooter";
 
+import reducer, {
+  initialState,
+  SET_SORT,
+  SET_FILTER,
+  FETCH_FAILED,
+  FETCH_SUCCESS,
+  FETCH_PENDING,
+  LIMIT,
+  RESET,
+  SET_COUNT,
+} from "./favorites.reducer";
+
 import ErrorMessage from "@src/components/ErrorMessage";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  getClaps,
-  setSort,
-  setFilter,
-  resetSession,
-} from "../store/clapsSlice";
+const CancelToken = axiosOrginal.CancelToken;
+let cancel;
 
 const Favorites = ({ sub }) => {
-  const dispatch = useDispatch();
   const flatlistRef = useRef(null);
+  const offsetRef = useRef(0);
+  const [state, dispatch] = useImmerReducer(reducer, initialState);
+  const { filter, sort, error, loading, byId, allIds } = state;
 
-  const sort = useSelector((state) => state.claps.sort);
-  const filter = useSelector((state) => state.claps.filter);
-
-  const errorMessage = useSelector((state) => state.claps.error);
-  const isLoading = useSelector((state) => state.claps.loading);
   const [isRefresh, setRefresh] = useState(false);
 
-  const byId = useSelector((state) => state.claps.byId);
-  const allIds = useSelector((state) => state.claps.allIds);
-
-  const items = sort === "popular" ? allIds.popular[filter] : allIds.newest;
-
   const quotes = useMemo(() => {
-    return items.map((id) => {
+    return allIds.map((id) => {
       return byId[id];
     });
-  }, [sort, items, filter, byId]);
+  }, [allIds, byId]);
 
-  useEffect(() => {
-    if (items.length === 0) {
-      setRefresh(false);
-      dispatch(getClaps({ sub }));
+  const fetchQuotes = async () => {
+    cancel && cancel();
+    try {
+      dispatch({
+        type: FETCH_PENDING,
+      });
+
+      const response = await axios.get(`claps`, {
+        cancelToken: new CancelToken(function executor(c) {
+          // An executor function receives a cancel function as a parameter
+          cancel = c;
+        }),
+        params: {
+          offset: offsetRef.current,
+          limit: LIMIT,
+          sort,
+          filter,
+          sub: sub,
+        },
+      });
+
+      const quotes = response.data;
+      const total = response.headers["x-total-count"];
+      cancel = null;
+
+      let nextOffset = parseInt(offsetRef.current + LIMIT);
+      if (nextOffset > total) {
+        nextOffset = total;
+      }
+      offsetRef.current = nextOffset;
+      dispatch({
+        type: FETCH_SUCCESS,
+        payload: {
+          quotes,
+          total,
+        },
+      });
+    } catch (e) {
+      if (axiosOrginal.isCancel(e)) {
+        return;
+      }
+
+      dispatch({
+        type: FETCH_FAILED,
+        payload: {
+          error: e.message,
+        },
+      });
     }
-  }, [sort, sub, filter]);
+  };
+
+  const resetAndFetch = () => {
+    offsetRef.current = 0;
+    dispatch({
+      type: RESET,
+    });
+    fetchQuotes();
+  };
 
   useEffect(() => {
-    return () => {
-      dispatch(resetSession());
-    };
-  }, []);
+    setRefresh(false);
+
+    resetAndFetch();
+  }, [sort, sub, filter]);
 
   const handleEndReached = () => {
     setRefresh(false);
-    dispatch(getClaps({ sub }));
+    fetchQuotes(false);
   };
 
   const renderItem = ({ item }) => {
@@ -73,20 +126,34 @@ const Favorites = ({ sub }) => {
 
   const refresh = () => {
     setRefresh(true);
-    dispatch(resetSession());
-    dispatch(getClaps({ sub }));
+    resetAndFetch();
   };
 
   const handleSetSort = (type) => {
     flatlistRef.current.scrollToOffset({ animated: true, offset: 0 });
-    dispatch(setSort(type));
+    dispatch({
+      type: SET_SORT,
+      payload: type,
+    });
   };
 
   const handleSetFilter = (type) => {
     flatlistRef.current.scrollToOffset({ animated: true, offset: 0 });
-    dispatch(setFilter(type));
+    dispatch({
+      type: SET_FILTER,
+      payload: type,
+    });
   };
 
+  const setCount = (id, count) => {
+    dispatch({
+      type: SET_COUNT,
+      payload: {
+        id,
+        count,
+      },
+    });
+  };
   return (
     <>
       <View style={styles.container}>
@@ -95,15 +162,15 @@ const Favorites = ({ sub }) => {
           <Filter setFilter={handleSetFilter} filter={filter} />
         ) : null}
 
-        <ErrorMessage message={errorMessage} />
+        <ErrorMessage message={error} />
         <FlatList
           ref={flatlistRef}
           data={quotes}
-          ListFooterComponent={<ListFooter loading={!isRefresh && isLoading} />}
+          ListFooterComponent={<ListFooter loading={!isRefresh && loading} />}
           refreshControl={
             <RefreshControl
               enabled
-              refreshing={isRefresh && isLoading}
+              refreshing={isRefresh && loading}
               onRefresh={refresh}
               tintColor={"red"}
             />
@@ -114,8 +181,8 @@ const Favorites = ({ sub }) => {
           onEndReachedThreshold={0.5}
         />
       </View>
-      {!isLoading && quotes.length < 1 && <ListEmpty />}
-      <Panel />
+      {!loading && quotes.length < 1 && <ListEmpty />}
+      <Panel byId={byId} setCount={setCount} />
     </>
   );
 };

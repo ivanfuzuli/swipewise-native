@@ -14,7 +14,7 @@ const style = {
 };
 
 export default (props) => {
-  const { quote, likeOpacity, nopeOpacity } = {
+  const { quote, likeOpacity, nopeOpacity, x } = {
     likeOpacity: 0,
     nopeOpacity: 0,
     ...props,
@@ -26,7 +26,14 @@ export default (props) => {
           <Animated.View style={[styles.like, { opacity: likeOpacity }]}>
             <Text style={styles.likeLabel}>LIKE</Text>
           </Animated.View>
-          <Animated.View style={[styles.nope, { opacity: nopeOpacity }]}>
+          <Animated.View
+            style={[
+              styles.nope,
+              {
+                opacity: nopeOpacity,
+              },
+            ]}
+          >
             <Text style={styles.nopeLabel}>NOPE</Text>
           </Animated.View>
         </View>

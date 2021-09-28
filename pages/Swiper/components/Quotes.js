@@ -35,6 +35,8 @@ const A = width * Math.cos(α) + height * Math.sin(α);
 class Quotes extends React.PureComponent {
   x = new Value(0);
   y = new Value(0);
+  active = new Value(0);
+
   rateCount = 0;
 
   state = {
@@ -95,6 +97,7 @@ class Quotes extends React.PureComponent {
 
     const x = this.x;
     const y = this.y;
+    const active = this.active;
 
     const quote = quotes[currentIndex];
     const nextQuote =
@@ -148,10 +151,10 @@ class Quotes extends React.PureComponent {
               }
               snapPoints={[{ x: -1 * A }, { x: 0 }, { x: A }]}
               style={{ ...StyleSheet.absoluteFill, zIndex: 2 }}
-              {...{ onSnap, x, y }}
+              {...{ onSnap, x, y, active }}
             >
               <Animated.View {...{ style }}>
-                <Card {...{ quote, likeOpacity, nopeOpacity }} />
+                <Card {...{ quote, likeOpacity, nopeOpacity, x, active }} />
               </Animated.View>
             </Interactable>
           )}

@@ -11,7 +11,7 @@ import Animated from "react-native-reanimated";
 const { Value, debug, event, block, set, cond, eq, Clock, call, clockRunning } =
   Animated;
 
-export default ({ style, x, y, snapPoints, onSnap, children }) => {
+export default ({ style, x, y, snapPoints, onSnap, active, children }) => {
   const ref = useRef(null);
   const clock = new Clock();
   const spring = new Value(0);
@@ -46,8 +46,10 @@ export default ({ style, x, y, snapPoints, onSnap, children }) => {
                 set(spring, runSpring(clock, 0, 1)),
                 cond(eq(clockRunning(clock), 0), [
                   call([snapPointX], ([x]) => onSnap({ nativeEvent: { x } })),
+                  set(active, 0),
                 ]),
               ]),
+              cond(eq(state, State.BEGAN), set(active, 1)),
               set(
                 x,
                 cond(

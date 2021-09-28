@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#d1d1d1",
     backgroundColor: "#fff",
-    padding: 25,
+    padding: 15,
     borderRadius: 5,
     flex: 1,
     justifyContent: "space-between",

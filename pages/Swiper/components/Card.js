@@ -1,12 +1,11 @@
 // @flow
-import * as React from "react";
+import React, { useState } from "react";
 import { Text } from "react-native-elements";
 
 import { StyleSheet, View } from "react-native";
-import Animated from "react-native-reanimated";
+import Animated, { call, useCode, Value } from "react-native-reanimated";
 
 import CardContent from "./CardContent";
-
 const style = {
   ...StyleSheet.absoluteFillObject,
   marginBottom: 10,
@@ -14,14 +13,21 @@ const style = {
 };
 
 export default (props) => {
-  const { quote, likeOpacity, nopeOpacity, x } = {
+  const [isActive, setActive] = useState(0);
+  const { quote, likeOpacity, nopeOpacity, active } = {
     likeOpacity: 0,
     nopeOpacity: 0,
+    active: new Value(0),
     ...props,
   };
+
+  useCode(() => {
+    return call([active], ([active]) => setActive(active));
+  }, [active]);
+
   return (
     <View style={style}>
-      <View style={styles.overlay}>
+      <View style={[styles.overlay, { display: isActive ? "flex" : "none" }]}>
         <View style={styles.header}>
           <Animated.View style={[styles.like, { opacity: likeOpacity }]}>
             <Text style={styles.likeLabel}>LIKE</Text>

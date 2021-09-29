@@ -140,15 +140,6 @@ class Quotes extends React.PureComponent {
           )}
           {!isEmpty && (
             <Interactable
-              key={
-                this.props.totalSessions.toString() +
-                "_" +
-                currentIndex.toString() +
-                "_" +
-                this.props.rated.toString() +
-                "-" +
-                this.state.isRateOpen.toString()
-              }
               snapPoints={[{ x: -1 * A }, { x: 0 }, { x: A }]}
               style={{ ...StyleSheet.absoluteFill, zIndex: 2 }}
               {...{ onSnap, x, y, active }}

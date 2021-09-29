@@ -46,6 +46,7 @@ const LikedBy = ({ route, navigation }) => {
                 })
               }
               style={styles.avatar_container}
+              key={user.user._id}
             >
               <Avatar size="lg" seed={user.user._id} />
               <Text numberOfLines={1} style={styles.username}>
@@ -55,8 +56,8 @@ const LikedBy = ({ route, navigation }) => {
           );
         })}
       {isLoading &&
-        placeholders.map(() => {
-          return <LikedByPlaceholder />;
+        placeholders.map((i) => {
+          return <LikedByPlaceholder key={i} />;
         })}
 
       {!isLoading && users.length < 1 && <Text>No user...</Text>}

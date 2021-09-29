@@ -15,18 +15,10 @@ const CardComponent = ({ quote }) => {
         <View style={styles.header}>
           <ShareContainer quote={quote} />
         </View>
-        <View>
-          <View>
-            <ScrollView>
-              <Text
-                style={{
-                  fontSize: 24,
-                }}
-              >
-                {quote.quote}
-              </Text>
-            </ScrollView>
-          </View>
+        <View style={styles.content}>
+          <ScrollView>
+            <Text h4>{quote.quote}</Text>
+          </ScrollView>
           <View>
             <Text>
               — {quote.author}
@@ -69,6 +61,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
     zIndex: 1,
+  },
+
+  content: {
+    marginBottom: 0,
+    maxHeight: "80%",
   },
 });
 

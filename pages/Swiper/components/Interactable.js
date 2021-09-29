@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useMemo } from "react";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 
 import {
@@ -8,29 +8,41 @@ import {
 } from "../../../helpers/redash";
 import Animated from "react-native-reanimated";
 
-const { Value, debug, event, block, set, cond, eq, Clock, call, clockRunning } =
+const { Value, event, block, set, cond, eq, Clock, call, clockRunning } =
   Animated;
-
-export default ({ style, x, y, snapPoints, onSnap, active, children }) => {
-  const ref = useRef(null);
-  const clock = new Clock();
-  const spring = new Value(0);
-  const translationX = new Value(0);
-  const translationY = new Value(0);
-  const velocityX = new Value(0);
-  const snapPointX = new Value(0);
-  const state = new Value(State.UNDETERMINED);
-  const onGestureEvent = event([
-    {
-      nativeEvent: {
-        velocityX,
-        translationX,
-        translationY,
-        state,
-      },
-    },
-  ]);
+const Interactable = ({
+  style,
+  x,
+  y,
+  snapPoints,
+  onSnap,
+  active,
+  children,
+}) => {
   const points = snapPoints.map((point) => point.x);
+  const clock = useMemo(() => new Clock(), []);
+  const spring = useMemo(() => new Value(0), []);
+  const translationX = useMemo(() => new Value(0), []);
+  const translationY = useMemo(() => new Value(0), []);
+  const velocityX = useMemo(() => new Value(0), []);
+  const snapPointX = useMemo(() => new Value(0), []);
+  const state = useMemo(() => new Value(State.UNDETERMINED), []);
+
+  const onGestureEvent = useMemo(
+    () =>
+      event([
+        {
+          nativeEvent: {
+            velocityX,
+            translationX,
+            translationY,
+            state,
+          },
+        },
+      ]),
+    []
+  );
+
   return (
     <PanGestureHandler
       onHandlerStateChange={onGestureEvent}
@@ -45,8 +57,11 @@ export default ({ style, x, y, snapPoints, onSnap, active, children }) => {
                 set(snapPointX, snapPoint(translationX, velocityX, points)),
                 set(spring, runSpring(clock, 0, 1)),
                 cond(eq(clockRunning(clock), 0), [
-                  call([snapPointX], ([x]) => onSnap({ nativeEvent: { x } })),
                   set(active, 0),
+                  set(translationX, 0),
+                  set(translationY, 0),
+                  set(velocityX, 0),
+                  call([snapPointX], ([x]) => onSnap({ nativeEvent: { x } })),
                 ]),
               ]),
               cond(eq(state, State.BEGAN), set(active, 1)),
@@ -73,3 +88,5 @@ export default ({ style, x, y, snapPoints, onSnap, active, children }) => {
     </PanGestureHandler>
   );
 };
+
+export default React.memo(Interactable);

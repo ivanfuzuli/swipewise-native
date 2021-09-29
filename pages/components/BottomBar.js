@@ -1,9 +1,8 @@
 import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import Swiper from "@src/pages/Swiper/Swiper";
 import Profile from "@src/pages/Profile/Profile";
-import { Feather, AntDesign } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import UserStack from "./UserStack";
 
 const Tab = createBottomTabNavigator();

@@ -13,7 +13,7 @@ const UserStack = () => {
         name="Quotes"
         component={Swiper}
         options={{
-          headerShown: true, // change this to `false`
+          headerShown: false, // change this to `false`
         }}
       />
       <Stack.Screen

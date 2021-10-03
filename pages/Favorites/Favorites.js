@@ -8,7 +8,7 @@ import Item from "./Item";
 import Sort from "./Sort";
 import Filter from "./Filter";
 
-import Panel from "./Panel";
+import Panel from "./PanelContent";
 import ListEmpty from "./ListEmpty";
 import ListFooter from "./ListFooter";
 

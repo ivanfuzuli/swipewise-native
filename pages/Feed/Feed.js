@@ -6,7 +6,6 @@ import axiosOrginal from "axios";
 
 import Item from "./Item";
 
-import Panel from "../components/Panel";
 import ListEmpty from "./ListEmpty";
 import ListFooter from "../Favorites/ListFooter";
 
@@ -21,6 +20,8 @@ import reducer, {
 } from "./feed.reducer";
 
 import ErrorMessage from "@src/components/ErrorMessage";
+import PanelContent from "./PanelContent";
+
 const CancelToken = axiosOrginal.CancelToken;
 let cancel;
 
@@ -173,8 +174,7 @@ const Feed = () => {
         />
       </View>
       {!loading && quotes.length < 1 && <ListEmpty />}
-      <Panel
-        byId={byId}
+      <PanelContent
         modalState={modalState}
         setCount={setCount}
         updateModalState={updateModalState}

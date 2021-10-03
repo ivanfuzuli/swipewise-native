@@ -19,7 +19,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import { navigationRef } from "./RootNavigation";
-import BottomBar from "./pages/components/BottomBar";
+import BottomTabs from "./pages/components/BottomTabs";
 const Stack = createStackNavigator();
 
 const Routes = () => {
@@ -31,7 +31,7 @@ const Routes = () => {
         <Stack.Navigator initialRouteName="Swipe">
           <Stack.Screen
             name="Swipe"
-            component={BottomBar}
+            component={BottomTabs}
             options={{
               headerShown: false, // change this to `false`
             }}

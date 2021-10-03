@@ -2,12 +2,14 @@ import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Profile from "@src/pages/Profile/Profile";
+import Feed from "@src/pages/Feed/Feed";
+
 import { AntDesign } from "@expo/vector-icons";
 import UserStack from "./UserStack";
 
 const Tab = createBottomTabNavigator();
 
-export default function BottomBar() {
+export default function BottomTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -23,6 +25,10 @@ export default function BottomBar() {
               iconName = focused ? "user" : "user";
               break;
             }
+            case "Feed": {
+              iconName = focused ? "inbox" : "inbox";
+              break;
+            }
           }
           // You can return any component that you like here!
           return <AntDesign name={iconName} size={size} color={color} />;
@@ -36,6 +42,13 @@ export default function BottomBar() {
         component={UserStack}
         options={{
           headerShown: false, // change this to `false`
+        }}
+      />
+      <Tab.Screen
+        name="Feed"
+        component={Feed}
+        options={{
+          headerShown: true, // change this to `false`
         }}
       />
       <Tab.Screen

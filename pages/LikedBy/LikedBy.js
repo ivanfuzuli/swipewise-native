@@ -1,13 +1,7 @@
 import axios from "@src/config/@axios";
 
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Alert,
-  TouchableOpacity,
-  Touchable,
-} from "react-native";
+import { View, StyleSheet, Alert, TouchableOpacity } from "react-native";
 import { Text } from "react-native-elements";
 
 import Avatar from "../components/Avatar";

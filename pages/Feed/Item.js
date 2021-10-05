@@ -5,6 +5,7 @@ import Avatar from "../components/Avatar";
 
 const Item = ({
   id,
+  quoteId,
   count,
   title,
   author,
@@ -16,6 +17,7 @@ const Item = ({
   const handlePress = () => {
     updateModalState({
       id,
+      quoteId,
       count,
       title,
       author,

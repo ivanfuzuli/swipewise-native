@@ -3,11 +3,11 @@ import { Pressable, View, Text, StyleSheet, Animated } from "react-native";
 import LottieView from "lottie-react-native";
 import debounce from "lodash/debounce";
 import { useDispatch } from "react-redux";
-import { sendClap } from "../../store/votesSlice";
+import { sendClap } from "../store/votesSlice";
 
 const MAX_CLAPS = 30;
 const SEND_DEBOUNCE = 2000;
-const ClapsButton = ({ quote, circleStyle }) => {
+const ClapsButton = ({ quoteId, circleStyle }) => {
   const dispatch = useDispatch();
 
   const sendDebounced = useRef(
@@ -54,21 +54,19 @@ const ClapsButton = ({ quote, circleStyle }) => {
     const timer = setTimeout(() => {
       setDisabled(false);
       setCount(0);
-      voteRef.current[quote._id] = 0;
+      voteRef.current[quoteId] = 0;
     }, 1000);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [quote._id]);
+  }, [quoteId]);
 
   const claps = () => {
-    const quoteId = quote._id;
-
     if (count < MAX_CLAPS) {
       setCount((state) => {
         const count = state + 1;
-        voteRef.current[quote._id] = count;
+        voteRef.current[quoteId] = count;
         return count;
       });
     }
@@ -104,7 +102,7 @@ const ClapsButton = ({ quote, circleStyle }) => {
               width: 48,
               height: 48,
             }}
-            source={require("../../../assets/clap-yellow.json")}
+            source={require("@src/assets/clap-yellow.json")}
           />
         </View>
       </Pressable>
@@ -148,13 +146,16 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   container: {
+    left: 0,
+    right: 0,
+    alignItems: "center",
+    justifyContent: "center",
     transform: [
       {
         translateY: 0,
       },
     ],
     position: "absolute",
-    right: 10,
   },
   bubble: {
     justifyContent: "center",

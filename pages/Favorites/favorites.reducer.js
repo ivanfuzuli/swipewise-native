@@ -80,7 +80,8 @@ function reducer(state, action) {
 
     case FETCH_FAILED: {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload.error;
+      break;
     }
     default:
       throw new Error();

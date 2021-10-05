@@ -5,6 +5,7 @@ import Modal from "react-native-modal";
 import PanelFooter from "./PanelFooter";
 
 export default Panel = ({
+  quoteId,
   author,
   title,
   quote,
@@ -30,7 +31,12 @@ export default Panel = ({
           </TouchableOpacity>
         </View>
         {children}
-        <PanelFooter author={author} title={title} quote={quote} />
+        <PanelFooter
+          quoteId={quoteId}
+          author={author}
+          title={title}
+          quote={quote}
+        />
       </View>
     </Modal>
   );

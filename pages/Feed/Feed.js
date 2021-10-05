@@ -130,6 +130,7 @@ const Feed = () => {
         title={item.quote.title}
         author={item.quote.author}
         quote={item.quote.quote}
+        quoteId={item._quote_id}
         sub={item.user._id}
         username={item.user.username}
         updateModalState={updateModalState}

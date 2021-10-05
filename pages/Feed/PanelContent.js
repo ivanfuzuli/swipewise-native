@@ -8,7 +8,8 @@ import Panel from "../components/Panel";
 export default PanelContent = ({ modalState, updateModalState }) => {
   const navigation = useNavigation();
 
-  const { id, author, title, quote, username, count, isOpen, sub } = modalState;
+  const { id, quoteId, author, title, quote, username, count, isOpen, sub } =
+    modalState;
 
   const handleClose = () => {
     updateModalState({
@@ -33,6 +34,7 @@ export default PanelContent = ({ modalState, updateModalState }) => {
       title={title}
       quote={quote}
       username={username}
+      quoteId={quoteId}
     >
       <TouchableOpacity
         onClose={handleClose}

@@ -7,8 +7,9 @@ import openShare from "@src/utils/openShare";
 import { Feather as Icon } from "@expo/vector-icons";
 
 import { StyleSheet, View, TouchableOpacity } from "react-native";
+import ClapsButton from "./ClapsButton";
 
-const PanelFooter = ({ author, title, quote }) => {
+const PanelFooter = ({ quoteId, author, title, quote }) => {
   const dispatch = useDispatch();
 
   const handleShare = () => {
@@ -28,22 +29,32 @@ const PanelFooter = ({ author, title, quote }) => {
 
   return (
     <View style={styles.footer}>
-      <TouchableOpacity style={{ marginRight: 10 }} onPress={handleShare}>
-        <Icon name="share" size={32} color="gray" />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.mr10} onPress={openInstagramShare}>
-        <Icon name="instagram" size={32} color="gray" />
-      </TouchableOpacity>
+      <View style={styles.left}>
+        {quoteId && <ClapsButton quoteId={quoteId} />}
+      </View>
+      <View style={styles.right}>
+        <TouchableOpacity style={{ marginRight: 10 }} onPress={handleShare}>
+          <Icon name="share" size={32} color="gray" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.mr10} onPress={openInstagramShare}>
+          <Icon name="instagram" size={32} color="gray" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   footer: {
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     flexDirection: "row",
     marginBottom: 10,
     marginRight: 10,
   },
+  right: {
+    flexDirection: "row",
+  },
+
+  left: {},
 });
 export default PanelFooter;

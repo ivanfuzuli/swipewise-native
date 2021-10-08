@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View, SafeAreaView, Alert, StyleSheet } from "react-native";
 
 import axios from "@src/config/@axios";
@@ -14,10 +14,20 @@ import UsernamePlaceholder from "./UsernamePlaceholder";
 import { useFocusEffect } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+import Analytics from "@src/config/Analytics";
+
 const Profile = ({ route, navigation }) => {
   const userid = useSelector((state) => state.auth.user.sub);
   const id = route.params?.id;
   const sub = id ? id : userid;
+
+  useEffect(() => {
+    if (id) {
+      Analytics.track(Analytics.events.USER_PROFILE_OPENED);
+    } else {
+      Analytics.track(Analytics.events.OWN_PROFILE_OPENED);
+    }
+  }, [id]);
 
   const [isLoading, setLoading] = useState(true);
   const [username, setUsername] = useState("");

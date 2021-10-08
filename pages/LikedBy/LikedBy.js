@@ -4,10 +4,16 @@ import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Alert, TouchableOpacity } from "react-native";
 import { Text } from "react-native-elements";
 
+import Analytics from "@src/config/Analytics";
+
 import Avatar from "../components/Avatar";
 import LikedByPlaceholder from "./LikedByPlaceholder";
 
 const LikedBy = ({ route, navigation }) => {
+  useEffect(() => {
+    Analytics.track(Analytics.events.LIKED_BY_OPENED);
+  }, []);
+
   const id = route.params.id;
 
   const [users, setUsers] = useState([]);

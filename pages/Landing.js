@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Analytics from "../config/Analytics";
+import Analytics from "@src/config/Analytics";
 import {
   Pressable,
   TouchableOpacity,

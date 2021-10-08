@@ -18,7 +18,7 @@ export const FETCH_FAILED = "FETCH_FAILED";
 export const FETCH_SUCCESS = "FETCH_SUCCESS";
 export const RESET = "RESET";
 export const SET_COUNT = "SENT_COUNT";
-export const LIMIT = 15;
+export const LIMIT = 10;
 
 function reducer(state, action) {
   switch (action.type) {

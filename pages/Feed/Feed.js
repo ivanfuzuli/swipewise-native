@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import { useImmerReducer } from "use-immer";
+
+import Analytics from "@src/config/Analytics";
+
 import { View, FlatList, RefreshControl, StyleSheet } from "react-native";
 import axios from "@src/config/@axios";
 import axiosOrginal from "axios";
@@ -26,6 +29,10 @@ const CancelToken = axiosOrginal.CancelToken;
 let cancel;
 
 const Feed = () => {
+  useEffect(() => {
+    Analytics.track(Analytics.events.FEED_OPENED);
+  }, []);
+
   const flatlistRef = useRef(null);
   const offsetRef = useRef(0);
   const [state, dispatch] = useImmerReducer(reducer, initialState);

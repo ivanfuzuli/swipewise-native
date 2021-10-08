@@ -1,25 +1,26 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import Swiper from "../Swiper";
+
 import Profile from "@src/pages/Profile/Profile";
-import LikedBy from "@src/pages/LikedBy/LikedBy";
+import Feed from "../Feed/Feed";
 
 const Stack = createStackNavigator();
 
-const UserStack = () => {
+const FeedStack = () => {
   return (
-    <Stack.Navigator initialRouteName="Quotes">
+    <Stack.Navigator initialRouteName="Feed List">
       <Stack.Screen
-        name="Quotes"
-        component={Swiper}
+        name="Feed List"
+        component={Feed}
         options={{
-          headerShown: false, // change this to `false`
+          title: "Feed",
         }}
       />
       <Stack.Screen
-        name="Liked By"
-        component={LikedBy}
+        name="Feed Profile"
+        component={Profile}
         options={{
+          title: "Profile",
           headerShown: true, // change this to `false`
         }}
       />
@@ -28,4 +29,4 @@ const UserStack = () => {
   );
 };
 
-export default UserStack;
+export default FeedStack;

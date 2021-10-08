@@ -22,7 +22,7 @@ export default PanelContent = ({ modalState, updateModalState }) => {
       isOpen: false,
     });
 
-    navigation.navigate("User Profile", {
+    navigation.navigate("Feed Profile", {
       id: sub,
     });
   };

@@ -2,10 +2,10 @@ import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Profile from "@src/pages/Profile/Profile";
-import Feed from "@src/pages/Feed/Feed";
 
 import { AntDesign } from "@expo/vector-icons";
-import UserStack from "./UserStack";
+import QuoteStack from "./QuoteStack";
+import FeedStack from "./FeedStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -39,16 +39,16 @@ export default function BottomTabs() {
     >
       <Tab.Screen
         name="Home"
-        component={UserStack}
+        component={QuoteStack}
         options={{
           headerShown: false, // change this to `false`
         }}
       />
       <Tab.Screen
         name="Feed"
-        component={Feed}
+        component={FeedStack}
         options={{
-          headerShown: true, // change this to `false`
+          headerShown: false, // change this to `false`
         }}
       />
       <Tab.Screen

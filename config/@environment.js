@@ -1,6 +1,7 @@
-const release = "develop";
+import { RELEASE } from "@env";
+
 function getEnvironment() {
-  if (release.startsWith("prod")) {
+  if (RELEASE.startsWith("prod")) {
     // matches prod-v1, prod-v2, prod-v3
     return {
       envName: "PRODUCTION",
@@ -16,7 +17,7 @@ function getEnvironment() {
       googleAppId:
         "90841678000-o8cu6dmpj60390eil53119j0fvugklr4.apps.googleusercontent.com",
     }; // prod env settings
-  } else if (release.startsWith("staging")) {
+  } else if (RELEASE.startsWith("staging")) {
     // matches staging-v1, staging-v2
     return {
       envName: "STAGING",
@@ -30,8 +31,8 @@ function getEnvironment() {
       googleAppId:
         "90841678000-o8cu6dmpj60390eil53119j0fvugklr4.apps.googleusercontent.com",
     }; // stage env settings
-  } else {
-    // assume any other release channel is development
+  } else if (RELEASE.startsWith("develop")) {
+    // assume any other RELEASE channel is development
     return {
       envName: "DEVELOPMENT",
       googlePackageName: "com.can.swipe",
@@ -45,6 +46,8 @@ function getEnvironment() {
       googleAppId:
         "90841678000-35h5sdae7d5u5ec7opk3adkar1oqjiv1.apps.googleusercontent.com",
     }; // dev env settings
+  } else {
+    throw new Error("Need's env.");
   }
 }
 

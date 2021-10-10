@@ -2,7 +2,7 @@ import axios from "axios";
 import PubSub from "pubsub-js";
 
 import * as SecureStore from "expo-secure-store";
-import env from "./@env";
+import env from "./@environment";
 
 const API_URL = env.apiUrl;
 

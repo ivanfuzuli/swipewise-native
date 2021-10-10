@@ -1,5 +1,5 @@
 import * as Amplitude from "expo-analytics-amplitude";
-import Environment from "./@env";
+import Environment from "./@environment";
 
 let isInitialized = false;
 const apiKey = Environment.amplitudeApiKey;

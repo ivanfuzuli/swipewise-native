@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 
 import { SvgUri } from "react-native-svg";
-import env from "@src/config/@env";
+import env from "@src/config/@environment";
 
 const Avatar = ({ seed, size = "md" }) => {
   const sizeStyle = {};

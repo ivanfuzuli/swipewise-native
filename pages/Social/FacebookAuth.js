@@ -8,7 +8,7 @@ import * as Auth from "../store/authSlice";
 import * as SecureStore from "expo-secure-store";
 
 import Analytics from "../../config/Analytics";
-import env from "../../config/@env";
+import env from "../../config/@environment";
 const API_URL = env.apiUrl;
 const FB_APP_ID = env.fbAppId;
 

@@ -1,4 +1,4 @@
-import env from "./config/@env";
+import env from "./config/@environment";
 
 import "react-native-gesture-handler";
 import React, { useEffect } from "react";

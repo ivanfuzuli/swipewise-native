@@ -1,5 +1,5 @@
 import React from "react";
-import env from "@src/config/@env";
+import env from "@src/config/@environment";
 import Rate, { AndroidMarket } from "react-native-rate";
 
 import { Modal, StyleSheet, Text, View } from "react-native";

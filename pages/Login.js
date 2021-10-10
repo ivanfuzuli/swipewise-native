@@ -14,7 +14,7 @@ import Analytics from "../config/Analytics";
 import { Button, Input, Text } from "react-native-elements";
 
 import { Feather } from "@expo/vector-icons";
-import env from "../config/@env";
+import env from "../config/@environment";
 
 import * as Auth from "./store/authSlice";
 import { useSelector, useDispatch } from "react-redux";

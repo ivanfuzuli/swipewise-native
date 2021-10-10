@@ -13,7 +13,7 @@ import * as Auth from "../store/authSlice";
 import * as SecureStore from "expo-secure-store";
 
 import Analytics from "../../config/Analytics";
-import env from "../../config/@env";
+import env from "../../config/@environment";
 import google from "../../assets/google.logo.png";
 
 const GOOGLE_APP_ID = env.googleAppId;

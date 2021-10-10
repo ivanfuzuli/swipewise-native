@@ -2,7 +2,7 @@ import axiosOrg from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setQuotes } from "./quotesSlice";
 import axios from "../../config/@axios";
-import env from "../../config/@env";
+import env from "../../config/@environment";
 
 const CancelToken = axiosOrg.CancelToken;
 let cancel;

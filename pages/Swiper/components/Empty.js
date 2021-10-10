@@ -1,4 +1,4 @@
-import env from "../../../config/@env";
+import env from "../../../config/@environment";
 import Analytics from "../../../config/Analytics";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Dimensions, View } from "react-native";

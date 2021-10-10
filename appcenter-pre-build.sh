@@ -13,4 +13,5 @@ then
     APP_NAME="Swipewise"
     INFO=$APPCENTER_SOURCE_DIRECTORY/ios/$APP_NAME/$CONFIG_FILE
     plutil -remove NSAppTransportSecurity.NSExceptionDomains.localhost $INFO
+    echo "IOS plist modified"
 fi

@@ -1,4 +1,4 @@
-import Constants from "expo-constants";
+import { version } from "../../package.json";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { ListItem, Text } from "react-native-elements";
@@ -7,7 +7,7 @@ import LogoutButton from "./LogoutButton";
 
 const Settings = ({ navigation }) => {
   const email = useSelector((state) => state.auth.user.email);
-  const version = Constants.manifest.version;
+
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <View style={styles.profile}>

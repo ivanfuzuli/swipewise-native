@@ -27,26 +27,28 @@ export default (props) => {
 
   return (
     <View style={style}>
-      <View style={[styles.overlay, { display: isActive ? "flex" : "none" }]}>
-        <View style={styles.header}>
-          <Animated.View style={[styles.like, { opacity: likeOpacity }]}>
-            <Text style={styles.likeLabel}>LIKE</Text>
-          </Animated.View>
-          <Animated.View
-            style={[
-              styles.nope,
-              {
-                opacity: nopeOpacity,
-              },
-            ]}
-          >
-            <Text style={styles.nopeLabel}>NOPE</Text>
-          </Animated.View>
+      {isActive ? (
+        <View style={styles.overlay}>
+          <View style={styles.header}>
+            <Animated.View style={[styles.like, { opacity: likeOpacity }]}>
+              <Text style={styles.likeLabel}>LIKE</Text>
+            </Animated.View>
+            <Animated.View
+              style={[
+                styles.nope,
+                {
+                  opacity: nopeOpacity,
+                },
+              ]}
+            >
+              <Text style={styles.nopeLabel}>NOPE</Text>
+            </Animated.View>
+          </View>
+          <View style={styles.footer}>
+            <Text style={styles.name}>{quote.name}</Text>
+          </View>
         </View>
-        <View style={styles.footer}>
-          <Text style={styles.name}>{quote.name}</Text>
-        </View>
-      </View>
+      ) : null}
       <CardContent quote={quote} />
     </View>
   );

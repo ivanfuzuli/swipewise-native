@@ -4,6 +4,7 @@ function getEnvironment() {
     // matches prod-v1, prod-v2, prod-v3
     return {
       envName: "PRODUCTION",
+      googlePackageName: "com.can.swipe",
       apiUrl: "https://api.swipewiseapp.com",
       amplitudeApiKey: "43d4bd8a314dcf72434237369dcbb02b",
       limit: 50,
@@ -19,6 +20,7 @@ function getEnvironment() {
     // matches staging-v1, staging-v2
     return {
       envName: "STAGING",
+      googlePackageName: "com.can.swipe",
       apiUrl: "https://swipewise-dev.herokuapp.com",
       amplitudeApiKey: "43d4bd8a314dcf72434237369dcbb02b",
       limit: 50,
@@ -32,7 +34,8 @@ function getEnvironment() {
     // assume any other release channel is development
     return {
       envName: "DEVELOPMENT",
-      apiUrl: "http://localhost:8080",
+      googlePackageName: "com.can.swipe",
+      apiUrl: "https://swipewise-dev.herokuapp.com",
       sentryDsn: "",
       amplitudeApiKey: "",
       limit: 50,

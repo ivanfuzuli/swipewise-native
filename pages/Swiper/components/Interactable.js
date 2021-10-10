@@ -8,7 +8,7 @@ import {
 } from "../../../helpers/redash";
 import Animated from "react-native-reanimated";
 
-const { Value, event, block, set, cond, eq, Clock, call, clockRunning } =
+const { Value, not, event, block, set, cond, eq, Clock, call, clockRunning } =
   Animated;
 const Interactable = ({
   style,
@@ -64,7 +64,7 @@ const Interactable = ({
                   call([snapPointX], ([x]) => onSnap({ nativeEvent: { x } })),
                 ]),
               ]),
-              cond(eq(state, State.BEGAN), set(active, 1)),
+              cond(not(eq(translationX, 0)), set(active, 1)),
               set(
                 x,
                 cond(

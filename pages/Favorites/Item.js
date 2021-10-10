@@ -1,13 +1,9 @@
 import React from "react";
 import { ListItem } from "react-native-elements";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { useDispatch } from "react-redux";
-import { setModalQuoteId } from "../store/statusSlice";
-
-const Item = ({ id, count, title, author, quote }) => {
-  const dispatch = useDispatch();
+const Item = ({ id, count, title, setModalQuoteId, author, quote }) => {
   const handlePress = () => {
-    dispatch(setModalQuoteId(id));
+    setModalQuoteId(id);
   };
 
   return (

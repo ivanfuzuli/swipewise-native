@@ -11,6 +11,7 @@ const RateModal = ({ open, onClose }) => {
       preferredAndroidMarket: AndroidMarket.Google,
       preferInApp: true,
       openAppStoreIfInAppFails: true,
+      GooglePackageName: env.googlePackageName,
     };
 
     Rate.rate(options);

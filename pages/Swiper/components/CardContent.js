@@ -17,7 +17,7 @@ const CardComponent = ({ quote }) => {
         </View>
         <View style={styles.content}>
           <ScrollView>
-            <Text h4>{quote.quote}</Text>
+            <Text style={styles.quote}>{quote.quote}</Text>
           </ScrollView>
           <View>
             <Text>
@@ -46,6 +46,9 @@ CardComponent.propTypes = {
 const styles = StyleSheet.create({
   mr10: {
     marginRight: 10,
+  },
+  quote: {
+    fontSize: 20,
   },
   header: {
     flexDirection: "row",

@@ -4,7 +4,7 @@ import { Text } from "react-native-elements";
 import Avatar from "@src/pages/components/Avatar";
 import { useNavigation } from "@react-navigation/native";
 
-const LikedBy = ({ users = [], id, count = 0 }) => {
+const LikedByAvatars = ({ users = [], id, count = 0 }) => {
   const navigation = useNavigation();
 
   return (
@@ -18,7 +18,7 @@ const LikedBy = ({ users = [], id, count = 0 }) => {
     >
       {users &&
         users.map((user) => {
-          return <Avatar size="sm" seed={user} />;
+          return <Avatar size="sm" key={user} seed={user} />;
         })}
       {count > 3 && (
         <View style={styles.count}>
@@ -44,4 +44,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LikedBy;
+export default LikedByAvatars;

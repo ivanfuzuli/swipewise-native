@@ -33,6 +33,7 @@ const Favorites = ({ sub }) => {
   const offsetRef = useRef(0);
   const [state, dispatch] = useImmerReducer(reducer, initialState);
   const { filter, sort, error, loading, byId, allIds } = state;
+  const [id, setModalQuoteId] = useState(null);
 
   const [isRefresh, setRefresh] = useState(false);
 
@@ -120,6 +121,7 @@ const Favorites = ({ sub }) => {
         title={item.quote.title}
         author={item.quote.author}
         quote={item.quote.quote}
+        setModalQuoteId={setModalQuoteId}
       />
     );
   };
@@ -182,7 +184,12 @@ const Favorites = ({ sub }) => {
         />
       </View>
       {!loading && quotes.length < 1 && <ListEmpty />}
-      <Panel byId={byId} setCount={setCount} />
+      <Panel
+        byId={byId}
+        id={id}
+        setModalQuoteId={setModalQuoteId}
+        setCount={setCount}
+      />
     </>
   );
 };

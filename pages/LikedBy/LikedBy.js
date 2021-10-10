@@ -33,7 +33,7 @@ const LikedBy = ({ route, navigation }) => {
       });
   }, [id]);
 
-  const placeholders = ["_", "_", "_"];
+  const placeholders = [0, 1, 2];
   return (
     <View style={styles.container}>
       {!isLoading &&
@@ -56,8 +56,8 @@ const LikedBy = ({ route, navigation }) => {
           );
         })}
       {isLoading &&
-        placeholders.map((_, index) => {
-          return <LikedByPlaceholder key={index} />;
+        placeholders.map((id) => {
+          return <LikedByPlaceholder key={id} />;
         })}
 
       {!isLoading && users.length < 1 && <Text>No user...</Text>}

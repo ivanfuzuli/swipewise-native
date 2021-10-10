@@ -1,21 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Text } from "react-native-elements";
 
-import { useSelector, useDispatch } from "react-redux";
-
-import { setModalQuoteId } from "../store/statusSlice";
 import Claps from "./Claps";
 
-export default PanelContent = ({ byId, setCount }) => {
-  const dispatch = useDispatch();
-  const id = useSelector((state) => state.status.modalQuoteId);
-
+export default PanelContent = ({ byId, id, setModalQuoteId, setCount }) => {
   const currentQuote = byId[id];
   const isActive = id ? true : false;
 
   const handleClose = () => {
-    dispatch(setModalQuoteId(null));
+    setModalQuoteId(null);
   };
 
   const { author, title, quote } = currentQuote?.quote || {};

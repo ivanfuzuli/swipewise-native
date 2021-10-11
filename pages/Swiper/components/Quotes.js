@@ -6,6 +6,7 @@ import Analytics from "../../../config/Analytics";
 
 import Footer from "./Footer";
 import Empty from "./Empty";
+import Filter from "./Filter";
 
 import Interactable from "./Interactable";
 import Card from "./Card";
@@ -120,6 +121,7 @@ class Quotes extends React.PureComponent {
     return (
       <SafeAreaView style={styles.container}>
         <Header quote={quote} isEmpty={isEmpty} />
+        <Filter />
         <View style={styles.cards}>
           {nextQuote ? (
             <View style={styles.placeholder}>

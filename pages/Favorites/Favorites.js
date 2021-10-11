@@ -187,6 +187,7 @@ const Favorites = ({ sub }) => {
       <Panel
         byId={byId}
         id={id}
+        sub={sub}
         setModalQuoteId={setModalQuoteId}
         setCount={setCount}
       />

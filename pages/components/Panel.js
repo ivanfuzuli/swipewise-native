@@ -12,6 +12,7 @@ export default Panel = ({
   isOpen,
   onClose,
   children,
+  me,
 }) => {
   return (
     <Modal
@@ -37,6 +38,7 @@ export default Panel = ({
           author={author}
           title={title}
           quote={quote}
+          me={me}
         />
       </View>
     </Modal>

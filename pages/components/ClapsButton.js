@@ -18,8 +18,15 @@ const ClapsButton = ({ quoteId, circleStyle }) => {
         count,
       };
       dispatch(sendClap(vote));
+      voteRef.current[quoteId] = 0;
     }, SEND_DEBOUNCE)
   );
+
+  useEffect(() => {
+    return () =>
+      voteRef.current[quoteId] > 0 &&
+      sendDebounced.current(quoteId, voteRef.current[quoteId]);
+  }, []);
 
   const debounced = useRef(null);
   const voteRef = useRef({});

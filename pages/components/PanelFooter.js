@@ -9,7 +9,7 @@ import { Feather as Icon } from "@expo/vector-icons";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 import ClapsButton from "./ClapsButton";
 
-const PanelFooter = ({ onPanelClose, quoteId, author, title, quote }) => {
+const PanelFooter = ({ onPanelClose, me, quoteId, author, title, quote }) => {
   const dispatch = useDispatch();
 
   const handleShare = () => {
@@ -30,7 +30,7 @@ const PanelFooter = ({ onPanelClose, quoteId, author, title, quote }) => {
   return (
     <View style={styles.footer}>
       <View style={styles.left}>
-        {quoteId && <ClapsButton quoteId={quoteId} />}
+        {!me && <ClapsButton quoteId={quoteId} />}
       </View>
       <View style={styles.right}>
         <TouchableOpacity style={{ marginRight: 10 }} onPress={handleShare}>

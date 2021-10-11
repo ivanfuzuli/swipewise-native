@@ -9,14 +9,14 @@ import { Feather as Icon } from "@expo/vector-icons";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 import ClapsButton from "./ClapsButton";
 
-const PanelFooter = ({ quoteId, author, title, quote }) => {
+const PanelFooter = ({ onPanelClose, quoteId, author, title, quote }) => {
   const dispatch = useDispatch();
 
   const handleShare = () => {
     openShare(author, title, quote);
   };
   const openInstagramShare = () => {
-    handleClose();
+    onPanelClose && onPanelClose();
     dispatch(
       setCurrentQuote({
         author,

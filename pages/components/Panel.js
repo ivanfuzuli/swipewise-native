@@ -32,6 +32,7 @@ export default Panel = ({
         </View>
         {children}
         <PanelFooter
+          onPanelClose={onClose}
           quoteId={quoteId}
           author={author}
           title={title}
